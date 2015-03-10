@@ -2,6 +2,7 @@
 namespace GianArb\GrootTest;
 
 use GianArb\Groot\App;
+use DI\ContainerBuilder;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -12,9 +13,23 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $loader = require_once __DIR__.'/../vendor/autoload.php';
         $router = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
+            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
         });
 
         $this->app = new App($router);
+        $container = new ContainerBuilder();
+        $this->app->setContainer($container->build());
+    }
+
+    public function testChangeResponseStatusCode()
+    {
+        $request = (new \Phly\Http\Request())
+        ->withUri(new \Phly\Http\Uri('http://example.com/fail'))
+        ->withMethod("GET");
+        $response = new \Phly\Http\Response();
+
+        $response = $this->app->run($request, $response);
+        $this->assertEquals(205, $response->getStatusCode());
     }
 
     public function testRouteFound()
@@ -24,7 +39,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
         ->withMethod("GET");
         $response = new \Phly\Http\Response();
 
-        $this->app->run($request, $response);
+        $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
     }
 

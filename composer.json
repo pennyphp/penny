@@ -3,6 +3,7 @@
     "description": "Another PHP framework make of other components",
     "require": {
         "nikic/fast-route": "0.4.*",
+        "mnapoli/php-di": "~4.0",
         "phly/http": "0.11.*"
     },
     "require-dev": {

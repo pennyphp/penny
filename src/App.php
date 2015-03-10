@@ -7,10 +7,21 @@ class App
     private $router;
     private $request;
     private $response;
+    private $container;
 
     public function __construct($router)
     {
         $this->router = $router;
+    }
+
+    public function setContainer($container)
+    {
+        $this->container = $container;
+    }
+
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     public function run($request, $response)
@@ -28,9 +39,8 @@ class App
             break;
             case \FastRoute\Dispatcher::FOUND:
                 $this->response = $response->withStatus(200);
-
-                $controller = new $routeInfo[1][0];
-                $controller->$routeInfo[1][1]();
+                $controller = $this->getContainer()->get($routeInfo[1][0]);
+                $this->response = call_user_func([$controller, $routeInfo[1][1]], $this->request, $this->response);
             break;
         }
         return $this->response;

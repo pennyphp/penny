@@ -1,10 +1,16 @@
 <?php
 namespace TestApp\Controller;
+use Phly\Http\Request;
 
 class Index
 {
-    public function index()
+    public function index($request, $response)
     {
-        return json_encode(["ping" => "yes"]);
+        return $response;
+    }
+
+    public function failed($request, $response)
+    {
+        return $response->withStatus(205);
     }
 }
