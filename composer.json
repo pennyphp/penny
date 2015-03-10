@@ -4,6 +4,8 @@
     "require": {
         "nikic/fast-route": "0.4.*",
         "mnapoli/php-di": "~4.0",
+        "acclimate/container": "~1",
+        "symfony/dependency-injection": "~2.6",
         "phly/http": "0.11.*"
     },
     "require-dev": {

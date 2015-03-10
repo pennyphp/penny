@@ -4,8 +4,68 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "0d43b58f33d68e42162f8fd3a4a55808",
+    "hash": "9391c7a0fb69c6eab8460c6ef1fd3d97",
     "packages": [
+        {
+            "name": "acclimate/container",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jeremeamia/acclimate-container.git",
+                "reference": "6912ee2d9f069c103594977b55c91c7404ac40b9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jeremeamia/acclimate-container/zipball/6912ee2d9f069c103594977b55c91c7404ac40b9",
+                "reference": "6912ee2d9f069c103594977b55c91c7404ac40b9",
+                "shasum": ""
+            },
+            "require": {
+                "container-interop/container-interop": "~1.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "aura/di": "1.*",
+                "guzzle/service": "3.*",
+                "illuminate/container": "4.*",
+                "mnapoli/php-di": "3.*",
+                "nette/nette": "2.*",
+                "php": ">=5.4.0",
+                "phpunit/phpunit": "3.7.*",
+                "pimple/pimple": "1.*",
+                "symfony/dependency-injection": "2.*",
+                "zendframework/zend-di": "2.*",
+                "zendframework/zend-servicemanager": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Acclimate\\Container\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jeremy Lindblom",
+                    "email": "jeremeamia@gmail.com",
+                    "homepage": "http://webjeremy.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides adapters for various third-party service containers.",
+            "keywords": [
+                "adapter",
+                "container",
+                "decorator",
+                "dependency injection",
+                "interoperability",
+                "service locator"
+            ],
+            "time": "2014-03-19 19:15:54"
+        },
         {
             "name": "container-interop/container-interop",
             "version": "1.1.0",
@@ -555,6 +615,66 @@
                 "response"
             ],
             "time": "2015-03-04 22:45:46"
+        },
+        {
+            "name": "symfony/dependency-injection",
+            "version": "v2.6.4",
+            "target-dir": "Symfony/Component/DependencyInjection",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/DependencyInjection.git",
+                "reference": "42bbb43fab66292a1865dc9616c299904c3d4d14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/DependencyInjection/zipball/42bbb43fab66292a1865dc9616c299904c3d4d14",
+                "reference": "42bbb43fab66292a1865dc9616c299904c3d4d14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "conflict": {
+                "symfony/expression-language": "<2.6"
+            },
+            "require-dev": {
+                "symfony/config": "~2.2",
+                "symfony/expression-language": "~2.6",
+                "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "symfony/config": "",
+                "symfony/proxy-manager-bridge": "Generate service proxies to lazy load them",
+                "symfony/yaml": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\DependencyInjection\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony DependencyInjection Component",
+            "homepage": "http://symfony.com",
+            "time": "2015-01-25 04:39:26"
         },
         {
             "name": "zendframework/zend-code",

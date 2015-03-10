@@ -3,6 +3,9 @@ namespace GianArb\GrootTest;
 
 use GianArb\Groot\App;
 use DI\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyDiCBuilder;
+use Acclimate\Container\CompositeContainer;
+use Acclimate\Container\ContainerAcclimator;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,8 +20,17 @@ class AppTest extends \PHPUnit_Framework_TestCase
         });
 
         $this->app = new App($router);
-        $container = new ContainerBuilder();
-        $this->app->setContainer($container->build());
+        $acclimate = new ContainerAcclimator();
+
+        $mnapoliDiCBuilder = new ContainerBuilder();
+        $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
+
+        $symfonyDiC = new SymfonyDiCBuilder();
+        $syAcclimate = $acclimate->acclimate($symfonyDiC);
+
+        $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
+
+        $this->app->setContainer($container);
     }
 
     public function testChangeResponseStatusCode()
