@@ -1,4 +1,0 @@
-suites:
-   groot:
-       namespace: GianArb\Groot
-       psr4_prefix: GianArb\Groot
