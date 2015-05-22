@@ -28,7 +28,6 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
         $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
         $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
-            ->addMethodCall('setHttpFlow', [$container->get("http.flow")])
             ->addMethodCall('setRouter', [$router]);
         $this->app->setContainer($container);
 

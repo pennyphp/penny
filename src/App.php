@@ -52,19 +52,30 @@ class App
         $this->request = $request;
         $this->response = $response;
 
-        $dispatched = $this->getContainer()->get("dispatcher")->dispatch($this->request, $this);
-
-        if($dispatched->getResponse() instanceof Response && $dispatched->getRouteInfo() == null){
-            return $dispatched->getResponse();
+        try {
+            $this->getContainer()->get("dispatcher")->dispatch($this->request, $this);
+        } catch (\Exception $e) {
+            if (404 === $e->getCode()) {
+                $this->getContainer()->get("http.flow")
+                    ->trigger("ROUTE_NOT_FOUND", $this);
+            }
+            if (405 === $e->getCode()) {
+                $this->getContainer()->get("http.flow")
+                    ->trigger("METHOD_NOT_ALLOWED", $this);
+            }
         }
 
-        $controller = $this->getContainer()->get($dispatched->getRouteInfo()[1][0]);
-        $dispatched->response = call_user_func([$controller, $dispatched->getRouteInfo()[1][1]], $this->request, new Response());
+        if($this->getResponse() instanceof Response && $this->getRouteInfo() == null){
+            return $this->getResponse();
+        }
+
+        $controller = $this->getContainer()->get($this->getRouteInfo()[1][0]);
+        $this->response = call_user_func([$controller, $this->getRouteInfo()[1][1]], $this->request, new Response());
 
         if (!$this->getResponse() instanceof Response) {
             throw \Exception("dead");
         }
 
-        return $dispatched->getResponse();
+        return $this->getResponse();
     }
 }
