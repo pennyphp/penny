@@ -24,32 +24,34 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
         $mnapoliDiCBuilder = new ContainerBuilder();
         $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-
         $symfonyDiC = new SymfonyDiCBuilder();
         $syAcclimate = $acclimate->acclimate($symfonyDiC);
-
         $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
-
+        $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
+        $symfonyDiC
+            ->register('dispatcher', "GianArb\\Groot\\Dispatcher")
+            ->addMethodCall('setHttpFlow', [$container->get("http.flow")])
+            ->addMethodCall('setRouter', [$router]);
         $this->app->setContainer($container);
     }
 
     public function testChangeResponseStatusCode()
     {
-        $request = (new \Phly\Http\Request())
-        ->withUri(new \Phly\Http\Uri('http://example.com/fail'))
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/fail'))
         ->withMethod("GET");
-        $response = new \Phly\Http\Response();
+        $response = new \Zend\Diactoros\Response();
 
         $response = $this->app->run($request, $response);
-        $this->assertEquals(205, $response->getStatusCode());
+        $this->assertEquals(502, $response->getStatusCode());
     }
 
     public function testRouteFound()
     {
-        $request = (new \Phly\Http\Request())
-        ->withUri(new \Phly\Http\Uri('http://example.com'))
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/'))
         ->withMethod("GET");
-        $response = new \Phly\Http\Response();
+        $response = new \Zend\Diactoros\Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
@@ -57,10 +59,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testRouteNotFound()
     {
-        $request = (new \Phly\Http\Request())
-        ->withUri(new \Phly\Http\Uri('http://example.com/doh'))
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/doh'))
         ->withMethod("GET");
-        $response = new \Phly\Http\Response();
+        $response = new \Zend\Diactoros\Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(404, $response->getStatusCode());
@@ -68,10 +70,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testMethodNotAllowed()
     {
-        $request = (new \Phly\Http\Request())
-        ->withUri(new \Phly\Http\Uri('http://example.com/'))
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/'))
         ->withMethod("POST");
-        $response = new \Phly\Http\Response();
+        $response = new \Zend\Diactoros\Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(405, $response->getStatusCode());

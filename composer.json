@@ -6,7 +6,8 @@
         "mnapoli/php-di": "~4.0",
         "acclimate/container": "~1",
         "symfony/dependency-injection": "~2.6",
-        "phly/http": "0.11.*"
+        "zendframework/zend-diactoros": "~1.0",
+        "zendframework/zend-eventmanager": "~2.4"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.5",

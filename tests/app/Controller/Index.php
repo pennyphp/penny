@@ -1,16 +1,17 @@
 <?php
 namespace TestApp\Controller;
-use Phly\Http\Request;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
 
 class Index
 {
-    public function index($request, $response)
+    public function index(Request $request, Response $response)
     {
         return $response;
     }
 
-    public function failed($request, $response)
+    public function failed(Request $request, Response $response)
     {
-        return $response->withStatus(205);
+        return $response->withStatus(502);
     }
 }
