@@ -13,7 +13,6 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $loader = require_once __DIR__.'/../vendor/autoload.php';
         $router = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
@@ -28,11 +27,21 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $syAcclimate = $acclimate->acclimate($symfonyDiC);
         $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
         $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
-        $symfonyDiC
-            ->register('dispatcher', "GianArb\\Groot\\Dispatcher")
+        $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
             ->addMethodCall('setHttpFlow', [$container->get("http.flow")])
             ->addMethodCall('setRouter', [$router]);
         $this->app->setContainer($container);
+
+        $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function($e){
+            $response = $e->getTarget()->getResponse()->withStatus(404);
+            $e->getTarget()->setResponse($response);
+        });
+
+        $this->app->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function($e){
+            $response = $e->getTarget()->getResponse()->withStatus(405);
+            $e->getTarget()->setResponse($response);
+        });
+
     }
 
     public function testChangeResponseStatusCode()

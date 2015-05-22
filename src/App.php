@@ -52,18 +52,7 @@ class App
         $this->request = $request;
         $this->response = $response;
 
-        $this->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function($e){
-            $response = $e->getTarget()->getResponse()->withStatus(404);
-            $e->getTarget()->setResponse($response);
-        });
-
-        $this->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function($e){
-            $response = $e->getTarget()->getResponse()->withStatus(405);
-            $e->getTarget()->setResponse($response);
-        });
-
-        $dispatched = $this->getContainer()->get("dispatcher")
-            ->dispatch($this->request, $this);
+        $dispatched = $this->getContainer()->get("dispatcher")->dispatch($this->request, $this);
 
         if($dispatched->getResponse() instanceof Response && $dispatched->getRouteInfo() == null){
             return $dispatched->getResponse();
