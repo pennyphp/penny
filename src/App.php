@@ -50,6 +50,7 @@ class App
         }
 
         $controller = $this->getContainer()->get($evt->getRouteInfo()[1][0]);
+
         $evt->setResponse(
             call_user_func([$controller, $evt->getRouteInfo()[1][1]], $evt->getRequest(), $evt->getResponse())
         );

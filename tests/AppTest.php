@@ -29,6 +29,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
         $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
             ->addMethodCall('setRouter', [$router]);
+        $mnapoliDiC->set('di', $container);
         $this->app->setContainer($container);
 
         $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function($e){
