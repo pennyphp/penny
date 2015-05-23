@@ -4,6 +4,10 @@ namespace GianArb\Groot;
 
 use Zend\Diactoros\Response;
 use GianArb\Groot\Event\HttpFlowEvent;
+use DI\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyDiCBuilder;
+use Acclimate\Container\CompositeContainer;
+use Acclimate\Container\ContainerAcclimator;
 
 class App
 {
@@ -15,8 +19,20 @@ class App
         $this->router = $router;
     }
 
-    public function setContainer($container)
+    public function setContainer($container = null)
     {
+        if($container == null){
+            $acclimate = new ContainerAcclimator();
+            $mnapoliDiCBuilder = new ContainerBuilder();
+            $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
+            $symfonyDiC = new SymfonyDiCBuilder();
+            $syAcclimate = $acclimate->acclimate($symfonyDiC);
+            $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
+            $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
+            $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
+                ->addMethodCall('setRouter', [$this->router]);
+            $mnapoliDiC->set('di', $container);
+        }
         $this->container = $container;
     }
 

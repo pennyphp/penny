@@ -2,10 +2,6 @@
 namespace GianArb\GrootTest;
 
 use GianArb\Groot\App;
-use DI\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyDiCBuilder;
-use Acclimate\Container\CompositeContainer;
-use Acclimate\Container\ContainerAcclimator;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,18 +15,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
         });
 
         $this->app = new App($router);
-        $acclimate = new ContainerAcclimator();
-
-        $mnapoliDiCBuilder = new ContainerBuilder();
-        $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-        $symfonyDiC = new SymfonyDiCBuilder();
-        $syAcclimate = $acclimate->acclimate($symfonyDiC);
-        $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
-        $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
-        $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
-            ->addMethodCall('setRouter', [$router]);
-        $mnapoliDiC->set('di', $container);
-        $this->app->setContainer($container);
+        $this->app->setContainer();
 
         $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function($e){
             $response = $e->getTarget()->getResponse()->withStatus(404);
