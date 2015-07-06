@@ -10,8 +10,12 @@ class AppTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
-            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
+            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
+                "name" => "index"
+            ]);
+            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed'], [
+                "name" => "fail"
+            ]);
         });
 
         $this->app = new App($router);
@@ -48,6 +52,42 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testEventPostExecuted()
+    {
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/'))
+        ->withMethod("GET");
+        $response = new \Zend\Diactoros\Response();
+
+        $this->app->getContainer()->get("http.flow")->attach("index.index.post", function ($e) {
+            $response = $e->getTarget()->getResponse();
+            $response->getBody()->write("I'm very happy!");
+            $e->getTarget()->setResponse($response);
+        });
+
+        $response = $this->app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertRegExp('/very happy/', $response->getBody()->__toString());
+    }
+
+    public function testEventPreExecuted()
+    {
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/'))
+        ->withMethod("GET");
+        $response = new \Zend\Diactoros\Response();
+
+        $this->app->getContainer()->get("http.flow")->attach("index.index.pre", function ($e) {
+            $response = $e->getTarget()->getResponse();
+            $response->getBody()->write("This is");
+            $e->getTarget()->setResponse($response);
+        });
+
+        $response = $this->app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertRegExp('/This is a beautiful/', $response->getBody()->__toString());
     }
 
     public function testRouteNotFound()

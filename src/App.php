@@ -51,17 +51,16 @@ class App
         $evt = new HttpFlowEvent();
         $evt->setRequest($request);
         $evt->setResponse($response);
+
         try {
             $this->getContainer()->get("dispatcher")
                 ->dispatch($request, $evt);
         } catch (\Exception $e) {
             if (404 === $e->getCode()) {
-                $this->getContainer()->get("http.flow")
-                    ->trigger("ROUTE_NOT_FOUND", $evt);
+                $this->getContainer()->get("http.flow")->trigger("ROUTE_NOT_FOUND", $evt);
             }
             if (405 === $e->getCode()) {
-                $this->getContainer()->get("http.flow")
-                    ->trigger("METHOD_NOT_ALLOWED", $evt);
+                $this->getContainer()->get("http.flow")->trigger("METHOD_NOT_ALLOWED", $evt);
             }
         }
 
@@ -70,13 +69,16 @@ class App
         }
 
         $controller = $this->getContainer()->get($evt->getRouteInfo()[1][0]);
+        $method = $evt->getRouteInfo()[1][1];
+        $function = new \ReflectionClass($controller);
+        $name = strtolower($function->getShortName());
 
-        $evt->setResponse(
-            call_user_func([$controller, $evt->getRouteInfo()[1][1]], $evt->getRequest(), $evt->getResponse())
-        );
+        $this->getContainer()->get("http.flow")->trigger("{$name}.{$method}.pre", $evt);
+        $evt->setResponse(call_user_func([$controller, $method], $evt->getRequest(), $evt->getResponse()));
+        $this->getContainer()->get("http.flow")->trigger("{$name}.{$method}.post", $evt);
 
         if (!$evt->getResponse() instanceof Response) {
-            throw \Exception("dead");
+            throw new \Exception("dead");
         }
 
         return $evt->getResponse();

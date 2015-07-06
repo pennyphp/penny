@@ -12,6 +12,7 @@ class Index
 
     public function index(Request $request, Response $response)
     {
+        $response->getBody()->write(" a beautiful job");
         return $response;
     }
 
