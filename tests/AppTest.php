@@ -1,7 +1,7 @@
 <?php
-namespace GianArb\GrootTest;
+namespace GianArb\PennyTest;
 
-use GianArb\Groot\App;
+use GianArb\Penny\App;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {

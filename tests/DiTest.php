@@ -1,7 +1,7 @@
 <?php
-namespace GianArb\GrootTest;
+namespace GianArb\PennyTest;
 
-use GianArb\Groot\App;
+use GianArb\Penny\App;
 use DI\ContainerBuilder;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
@@ -46,7 +46,7 @@ class DiTest extends \PHPUnit_Framework_TestCase
                 return $mnapoliDiC->get("TestApp\\Controller\\Index");
             }));
 
-        $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Groot\Dispatcher')
+        $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
             ->method("setRouter", [$router]));
 
         $mnapoliDiC->set('di', $container);

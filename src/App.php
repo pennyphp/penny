@@ -1,9 +1,9 @@
 <?php
 
-namespace GianArb\Groot;
+namespace GianArb\Penny;
 
 use Zend\Diactoros\Response;
-use GianArb\Groot\Event\HttpFlowEvent;
+use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
@@ -26,7 +26,7 @@ class App
             $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
             $container = new CompositeContainer([$mnapoliDiC]);
             $mnapoliDiC->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-            $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Groot\Dispatcher')
+            $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
                 ->method("setRouter", [$this->router]));
             $mnapoliDiC->set('di', $container);
         }

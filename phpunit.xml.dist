@@ -9,7 +9,7 @@
     backupGlobals="false"
     syntaxCheck="true"
 >
-    <testsuite name="groot tests">
+    <testsuite name="penny tests">
         <directory>./tests</directory>
     </testsuite>
     <filter>

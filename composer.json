@@ -20,12 +20,12 @@
     ],
     "autoload": {
         "psr-4": {
-          "GianArb\\Groot\\": "./src"
+          "GianArb\\Penny\\": "./src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-          "GianArb\\GrootTest\\": "./tests",
+          "GianArb\\PennyTest\\": "./tests",
           "TestApp\\": "./tests/app"
         }
     }

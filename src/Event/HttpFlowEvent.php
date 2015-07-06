@@ -1,5 +1,5 @@
 <?php
-namespace GianArb\Groot\Event;
+namespace GianArb\Penny\Event;
 
 class HttpFlowEvent
 {

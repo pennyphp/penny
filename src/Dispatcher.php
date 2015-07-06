@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\Groot;
+namespace GianArb\Penny;
 
 use Zend\Diactoros\Response;
 
