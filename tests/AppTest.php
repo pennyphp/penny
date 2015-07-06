@@ -9,20 +9,19 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
+        $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
         });
 
         $this->app = new App($router);
-        $this->app->setContainer();
 
-        $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function($e){
+        $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function ($e) {
             $response = $e->getTarget()->getResponse()->withStatus(404);
             $e->getTarget()->setResponse($response);
         });
 
-        $this->app->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function($e){
+        $this->app->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function ($e) {
             $response = $e->getTarget()->getResponse()->withStatus(405);
             $e->getTarget()->setResponse($response);
         });

@@ -13,24 +13,32 @@ class App
     private $router;
     private $container;
 
-    public function __construct($router)
+    public function __construct($router, $container = null)
     {
         $this->router = $router;
+
+        if ($container == null) {
+            $this->buildContainer();
+        }
+
     }
 
-    public function setContainer($container = null)
+    public function setContainer($container)
     {
-        if ($container == null) {
-            $acclimate = new ContainerAcclimator();
-            $mnapoliDiCBuilder = new ContainerBuilder();
-            $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-            $container = new CompositeContainer([$mnapoliDiC]);
-            $mnapoliDiC->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-            $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
-                ->method("setRouter", [$this->router]));
-            $mnapoliDiC->set('di', $container);
-        }
         $this->container = $container;
+    }
+
+    public function buildContainer()
+    {
+        $acclimate = new ContainerAcclimator();
+        $mnapoliDiCBuilder = new ContainerBuilder();
+        $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
+        $container = new CompositeContainer([$mnapoliDiC]);
+        $mnapoliDiC->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
+        $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+            ->method("setRouter", [$this->router]));
+        $mnapoliDiC->set('di', $container);
+        $this->setContainer($container);
     }
 
     public function getContainer()
