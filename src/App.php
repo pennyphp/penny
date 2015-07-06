@@ -5,7 +5,6 @@ namespace GianArb\Groot;
 use Zend\Diactoros\Response;
 use GianArb\Groot\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyDiCBuilder;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
 
@@ -21,16 +20,14 @@ class App
 
     public function setContainer($container = null)
     {
-        if($container == null){
+        if ($container == null) {
             $acclimate = new ContainerAcclimator();
             $mnapoliDiCBuilder = new ContainerBuilder();
             $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-            $symfonyDiC = new SymfonyDiCBuilder();
-            $syAcclimate = $acclimate->acclimate($symfonyDiC);
-            $container = new CompositeContainer([$syAcclimate, $mnapoliDiC]);
-            $symfonyDiC->set("http.flow", new \Zend\EventManager\EventManager());
-            $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
-                ->addMethodCall('setRouter', [$this->router]);
+            $container = new CompositeContainer([$mnapoliDiC]);
+            $mnapoliDiC->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
+            $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Groot\Dispatcher')
+                ->method("setRouter", [$this->router]));
             $mnapoliDiC->set('di', $container);
         }
         $this->container = $container;
@@ -46,7 +43,6 @@ class App
         $evt = new HttpFlowEvent();
         $evt->setRequest($request);
         $evt->setResponse($response);
-
         try {
             $this->getContainer()->get("dispatcher")
                 ->dispatch($request, $evt);
@@ -61,7 +57,7 @@ class App
             }
         }
 
-        if($evt->getResponse() instanceof Response && $evt->getRouteInfo() == null){
+        if ($evt->getResponse() instanceof Response && $evt->getRouteInfo() == null) {
             return $evt->getResponse();
         }
 

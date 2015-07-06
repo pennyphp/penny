@@ -3,7 +3,6 @@ namespace GianArb\GrootTest;
 
 use GianArb\Groot\App;
 use DI\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyDiCBuilder;
 use Acclimate\Container\CompositeContainer;
 use Acclimate\Container\ContainerAcclimator;
 use TestApp\Controller\Index;
@@ -15,45 +14,42 @@ class DiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = \FastRoute\simpleDispatcher(function(\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
-            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
+        $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $router) {
+            $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
+            $router->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
         });
+
         $this->app = new App($router);
         $acclimate = new ContainerAcclimator();
 
         $mnapoliDiCBuilder = new ContainerBuilder();
         $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-        $symfonyDiC = new SymfonyDiCBuilder();
-        $syAcclimate = $acclimate->acclimate($symfonyDiC);
 
         $container = $this->getMockBuilder("Acclimate\Container\CompositeContainer")
-            ->setConstructorArgs([[$syAcclimate, $mnapoliDiC]])->getMock();
+            ->setConstructorArgs([[$mnapoliDiC]])->getMock();
 
         $container->expects($this->any())
             ->method("get")
             ->with($this->logicalOr(
-                 $this->equalTo('http.flow'),
-                 $this->equalTo('troyan'),
-                 $this->equalTo('TestApp\Controller\Index')
-             ))
-            ->will($this->returnCallback(function($arg) use ($mnapoliDiC) {
-                if($arg == "tryan"){
+                $this->equalTo('http.flow'),
+                $this->equalTo('troyan'),
+                $this->equalTo('TestApp\Controller\Index')
+            ))
+            ->will($this->returnCallback(function ($arg) use ($mnapoliDiC) {
+                if ($arg == "tryan") {
                     $stub = $this->getMock("stdClass");
                     return $stub;
                 }
-                if($arg == "http.flow"){
+                if ($arg == "http.flow") {
                     return new EventManager();
                 }
                 return $mnapoliDiC->get("TestApp\\Controller\\Index");
             }));
 
-        $symfonyDiC->register('dispatcher', "GianArb\\Groot\\Dispatcher")
-            ->addMethodCall('setRouter', [$router]);
+        $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Groot\Dispatcher')
+            ->method("setRouter", [$router]));
 
         $mnapoliDiC->set('di', $container);
-
-
 
         $this->app->setContainer($container);
     }
