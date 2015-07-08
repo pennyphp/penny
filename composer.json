@@ -1,5 +1,5 @@
 {
-    "name": "gianarb/groot",
+    "name": "gianarb/penny",
     "description": "Another PHP framework make of other components",
     "require": {
         "nikic/fast-route": "0.4.*",
