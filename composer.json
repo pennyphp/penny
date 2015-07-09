@@ -4,7 +4,6 @@
     "require": {
         "nikic/fast-route": "0.4.*",
         "mnapoli/php-di": "~4.0",
-        "acclimate/container": "~1",
         "zendframework/zend-diactoros": "~1.0",
         "zendframework/zend-eventmanager": "~2.4"
     },

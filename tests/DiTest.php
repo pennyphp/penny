@@ -3,8 +3,6 @@ namespace GianArb\PennyTest;
 
 use GianArb\Penny\App;
 use DI\ContainerBuilder;
-use Acclimate\Container\CompositeContainer;
-use Acclimate\Container\ContainerAcclimator;
 use TestApp\Controller\Index;
 use Zend\EventManager\EventManager;
 
@@ -19,14 +17,11 @@ class DiTest extends \PHPUnit_Framework_TestCase
             $router->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
         });
 
-        $this->app = new App($router);
-        $acclimate = new ContainerAcclimator();
 
         $mnapoliDiCBuilder = new ContainerBuilder();
-        $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
+        $mnapoliDiC = $mnapoliDiCBuilder->build();
 
-        $container = $this->getMockBuilder("Acclimate\Container\CompositeContainer")
-            ->setConstructorArgs([[$mnapoliDiC]])->getMock();
+        $container = $this->getMockBuilder(get_class($mnapoliDiC))->disableOriginalConstructor()->getMock();
 
         $container->expects($this->any())
             ->method("get")
@@ -51,7 +46,8 @@ class DiTest extends \PHPUnit_Framework_TestCase
 
         $mnapoliDiC->set('di', $container);
 
-        $this->app->setContainer($container);
+        $this->app = new App($router, $container);
+
     }
 
     public function testInjectionHttpFlow()

@@ -5,8 +5,6 @@ namespace GianArb\Penny;
 use Zend\Diactoros\Response;
 use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
-use Acclimate\Container\CompositeContainer;
-use Acclimate\Container\ContainerAcclimator;
 
 class App
 {
@@ -16,29 +14,22 @@ class App
     public function __construct($router, $container = null)
     {
         $this->router = $router;
+        $this->container = $container;
 
-        if ($container == null) {
-            $this->buildContainer();
+        if ($this->container == null) {
+            $this->container = $this->buildContainer();
         }
 
-    }
-
-    public function setContainer($container)
-    {
-        $this->container = $container;
-    }
-
-    public function buildContainer()
-    {
-        $acclimate = new ContainerAcclimator();
-        $mnapoliDiCBuilder = new ContainerBuilder();
-        $mnapoliDiC = $acclimate->acclimate($mnapoliDiCBuilder->build());
-        $container = new CompositeContainer([$mnapoliDiC]);
-        $mnapoliDiC->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $mnapoliDiC->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+        $this->container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
+        $this->container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
             ->method("setRouter", [$this->router]));
-        $mnapoliDiC->set('di', $container);
-        $this->setContainer($container);
+        $this->container->set('di', $container);
+    }
+
+    private function buildContainer()
+    {
+        $mnapoliDiCBuilder = new ContainerBuilder();
+        return $mnapoliDiCBuilder->build();
     }
 
     public function getContainer()
