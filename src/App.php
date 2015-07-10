@@ -65,7 +65,11 @@ class App
         $name = strtolower($function->getShortName());
 
         $this->getContainer()->get("http.flow")->trigger("{$name}.{$method}.pre", $evt);
-        $evt->setResponse(call_user_func([$controller, $method], $evt->getRequest(), $evt->getResponse()));
+        $evt->setResponse(call_user_func_array(
+            [$controller, $method],
+            [$evt->getRequest(),
+            $evt->getResponse()]+$evt->getRouteInfo()[2]
+        ));
         $this->getContainer()->get("http.flow")->trigger("{$name}.{$method}.post", $evt);
 
         if (!$evt->getResponse() instanceof Response) {
