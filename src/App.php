@@ -10,11 +10,23 @@ class App
 {
     private $router;
     private $container;
+    private $request;
+    private $response;
 
     public function __construct($router, $container = null)
     {
         $this->router = $router;
         $this->container = $container;
+
+        $this->response = new \Zend\Diactoros\Response();
+
+        $this->request = \Zend\Diactoros\ServerRequestFactory::fromGlobals(
+            $_SERVER,
+            $_GET,
+            $_POST,
+            $_COOKIE,
+            $_FILES
+        );
 
         if ($this->container == null) {
             $this->container = $this->buildContainer();
@@ -37,9 +49,37 @@ class App
         return $this->container;
     }
 
-    public function run($request, $response)
+    public function setResponse($response)
+    {
+        $this->response = $response;
+    }
+
+    private function getResponse()
+    {
+        return $this->response;
+    }
+
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    private function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function run($request = null, $response = null)
     {
         $evt = new HttpFlowEvent();
+
+        if ($request == null) {
+            $request = $this->getRequest();
+        }
+        if ($response == null) {
+            $response = $this->getResponse();
+        }
+
         $evt->setRequest($request);
         $evt->setResponse($response);
 
