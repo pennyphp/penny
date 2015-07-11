@@ -49,35 +49,15 @@ class App
         return $this->container;
     }
 
-    public function setResponse($response)
-    {
-        $this->response = $response;
-    }
-
-    private function getResponse()
-    {
-        return $this->response;
-    }
-
-    public function setRequest($request)
-    {
-        $this->request = $request;
-    }
-
-    private function getRequest()
-    {
-        return $this->request;
-    }
-
     public function run($request = null, $response = null)
     {
         $evt = new HttpFlowEvent();
 
         if ($request == null) {
-            $request = $this->getRequest();
+            $request = $this->request;
         }
         if ($response == null) {
-            $response = $this->getResponse();
+            $response = $this->response;
         }
 
         $evt->setRequest($request);
