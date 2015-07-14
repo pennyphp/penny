@@ -21,13 +21,13 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $this->app = new App($router);
 
         $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function ($e) {
-            $response = $e->getTarget()->getResponse()->withStatus(404);
-            $e->getTarget()->setResponse($response);
+            $response = $e->getResponse()->withStatus(404);
+            $e->setResponse($response);
         });
 
         $this->app->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function ($e) {
-            $response = $e->getTarget()->getResponse()->withStatus(405);
-            $e->getTarget()->setResponse($response);
+            $response = $e->getResponse()->withStatus(405);
+            $e->setResponse($response);
         });
 
     }
@@ -61,15 +61,15 @@ class AppTest extends \PHPUnit_Framework_TestCase
         ->withMethod("GET");
         $response = new \Zend\Diactoros\Response();
 
-        $this->app->getContainer()->get("http.flow")->attach("index.index.post", function ($e) {
-            $response = $e->getTarget()->getResponse();
+        $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
+            $response = $e->getResponse();
             $response->getBody()->write("I'm very happy!");
-            $e->getTarget()->setResponse($response);
-        });
+            $e->setResponse($response);
+        }, -10);
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertRegExp('/very happy/', $response->getBody()->__toString());
+        $this->assertRegExp("/jobI'm very happy!/", $response->getBody()->__toString());
     }
 
     public function testEventPreExecuted()
@@ -79,11 +79,11 @@ class AppTest extends \PHPUnit_Framework_TestCase
         ->withMethod("GET");
         $response = new \Zend\Diactoros\Response();
 
-        $this->app->getContainer()->get("http.flow")->attach("index.index.pre", function ($e) {
-            $response = $e->getTarget()->getResponse();
+        $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
+            $response = $e->getResponse();
             $response->getBody()->write("This is");
-            $e->getTarget()->setResponse($response);
-        });
+            $e->setResponse($response);
+        }, 10);
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());

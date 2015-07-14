@@ -1,8 +1,11 @@
 <?php
 namespace GianArb\Penny\Event;
 
-class HttpFlowEvent
+use Zend\EventManager\Event;
+
+class HttpFlowEvent extends Event
 {
+
     private $request;
     private $response;
     private $routeInfo;
@@ -12,14 +15,14 @@ class HttpFlowEvent
         return $this->response;
     }
 
-    public function setResponse($r)
+    public function setResponse($response)
     {
-        $this->response = $r;
+        $this->response = $response;
     }
 
-    public function setRequest($r)
+    public function setRequest($request)
     {
-        $this->request = $r;
+        $this->request = $request;
     }
 
     public function getRequest()
@@ -32,8 +35,8 @@ class HttpFlowEvent
         return $this->routeInfo;
     }
 
-    public function setRouteInfo($r)
+    public function setRouteInfo($routerInfo)
     {
-        $this->routeInfo = $r;
+        $this->routeInfo = $routerInfo;
     }
 }

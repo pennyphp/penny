@@ -13,7 +13,7 @@ class Dispatcher
         $this->router = $router;
     }
 
-    public function dispatch($request, $evt)
+    public function dispatch($request)
     {
         $routeInfo = $this->router[0]->dispatch($request->getMethod(), $request->getUri()->getPath());
         switch ($routeInfo[0]) {
@@ -24,7 +24,7 @@ class Dispatcher
                 throw new \Exception(null, 405);
                 break;
             case \FastRoute\Dispatcher::FOUND:
-                $evt->setRouteInfo($routeInfo);
+                return $routeInfo;
                 break;
             default:
                 throw new \Exception(null, 500);
