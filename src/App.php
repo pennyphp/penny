@@ -5,6 +5,8 @@ namespace GianArb\Penny;
 use Zend\Diactoros\Response;
 use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\RequestInterface;
 
 class App
 {
@@ -49,7 +51,7 @@ class App
         return $this->container;
     }
 
-    public function run($request = null, $response = null)
+    public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
 
         if ($request == null) {

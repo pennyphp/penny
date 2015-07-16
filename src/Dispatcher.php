@@ -3,6 +3,7 @@
 namespace GianArb\Penny;
 
 use Zend\Diactoros\Response;
+use Psr\Http\Message\RequestInterface;
 
 class Dispatcher
 {
@@ -13,7 +14,7 @@ class Dispatcher
         $this->router = $router;
     }
 
-    public function dispatch($request)
+    public function dispatch(RequestInterface $request)
     {
         $routeInfo = $this->router[0]->dispatch($request->getMethod(), $request->getUri()->getPath());
         switch ($routeInfo[0]) {
