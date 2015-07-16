@@ -2,7 +2,6 @@
 
 namespace GianArb\Penny;
 
-use Zend\Diactoros\Response;
 use Psr\Http\Message\RequestInterface;
 
 class Dispatcher
