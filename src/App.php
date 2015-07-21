@@ -7,6 +7,7 @@ use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use GianArb\Penny\Config\Loader;
 
 class App
 {
@@ -15,7 +16,7 @@ class App
     private $request;
     private $response;
 
-    public function __construct($router, $container = null)
+    public function __construct($router, $container = null, $configPath = null)
     {
         $this->router = $router;
         $this->container = $container;
@@ -31,7 +32,8 @@ class App
         );
 
         if ($this->container == null) {
-            $this->container = $this->buildContainer();
+            $config = Loader::load();
+            $this->container = $this->buildContainer($config);
         }
 
         $this->container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
@@ -40,10 +42,11 @@ class App
         $this->container->set('di', $container);
     }
 
-    private function buildContainer()
+    private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
         $builder->useAnnotations(true);
+        $builder->addDefinitions($config);
         return $builder->build();
     }
 
