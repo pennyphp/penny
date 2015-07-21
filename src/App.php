@@ -42,8 +42,9 @@ class App
 
     private function buildContainer()
     {
-        $mnapoliDiCBuilder = new ContainerBuilder();
-        return $mnapoliDiCBuilder->build();
+        $builder = new ContainerBuilder();
+        $builder->useAnnotations(true);
+        return $builder->build();
     }
 
     public function getContainer()
