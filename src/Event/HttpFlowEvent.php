@@ -12,6 +12,13 @@ class HttpFlowEvent extends Event
     private $response;
     private $routeInfo = [];
 
+    public function __construct($name, $request, $response)
+    {
+        $this->name = $name;
+        $this->response = $response;
+        $this->request = $request;
+    }
+
     public function getResponse()
     {
         return $this->response;
