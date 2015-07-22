@@ -24,6 +24,13 @@ class Index
     public function diTest(Request $request, Response $response)
     {
         $this->di->get("troyan");
+        $response->getBody()->write($this->di->get("troyan"));
+        return $response;
+    }
+
+    public function loadedParams(Request $request, Response $response)
+    {
+        $response->getBody()->write($this->di->get("fromFile"));
         return $response;
     }
 }

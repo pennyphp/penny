@@ -7,6 +7,7 @@ use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use GianArb\Penny\Config\Loader;
 
 class App
 {
@@ -31,19 +32,22 @@ class App
         );
 
         if ($this->container == null) {
-            $this->container = $this->buildContainer();
+            $config = Loader::load();
+            $container = $this->buildContainer($config);
         }
 
-        $this->container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $this->container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+        $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
+        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
             ->method("setRouter", [$this->router]));
-        $this->container->set('di', $container);
+        $container->set('di', $container);
+        $this->container = $container;
     }
 
-    private function buildContainer()
+    private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
         $builder->useAnnotations(true);
+        $builder->addDefinitions($config);
         return $builder->build();
     }
 
