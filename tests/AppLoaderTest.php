@@ -2,31 +2,53 @@
 namespace GianArb\PennyTest;
 
 use GianArb\Penny\App;
+use GianArb\Penny\Config\Loader;
+use DI\ContainerBuilder;
 
 class AppLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    private $app;
+    private $router;
 
     public function setUp()
     {
         chdir(dirname(__DIR__."/tests/"));
-        $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $this->router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
                 "name" => "load"
             ]);
         });
-
-        $this->app = new App($router);
     }
 
-    public function testThatControllerResumeCorrentParamFromDIConfigurationedWithLoader()
+    public function testCorrectInjection()
     {
+        $app = new App($this->router);
+
         $request = (new \Zend\Diactoros\Request())
         ->withUri(new \Zend\Diactoros\Uri('/load'))
         ->withMethod("GET");
         $response = new \Zend\Diactoros\Response();
 
-        $response = $this->app->run($request, $response);
-        $this->assertSame("euroka", $response->getContent()->__toString());
+        $response = $app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals("eureka", $response->getBody()->__toString());
+    }
+
+    public function testCorrectInjectionWithExternalContainer()
+    {
+
+        $builder = new ContainerBuilder();
+        $builder->addDefinitions(Loader::load());
+        $builder->useAnnotations(true);
+
+        $app = new App($this->router, $builder->build());
+
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/load'))
+        ->withMethod("GET");
+        $response = new \Zend\Diactoros\Response();
+
+        $response = $app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals("eureka", $response->getBody()->__toString());
     }
 }

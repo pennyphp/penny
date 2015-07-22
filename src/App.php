@@ -16,7 +16,7 @@ class App
     private $request;
     private $response;
 
-    public function __construct($router, $container = null, $configPath = null)
+    public function __construct($router, $container = null)
     {
         $this->router = $router;
         $this->container = $container;
@@ -33,13 +33,14 @@ class App
 
         if ($this->container == null) {
             $config = Loader::load();
-            $this->container = $this->buildContainer($config);
+            $container = $this->buildContainer($config);
         }
 
-        $this->container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $this->container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+        $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
+        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
             ->method("setRouter", [$this->router]));
-        $this->container->set('di', $container);
+        $container->set('di', $container);
+        $this->container = $container;
     }
 
     private function buildContainer($config)
