@@ -4,6 +4,7 @@ namespace GianArb\Penny;
 
 use Zend\Diactoros\Response;
 use GianArb\Penny\Event\HttpFlowEvent;
+use GianArb\Penny\Event\HttpErrorEvent;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
@@ -58,7 +59,6 @@ class App
 
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
-
         if ($request == null) {
             $request = $this->request;
         }
@@ -70,19 +70,10 @@ class App
             $routerInfo = $this->getContainer()->get("dispatcher")
                 ->dispatch($request);
         } catch (\Exception $e) {
-            if (404 === $e->getCode()) {
-                $evt = new HttpFlowEvent("ROUTE_NOT_FOUND");
-                $evt->setRequest($request);
-                $evt->setResponse($response);
-                $this->getContainer()->get("http.flow")->trigger($evt);
-            }
-            if (405 === $e->getCode()) {
-                $evt = new HttpFlowEvent("METHOD_NOT_ALLOWED");
-                $evt->setRequest($request);
-                $evt->setResponse($response);
-                $this->getContainer()->get("http.flow")->trigger($evt);
-            }
-            return $evt->getResponse();
+            $errorEvent = new HttpErrorEvent("ERROR_DISPATCH", $request, $response);
+            $errorEvent->setException($e);
+            $this->getContainer()->get("http.flow")->trigger($errorEvent);
+            return $errorEvent->getResponse();
         }
 
         $controller = $this->getContainer()->get($routerInfo[1][0]);
@@ -90,27 +81,33 @@ class App
         $function = new \ReflectionClass($controller);
         $name = strtolower($function->getShortName());
 
-        $evt = new HttpFlowEvent("{$name}.{$method}");
-        $evt->setRequest($request);
-        $evt->setResponse($response);
-        $evt->setRouteInfo($routerInfo);
+        $eventName = "{$name}.{$method}";
+        $flowEvent = new HttpFlowEvent($eventName, $request, $response);
+        $flowEvent->setRouteInfo($routerInfo);
 
-        $this->getContainer()->get("http.flow")->attach("{$name}.{$method}", function ($evt) use ($controller, $method) {
+        $this->getContainer()->get("http.flow")->attach("{$name}.{$method}", function ($flowEvent) use ($controller, $method) {
             $response = call_user_func_array(
                 [$controller, $method],
-                [$evt->getRequest(),
-                $evt->getResponse()]+$evt->getRouteInfo()[2]
+                [$flowEvent->getRequest(),
+                $flowEvent->getResponse()]+$flowEvent->getRouteInfo()[2]
             );
-            $evt->setResponse($response);
+            $flowEvent->setResponse($response);
         }, 0);
 
 
-        $this->getContainer()->get("http.flow")->trigger($evt);
+        try {
+            $this->getContainer()->get("http.flow")->trigger($flowEvent);
+        } catch (\Exception $exception) {
+            $errorEvent = new HttpErrorEvent($eventName."_error", $request, $response);
+            $errorEvent->setException($exception);
+            $this->getContainer()->get("http.flow")->trigger($errorEvent);
+            throw $exception;
+        }
 
-        if (!$evt->getResponse() instanceof Response) {
+        if (!$flowEvent->getResponse() instanceof Response) {
             throw new \Exception("dead");
         }
 
-        return $evt->getResponse();
+        return $flowEvent->getResponse();
     }
 }

@@ -16,18 +16,26 @@ class AppTest extends \PHPUnit_Framework_TestCase
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed'], [
                 "name" => "fail"
             ]);
+            $r->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy'], [
+                "name" => "dummy"
+            ]);
         });
 
         $this->app = new App($router);
 
-        $this->app->getContainer()->get("http.flow")->attach("ROUTE_NOT_FOUND", function ($e) {
-            $response = $e->getResponse()->withStatus(404);
-            $e->setResponse($response);
+        $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
         });
 
-        $this->app->getContainer()->get("http.flow")->attach("METHOD_NOT_ALLOWED", function ($e) {
-            $response = $e->getResponse()->withStatus(405);
-            $e->setResponse($response);
+        $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
+            if (404 === $e->getException()->getCode()) {
+                $response = $e->getResponse()->withStatus(404);
+                $e->setResponse($response);
+            }
+
+            if (405 == $e->getException()->getCode()) {
+                $response = $e->getResponse()->withStatus(405);
+                $e->setResponse($response);
+            }
         });
 
     }
@@ -88,6 +96,22 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertRegExp('/This is a beautiful/', $response->getBody()->__toString());
+    }
+
+    public function testEventPreThrowExceptionIsTrigger()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/dummy'))
+        ->withMethod("GET");
+        $response = new \Zend\Diactoros\Response();
+        $count = 0;
+
+        $this->app->getContainer()->get("http.flow")->attach("index.dummy_error", function ($e) use (&$count) {
+            $count = &$count +1;
+        }, 10);
+
+        $response = $this->app->run($request, $response);
     }
 
     public function testRouteNotFound()

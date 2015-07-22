@@ -33,4 +33,9 @@ class Index
         $response->getBody()->write($this->di->get("fromFile"));
         return $response;
     }
+
+    public function dummy(Request $request, Response $response)
+    {
+        throw new \InvalidArgumentException("it doesn't run");
+    }
 }
