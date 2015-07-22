@@ -14,7 +14,7 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
             $manager->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
                 "name" => "index"
             ]);
-            $manager->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed'], [
+            $manager->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'none'], [
                 "name" => "fail"
             ]);
             $manager->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy'], [
@@ -25,7 +25,29 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
 
     public function testSetRouter()
     {
-        $dispatcher = new Dispatcher([$this->router]);
-        $this->assertInstanceof("FastRoute\\RouteParser", \PHPUnit_Framework_Assert::readAttribute($dispatcher, 'router'));
+        $dispatcher = new Dispatcher($this->router);
+        $this->assertInstanceof("FastRoute\Dispatcher\GroupCountBased", \PHPUnit_Framework_Assert::readAttribute($dispatcher, 'router'));
+    }
+
+    public function testDispatchRouteNotFoundRequest()
+    {
+        $this->setExpectedException('GianArb\Penny\Exception\RouteNotFound');
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/doh'))
+        ->withMethod("GET");
+
+        $dispatcher = new Dispatcher($this->router);
+        $dispatcher->dispatch($request);
+    }
+
+    public function testDispatchMethodNotAllowedRequest()
+    {
+        $this->setExpectedException('GianArb\Penny\Exception\MethodNotAllowed');
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/'))
+        ->withMethod("POST");
+
+        $dispatcher = new Dispatcher($this->router);
+        $dispatcher->dispatch($request);
     }
 }

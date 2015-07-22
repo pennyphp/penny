@@ -26,9 +26,6 @@ class AppTest extends \PHPUnit_Framework_TestCase
         $this->app = new App($router);
 
         $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
-        });
-
-        $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
             if ($e->getException() instanceof RouteNotFound) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
