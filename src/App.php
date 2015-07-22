@@ -104,10 +104,6 @@ class App
             throw $exception;
         }
 
-        if (!$flowEvent->getResponse() instanceof Response) {
-            throw new \Exception("dead");
-        }
-
         return $flowEvent->getResponse();
     }
 }
