@@ -2,6 +2,8 @@
 namespace GianArb\PennyTest;
 
 use GianArb\Penny\App;
+use \GianArb\Penny\Exception\RouteNotFound;
+use \GianArb\Penny\Exception\MethodNotAllowed;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,12 +29,12 @@ class AppTest extends \PHPUnit_Framework_TestCase
         });
 
         $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
-            if (404 === $e->getException()->getCode()) {
+            if ($e->getException() instanceof RouteNotFound) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
             }
 
-            if (405 == $e->getException()->getCode()) {
+            if (405 == $e->getException() instanceof MethodNotAllowed) {
                 $response = $e->getResponse()->withStatus(405);
                 $e->setResponse($response);
             }
