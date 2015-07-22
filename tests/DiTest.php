@@ -18,8 +18,9 @@ class DiTest extends \PHPUnit_Framework_TestCase
         });
 
 
-        $mnapoliDiCBuilder = new ContainerBuilder();
-        $mnapoliDiC = $mnapoliDiCBuilder->build();
+        $builder = new ContainerBuilder();
+        $builder->useAnnotations(true);
+        $mnapoliDiC = $builder->build();
 
         $container = $this->getMockBuilder(get_class($mnapoliDiC))->disableOriginalConstructor()->getMock();
 
