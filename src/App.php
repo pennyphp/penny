@@ -38,7 +38,7 @@ class App
 
         $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
         $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
-            ->method("setRouter", [$this->router]));
+            ->constructor([$this->router]));
         $container->set('di', $container);
         $this->container = $container;
     }

@@ -8,7 +8,7 @@ class Dispatcher
 {
     private $router;
 
-    public function setRouter($router)
+    public function __construct($router)
     {
         $this->router = $router;
     }
