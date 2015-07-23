@@ -17,9 +17,8 @@ class App
     private $request;
     private $response;
 
-    public function __construct($router, $container = null)
+    public function __construct($router = null, $container = null)
     {
-        $this->router = $router;
         $this->container = $container;
 
         $this->response = new \Zend\Diactoros\Response();
@@ -37,9 +36,16 @@ class App
             $container = $this->buildContainer($config);
         }
 
+        if ($router == null && $container->has("router") == false) {
+            throw new \Exception("Define router config");
+            $container->set("router", $config['router']);
+        } elseif ($container->has("router") == false) {
+            $container->set("router", $router);
+        }
+
         $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
         $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
-            ->constructor($this->router));
+            ->constructor($container->get("router")));
         $container->set('di', $container);
         $this->container = $container;
     }
