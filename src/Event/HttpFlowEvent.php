@@ -7,9 +7,9 @@ use Psr\Http\Message\RequestInterface;
 
 class HttpFlowEvent extends Event
 {
-
     private $request;
     private $response;
+    private $exception;
     private $routeInfo = [];
 
     public function __construct($name, $request, $response)
@@ -47,5 +47,16 @@ class HttpFlowEvent extends Event
     public function setRouteInfo(array $routerInfo)
     {
         $this->routeInfo = $routerInfo;
+    }
+
+
+    public function setException(\Exception $exception)
+    {
+        $this->exception = $exception;
+    }
+
+    public function getException()
+    {
+        return $this->exception;
     }
 }

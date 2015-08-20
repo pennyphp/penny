@@ -4,7 +4,6 @@ namespace GianArb\Penny;
 
 use Zend\Diactoros\Response;
 use GianArb\Penny\Event\HttpFlowEvent;
-use GianArb\Penny\Event\HttpErrorEvent;
 use DI\ContainerBuilder;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
@@ -12,7 +11,6 @@ use GianArb\Penny\Config\Loader;
 
 class App
 {
-    private $router;
     private $container;
     private $request;
     private $response;
@@ -76,7 +74,7 @@ class App
             $routerInfo = $this->getContainer()->get("dispatcher")
                 ->dispatch($request);
         } catch (\Exception $e) {
-            $errorEvent = new HttpErrorEvent("ERROR_DISPATCH", $request, $response);
+            $errorEvent = new HttpFlowEvent("ERROR_DISPATCH", $request, $response);
             $errorEvent->setException($e);
             $this->getContainer()->get("http.flow")->trigger($errorEvent);
             return $errorEvent->getResponse();
@@ -104,7 +102,7 @@ class App
         try {
             $this->getContainer()->get("http.flow")->trigger($flowEvent);
         } catch (\Exception $exception) {
-            $errorEvent = new HttpErrorEvent($eventName."_error", $request, $response);
+            $errorEvent = new HttpFlowEvent($eventName."_error", $request, $response);
             $errorEvent->setException($exception);
             $this->getContainer()->get("http.flow")->trigger($errorEvent);
             throw $exception;
