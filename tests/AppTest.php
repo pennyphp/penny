@@ -108,6 +108,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
         $this->app->getContainer()->get("http.flow")->attach("index.dummy_error", function ($e) use (&$count) {
             $count = &$count +1;
+            throw $e->getException();
         }, 10);
 
         $response = $this->app->run($request, $response);

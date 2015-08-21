@@ -105,7 +105,6 @@ class App
             $errorEvent = new HttpFlowEvent($eventName."_error", $request, $response);
             $errorEvent->setException($exception);
             $this->getContainer()->get("http.flow")->trigger($errorEvent);
-            throw $exception;
         }
 
         return $flowEvent->getResponse();
