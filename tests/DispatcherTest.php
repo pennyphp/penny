@@ -2,7 +2,6 @@
 namespace GianArb\PennyTest;
 
 use GianArb\Penny\Dispatcher;
-use Psr\Http\Message\Request;
 
 class DispatcherTest extends \PHPUnit_Framework_TestCase
 {
