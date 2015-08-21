@@ -3,8 +3,6 @@ namespace GianArb\PennyTest;
 
 use GianArb\Penny\App;
 use DI\ContainerBuilder;
-use TestApp\Controller\Index;
-use Zend\EventManager\EventManager;
 
 class DiTest extends \PHPUnit_Framework_TestCase
 {
