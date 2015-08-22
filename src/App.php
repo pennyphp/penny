@@ -63,12 +63,8 @@ class App
 
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
-        if ($request == null) {
-            $request = $this->request;
-        }
-        if ($response == null) {
-            $response = $this->response;
-        }
+        ($request != null) ?: $request = $this->request;
+        ($response != null) ?: $response = $this->response;
 
         try {
             $routerInfo = $this->getContainer()->get("dispatcher")
@@ -92,8 +88,11 @@ class App
         $this->getContainer()->get("http.flow")->attach("{$name}.{$method}", function ($flowEvent) use ($controller, $method) {
             $response = call_user_func_array(
                 [$controller, $method],
-                [$flowEvent->getRequest(),
-                $flowEvent->getResponse()]+$flowEvent->getRouteInfo()[2]
+                [
+                    $flowEvent->getRequest(),
+                    $flowEvent->getResponse(),
+                    $flowEvent->getRouteInfo()[2],
+                ]
             );
             $flowEvent->setResponse($response);
         }, 0);
