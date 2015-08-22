@@ -65,15 +65,16 @@ class App
     {
         ($request != null) ?: $request = $this->request;
         ($response != null) ?: $response = $this->response;
+        $event = new HttpFlowEvent("bootstrap", $request, $response);
 
         try {
             $routerInfo = $this->getContainer()->get("dispatcher")
                 ->dispatch($request);
         } catch (\Exception $e) {
-            $errorEvent = new HttpFlowEvent("ERROR_DISPATCH", $request, $response);
-            $errorEvent->setException($e);
-            $this->getContainer()->get("http.flow")->trigger($errorEvent);
-            return $errorEvent->getResponse();
+            $event->setName("ERROR_DISPATCH");
+            $event->setException($e);
+            $this->getContainer()->get("http.flow")->trigger($event);
+            return $event->getResponse();
         }
 
         $controller = $this->getContainer()->get($routerInfo[1][0]);
@@ -82,30 +83,30 @@ class App
         $name = strtolower($function->getShortName());
 
         $eventName = "{$name}.{$method}";
-        $flowEvent = new HttpFlowEvent($eventName, $request, $response);
-        $flowEvent->setRouteInfo($routerInfo);
+        $event->setName($eventName);
+        $event->setRouteInfo($routerInfo);
 
-        $this->getContainer()->get("http.flow")->attach("{$name}.{$method}", function ($flowEvent) use ($controller, $method) {
+        $this->getContainer()->get("http.flow")->attach($eventName, function ($event) use ($controller, $method) {
             $response = call_user_func_array(
                 [$controller, $method],
                 [
-                    $flowEvent->getRequest(),
-                    $flowEvent->getResponse(),
-                    $flowEvent->getRouteInfo()[2],
+                    $event->getRequest(),
+                    $event->getResponse(),
+                    $event->getRouteInfo()[2],
                 ]
             );
-            $flowEvent->setResponse($response);
+            $event->setResponse($response);
         }, 0);
 
 
         try {
-            $this->getContainer()->get("http.flow")->trigger($flowEvent);
+            $this->getContainer()->get("http.flow")->trigger($event);
         } catch (\Exception $exception) {
-            $errorEvent = new HttpFlowEvent($eventName."_error", $request, $response);
-            $errorEvent->setException($exception);
-            $this->getContainer()->get("http.flow")->trigger($errorEvent);
+            $event->setName($eventName."_error", $request, $response);
+            $event->setException($exception);
+            $this->getContainer()->get("http.flow")->trigger($event);
         }
 
-        return $flowEvent->getResponse();
+        return $event->getResponse();
     }
 }
