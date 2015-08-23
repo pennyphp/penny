@@ -6,8 +6,8 @@ PHP has a very powerfull open source ecosystem. There are a lot of developers an
 Penny born to manage integration between your favourite  libraries and it does not force you to use big or unfulfilled libraries.  
 
 # The Core
-Penny is very easy its core is builded on [PHP-DI](http://php-di.org) a strong dependency injection library.  
-Into the basic implemntation it use [nikic/FastRoute](https://github.com/nikic/FastRoute) a fast implementation of a regular expression based router.
+Penny is very easy its core is built on [PHP-DI](http://php-di.org) a strong dependency injection library.  
+In its base implementation it uses [nikic/FastRoute](https://github.com/nikic/FastRoute) a fast regular expression based router.
 
 # The price of freedom
 Thi freedom require a strong knowledge of dependency injection pattern and to choice of the perfect mix of libraries, for every your application, is necessary a deep understanding of open source ecosystem.
