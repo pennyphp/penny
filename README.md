@@ -12,6 +12,8 @@ At moment Symfony, Zend Framework, Laravel are very big project and this complex
 This project help you to create applications with the best standalone components.  
 
 ## Projects
+[penny-foldering](https://github.com/gianarb/penny-foldering) rapresents only a foldering implementation. This is the simplest starting poin
+
 [classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with a HTML Render. It implements [thephpleague/plates](https://github.com/thephpleague/plates) how template engine.
 
 [currency-fair](https://github.com/gianarb/currency-fair-codetest) backend directory is an API system implementations of penny. It implements [predis](https://github.com/nrk/predis) and few zf components.
