@@ -4,6 +4,7 @@ Have you builded an application or a skeleton application with Penny?! Creates a
 
 # Skeleton
 
+* [penny-foldering](https://github.com/gianarb/penny-foldering) rapresents only a foldering implementation. This is the simplest starting poin.
 * [classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with a HTML Render. It implements [thephpleague/plates](https://github.com/thephpleague/plates) how template engine.
 
 # Application
