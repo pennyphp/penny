@@ -19,7 +19,7 @@ class Dispatcher
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
                 throw new \GianArb\Penny\Exception\RouteNotFound();
-            break;
+                break;
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
                 throw new \GianArb\Penny\Exception\MethodNotAllowed();
                 break;
