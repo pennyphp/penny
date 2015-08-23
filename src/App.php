@@ -87,14 +87,16 @@ class App
         $event->setRouteInfo($routerInfo);
 
         $this->getContainer()->get("http.flow")->attach($eventName, function ($event) use ($controller, $method) {
-            $response = call_user_func_array(
-                [$controller, $method],
-                [
-                    $event->getRequest(),
-                    $event->getResponse(),
-                    $event->getRouteInfo()[2],
-                ]
-            );
+            $args = [
+                $event->getRequest(),
+                $event->getResponse(),
+            ];
+
+            foreach($event->getRouteInfo()[2] as $v) {
+                $args[] = $v;
+            }
+
+            $response = call_user_func_array([$controller, $method], $args);
             $event->setResponse($response);
         }, 0);
 

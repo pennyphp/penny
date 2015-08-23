@@ -16,6 +16,12 @@ class Index
         return $response;
     }
 
+    public function getSingle(Request $request, Response $response, $id)
+    {
+        $response->getBody()->write("id=$id");
+        return $response;
+    }
+
     public function failed(Request $request, Response $response)
     {
         return $response->withStatus(502);

@@ -12,15 +12,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
-                "name" => "index"
-            ]);
-            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed'], [
-                "name" => "fail"
-            ]);
-            $r->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy'], [
-                "name" => "dummy"
-            ]);
+            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
+            $r->addRoute('GET', '/{id:\d+}', ['TestApp\Controller\Index', 'getSingle']);
+            $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
+            $r->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy']);
         });
 
         $this->app = new App($router);
@@ -59,6 +54,17 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testRouteParamIntoTheSignatureofMethod()
+    {
+        $request = (new \Zend\Diactoros\Request())
+        ->withUri(new \Zend\Diactoros\Uri('/10'))
+        ->withMethod("GET");
+        $response = new \Zend\Diactoros\Response();
+
+        $response = $this->app->run($request, $response);
+        $this->assertRegExp("/id=10/", $response->getBody()->__toString());
     }
 
     public function testEventPostExecuted()
