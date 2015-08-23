@@ -104,7 +104,7 @@ class App
         try {
             $this->getContainer()->get("http.flow")->trigger($event);
         } catch (\Exception $exception) {
-            $event->setName($eventName."_error", $request, $response);
+            $event->setName($eventName."_error");
             $event->setException($exception);
             $this->getContainer()->get("http.flow")->trigger($event);
         }
