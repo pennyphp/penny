@@ -1,4 +1,5 @@
 <?php
+
 namespace GianArb\Penny\Event;
 
 use Psr\Http\Message\RequestInterface;

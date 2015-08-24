@@ -1,4 +1,5 @@
 <?php
+
 namespace GianArb\Penny\Config;
 
 use Zend\Stdlib\ArrayUtils;
