@@ -11,10 +11,33 @@ use GianArb\Penny\Config\Loader;
 
 class App
 {
+    /**
+     * [$container description]
+     *
+     * @var [type]
+     */
     private $container;
+
+    /**
+     * [$request description]
+     *
+     * @var [type]
+     */
     private $request;
+
+    /**
+     * [$response description]
+     *
+     * @var [type]
+     */
     private $response;
 
+    /**
+     * [__construct description]
+     *
+     * @param [type] $router    [description]
+     * @param [type] $container [description]
+     */
     public function __construct($router = null, $container = null)
     {
         $this->container = $container;
@@ -48,6 +71,13 @@ class App
         $this->container = $container;
     }
 
+    /**
+     * [buildContainer description]
+     *
+     * @param [type] $config [description]
+     *
+     * @return [type] [description]
+     */
     private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
@@ -56,11 +86,24 @@ class App
         return $builder->build();
     }
 
+    /**
+     * [getContainer description]
+     *
+     * @return [type] [description]
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * [run description]
+     *
+     * @param RequestInterface|null  $request  [description]
+     * @param ResponseInterface|null $response [description]
+     *
+     * @return [type] [description]
+     */
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
         ($request != null) ?: $request = $this->request;
