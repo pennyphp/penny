@@ -117,4 +117,37 @@ security.limit_extensions = .php .phtml
 request_terminate_timeout = 600
 ```
 
-# Dependency Injection and configuration
+# Dependency Injection and routing configuration
+In this moment the default DiC library is PHP-DI and in this tutorial I use it.
+
+The default path to load configuration files is `/config` directory. It loads all `*.php` files and after them it loads `*.local.php`. This strategy is soo useful to override configurations of to load paramters how database configurations or api keys.
+
+The first step is to define a routing, in this moment I use [nikic/FastRoute](https://github.com/nikic/FastRoute) it is very fast and easy to use. We can use the DI to load Router because this strategy help us to uncouple the routing library by the framework.
+
+Create `/config/config.app.php`
+```
+<?php
+return [
+    "router" => function () {
+        return \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r->addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index'], [
+                "name" => "index"
+            ]);
+        });
+    },
+];
+```
+In this way GET / resolve `PennyApp\Controller\IndexController` object and it calls `index` function. This is our first route.
+
+## Autoloading
+To manage autoload you can use [composer](https://getcomposer.org). You can add this configuration in your composer.json
+```json
+{
+    "autoload": {
+    	"psr-4": {
+	    "PennyApp\\": "./app"
+	}
+    }
+}
+```
+see [composer.json](https://github.com/gianarb/penny-foldering/blob/master/composer.json)
