@@ -12,9 +12,9 @@ class HttpFlowEvent extends Event
     private $exception;
     private $routeInfo = [];
 
-    public function __construct($name, $request, $response)
+    public function __construct($name, RequestInterface $request, ResponseInterface $response)
     {
-        $this->name = $name;
+        $this->setName($name);
         $this->response = $response;
         $this->request = $request;
     }
@@ -29,12 +29,12 @@ class HttpFlowEvent extends Event
         $this->response = $response;
     }
 
-    public function setRequest(RequestInterface $request)
     {
         $this->request = $request;
     }
 
     public function getRequest()
+    public function setRequest(RequestInterface $request)
     {
         return $this->request;
     }
@@ -50,12 +50,12 @@ class HttpFlowEvent extends Event
     }
 
 
-    public function setException(\Exception $exception)
     {
         $this->exception = $exception;
     }
 
     public function getException()
+    public function setException(\Exception $exception)
     {
         return $this->exception;
     }

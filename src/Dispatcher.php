@@ -8,7 +8,7 @@ class Dispatcher
 {
     private $router;
 
-    public function __construct($router)
+    public function __construct(\FastRoute\Dispatcher $router)
     {
         $this->router = $router;
     }

@@ -65,8 +65,10 @@ class App
         }
 
         $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
-            ->constructor($container->get("router")));
+        $container->set(
+            'dispatcher',
+            \DI\object('GianArb\Penny\Dispatcher')->constructor($container->get("router"))
+        );
         $container->set('di', $container);
         $this->container = $container;
     }
@@ -137,7 +139,7 @@ class App
                 $event->getResponse(),
             ];
 
-            foreach($event->getRouteInfo()[2] as $v) {
+            foreach ($event->getRouteInfo()[2] as $v) {
                 $args[] = $v;
             }
 
