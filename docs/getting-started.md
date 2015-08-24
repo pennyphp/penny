@@ -125,7 +125,7 @@ The default path to load configuration files is `/config` directory. It loads al
 The first step is to define a routing, in this moment I use [nikic/FastRoute](https://github.com/nikic/FastRoute) it is very fast and easy to use. We can use the DI to load Router because this strategy help us to uncouple the routing library by the framework.
 
 Create `/config/config.app.php`
-```
+```php
 <?php
 return [
     "router" => function () {
@@ -145,8 +145,8 @@ To manage autoload you can use [composer](https://getcomposer.org). You can add 
 {
     "autoload": {
     	"psr-4": {
-	    "PennyApp\\": "./app"
-	}
+            "PennyApp\\": "./app"
+        }
     }
 }
 ```
