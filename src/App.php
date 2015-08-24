@@ -2,12 +2,12 @@
 
 namespace GianArb\Penny;
 
-use Zend\Diactoros\Response;
-use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
 use GianArb\Penny\Config\Loader;
+use GianArb\Penny\Event\HttpFlowEvent;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response;
 
 class App
 {
