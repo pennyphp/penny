@@ -18,7 +18,7 @@ composer require gianarb/penny:dev-master
 
 ## Foldering
 
-Penny is just a framework, to build an application is necessary a good foldering. 
+Penny is just the base framework, to build an application is also necessary a good folder structure.
 
 This tutorial proposal is:
 
