@@ -2,19 +2,42 @@
 
 namespace GianArb\Penny;
 
-use Zend\Diactoros\Response;
-use GianArb\Penny\Event\HttpFlowEvent;
 use DI\ContainerBuilder;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
 use GianArb\Penny\Config\Loader;
+use GianArb\Penny\Event\HttpFlowEvent;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\Diactoros\Response;
 
 class App
 {
+    /**
+     * [$container description]
+     *
+     * @var [type]
+     */
     private $container;
+
+    /**
+     * [$request description]
+     *
+     * @var [type]
+     */
     private $request;
+
+    /**
+     * [$response description]
+     *
+     * @var [type]
+     */
     private $response;
 
+    /**
+     * [__construct description]
+     *
+     * @param [type] $router    [description]
+     * @param [type] $container [description]
+     */
     public function __construct($router = null, $container = null)
     {
         $this->container = $container;
@@ -41,25 +64,48 @@ class App
         }
 
         $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
-            ->constructor($container->get("router")));
+        $container->set(
+            'dispatcher',
+            \DI\object('GianArb\Penny\Dispatcher')->constructor($container->get("router"))
+        );
         $container->set('di', $container);
         $this->container = $container;
     }
 
+    /**
+     * [buildContainer description]
+     *
+     * @param [type] $config [description]
+     *
+     * @return [type] [description]
+     */
     private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
         $builder->useAnnotations(true);
         $builder->addDefinitions($config);
+
         return $builder->build();
     }
 
+    /**
+     * [getContainer description]
+     *
+     * @return [type] [description]
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * [run description]
+     *
+     * @param RequestInterface|null  $request  [description]
+     * @param ResponseInterface|null $response [description]
+     *
+     * @return [type] [description]
+     */
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
         ($request != null) ?: $request = $this->request;
@@ -73,6 +119,7 @@ class App
             $event->setName("ERROR_DISPATCH");
             $event->setException($e);
             $this->getContainer()->get("http.flow")->trigger($event);
+
             return $event->getResponse();
         }
 
@@ -91,14 +138,13 @@ class App
                 $event->getResponse(),
             ];
 
-            foreach($event->getRouteInfo()[2] as $v) {
+            foreach ($event->getRouteInfo()[2] as $v) {
                 $args[] = $v;
             }
 
             $response = call_user_func_array([$controller, $method], $args);
             $event->setResponse($response);
         }, 0);
-
 
         try {
             $this->getContainer()->get("http.flow")->trigger($event);
