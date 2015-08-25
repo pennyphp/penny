@@ -2,12 +2,15 @@
 
 namespace GianArb\Penny;
 
-use Zend\Diactoros\Response;
-use GianArb\Penny\Event\HttpFlowEvent;
-use DI\ContainerBuilder;
-use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\RequestInterface;
+use DI;
+use Exception;
 use GianArb\Penny\Config\Loader;
+use GianArb\Penny\Event\HttpFlowEvent;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use ReflectionClass;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\ServerRequestFactory;
 
 class App
 {
@@ -19,9 +22,9 @@ class App
     {
         $this->container = $container;
 
-        $this->response = new \Zend\Diactoros\Response();
+        $this->response = new Response();
 
-        $this->request = \Zend\Diactoros\ServerRequestFactory::fromGlobals(
+        $this->request = ServerRequestFactory::fromGlobals(
             $_SERVER,
             $_GET,
             $_POST,
@@ -35,14 +38,14 @@ class App
         }
 
         if ($router == null && $container->has("router") == false) {
-            throw new \Exception("Define router config");
+            throw new Exception("Define router config");
             $container->set("router", $config['router']);
         } elseif ($container->has("router") == false) {
             $container->set("router", $router);
         }
 
-        $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+        $container->set("http.flow", DI\object('Zend\EventManager\EventManager'));
+        $container->set('dispatcher', DI\object('GianArb\Penny\Dispatcher')
             ->constructor($container->get("router")));
         $container->set('di', $container);
         $this->container = $container;
@@ -50,7 +53,7 @@ class App
 
     private function buildContainer($config)
     {
-        $builder = new ContainerBuilder();
+        $builder = new DI\ContainerBuilder();
         $builder->useAnnotations(true);
         $builder->addDefinitions($config);
         return $builder->build();
@@ -70,7 +73,7 @@ class App
         try {
             $routerInfo = $this->getContainer()->get("dispatcher")
                 ->dispatch($request);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $event->setName("ERROR_DISPATCH");
             $event->setException($e);
             $this->getContainer()->get("http.flow")->trigger($event);
@@ -79,7 +82,7 @@ class App
 
         $controller = $this->getContainer()->get($routerInfo[1][0]);
         $method = $routerInfo[1][1];
-        $function = new \ReflectionClass($controller);
+        $function = new ReflectionClass($controller);
         $name = strtolower($function->getShortName());
 
         $eventName = "{$name}.{$method}";
@@ -103,7 +106,7 @@ class App
 
         try {
             $this->getContainer()->get("http.flow")->trigger($event);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             $event->setName($eventName."_error");
             $event->setException($exception);
             $this->getContainer()->get("http.flow")->trigger($event);

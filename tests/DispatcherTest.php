@@ -1,15 +1,21 @@
 <?php
 namespace GianArb\PennyTest;
 
+use FastRoute\RouteCollector;
+use FastRoute\simpleDispatcher;
 use GianArb\Penny\Dispatcher;
+use PHPUnit_Framework_TestCase;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Uri;
 
-class DispatcherTest extends \PHPUnit_Framework_TestCase
+class DispatcherTest extends PHPUnit_Framework_TestCase
 {
     private $router;
 
     public function setUp()
     {
-        $this->router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $manager) {
+        $this->router = simpleDispatcher(function (RouteCollector $manager) {
             $manager->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
                 "name" => "index"
             ]);
@@ -31,8 +37,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     public function testDispatchRouteNotFoundRequest()
     {
         $this->setExpectedException('GianArb\Penny\Exception\RouteNotFound');
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/doh'))
+        $request = (new Request())
+        ->withUri(new Uri('/doh'))
         ->withMethod("GET");
 
         $dispatcher = new Dispatcher($this->router);
@@ -42,8 +48,8 @@ class DispatcherTest extends \PHPUnit_Framework_TestCase
     public function testDispatchMethodNotAllowedRequest()
     {
         $this->setExpectedException('GianArb\Penny\Exception\MethodNotAllowed');
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("POST");
 
         $dispatcher = new Dispatcher($this->router);
