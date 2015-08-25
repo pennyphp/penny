@@ -89,11 +89,7 @@ class App
             $args = [
                 $event->getRequest(),
                 $event->getResponse(),
-            ];
-
-            foreach($event->getRouteInfo()[2] as $v) {
-                $args[] = $v;
-            }
+            ]+$event->getRouteInfo()[2];
 
             $response = call_user_func_array([$controller, $method], $args);
             $event->setResponse($response);
