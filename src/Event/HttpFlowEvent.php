@@ -1,9 +1,10 @@
 <?php
 namespace GianArb\Penny\Event;
 
-use Zend\EventManager\Event;
-use Psr\Http\Message\ResponseInterface;
+use Exception;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event
 {
@@ -50,7 +51,7 @@ class HttpFlowEvent extends Event
     }
 
 
-    public function setException(\Exception $exception)
+    public function setException(Exception $exception)
     {
         $this->exception = $exception;
     }

@@ -1,8 +1,10 @@
 <?php
 namespace GianArb\PennyTest;
 
-use GianArb\Penny\App;
 use DI\ContainerBuilder;
+use FastRoute\RouteCollector;
+use FastRoute\simpleDispatcher;
+use GianArb\Penny\App;
 
 class DiTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +13,7 @@ class DiTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $router) {
+        $this->router = simpleDispatcher(function (RouteCollector $router) {
             $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
 
@@ -29,10 +31,10 @@ class DiTest extends \PHPUnit_Framework_TestCase
         $this->container->set("troyan", "call me");
         $app = new App($this->router, $this->container);
 
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());

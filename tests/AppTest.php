@@ -1,9 +1,14 @@
 <?php
 namespace GianArb\PennyTest;
 
+use FastRoute\RouteCollector;
+use FastRoute\simpleDispatcher;
 use GianArb\Penny\App;
-use \GianArb\Penny\Exception\RouteNotFound;
-use \GianArb\Penny\Exception\MethodNotAllowed;
+use GianArb\Penny\Exception\MethodNotAllowed;
+use GianArb\Penny\Exception\RouteNotFound;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Uri;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +16,7 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $router = simpleDispatcher(function (RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
             $r->addRoute('GET', '/{id:\d+}', ['TestApp\Controller\Index', 'getSingle']);
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
@@ -36,10 +41,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testChangeResponseStatusCode()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/fail'))
+        $request = (new Request())
+        ->withUri(new Uri('/fail'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(502, $response->getStatusCode());
@@ -47,10 +52,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testRouteFound()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
@@ -58,10 +63,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testRouteParamIntoTheSignatureofMethod()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/10'))
+        $request = (new Request())
+        ->withUri(new Uri('/10'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $this->app->run($request, $response);
         $this->assertRegExp("/id=10/", $response->getBody()->__toString());
@@ -69,10 +74,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testEventPostExecuted()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
             $response = $e->getResponse();
@@ -87,10 +92,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testEventPreExecuted()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
             $response = $e->getResponse();
@@ -106,10 +111,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
     public function testEventPreThrowExceptionIsTrigger()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/dummy'))
+        $request = (new Request())
+        ->withUri(new Uri('/dummy'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
         $count = 0;
 
         $this->app->getContainer()->get("http.flow")->attach("index.dummy_error", function ($e) use (&$count) {
@@ -122,10 +127,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testRouteNotFound()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/doh'))
+        $request = (new Request())
+        ->withUri(new Uri('/doh'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(404, $response->getStatusCode());
@@ -133,10 +138,10 @@ class AppTest extends \PHPUnit_Framework_TestCase
 
     public function testMethodNotAllowed()
     {
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/'))
+        $request = (new Request())
+        ->withUri(new Uri('/'))
         ->withMethod("POST");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $this->app->run($request, $response);
         $this->assertEquals(405, $response->getStatusCode());
