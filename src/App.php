@@ -36,7 +36,6 @@ class App
 
         if ($router == null && $container->has("router") == false) {
             throw new \Exception("Define router config");
-            $container->set("router", $config['router']);
         } elseif ($container->has("router") == false) {
             $container->set("router", $router);
         }
