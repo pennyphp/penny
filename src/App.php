@@ -6,8 +6,6 @@ use DI;
 use Exception;
 use GianArb\Penny\Config\Loader;
 use GianArb\Penny\Event\HttpFlowEvent;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use ReflectionClass;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
@@ -128,12 +126,12 @@ class App
     /**
      * Application execution.
      *
-     * @param RequestInterface|null  $request  Representation of an outgoing, client-side request.
-     * @param ResponseInterface|null $response Representation of an outgoing, server-side response.
+     * @param mixed|null  $request  Representation of an outgoing, client-side request.
+     * @param mixed|null $response Representation of an outgoing, server-side response.
      *
      * @return RequestInterface|mixed
      */
-    public function run(RequestInterface $request = null, ResponseInterface $response = null)
+    public function run($request = null, $response = null)
     {
         ($request != null) ?: $request = $this->request;
         ($response != null) ?: $response = $this->response;
