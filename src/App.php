@@ -36,7 +36,6 @@ class App
 
         if ($router == null && $container->has("router") == false) {
             throw new \Exception("Define router config");
-            $container->set("router", $config['router']);
         } elseif ($container->has("router") == false) {
             $container->set("router", $router);
         }
@@ -90,11 +89,7 @@ class App
             $args = [
                 $event->getRequest(),
                 $event->getResponse(),
-            ];
-
-            foreach($event->getRouteInfo()[2] as $v) {
-                $args[] = $v;
-            }
+            ]+$event->getRouteInfo()[2];
 
             $response = call_user_func_array([$controller, $method], $args);
             $event->setResponse($response);
