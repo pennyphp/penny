@@ -1,9 +1,11 @@
 <?php
+
 namespace GianArb\PennyTest\Config;
 
 use GianArb\Penny\Config\Loader;
+use PHPUnit_Framework_TestCase;
 
-class LoaderTest extends \PHPUnit_Framework_TestCase
+class LoaderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {

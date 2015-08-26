@@ -1,18 +1,24 @@
 <?php
+
 namespace GianArb\PennyTest;
 
+use DI\ContainerBuilder;
+use FastRoute\RouteCollector;
 use GianArb\Penny\App;
 use GianArb\Penny\Config\Loader;
-use DI\ContainerBuilder;
+use PHPUnit_Framework_TestCase;
+use Zend\Diactoros\Request;
+use Zend\Diactoros\Response;
+use Zend\Diactoros\Uri;
 
-class AppLoaderTest extends \PHPUnit_Framework_TestCase
+class AppLoaderTest extends PHPUnit_Framework_TestCase
 {
     private $router;
 
     public function setUp()
     {
         chdir(__DIR__."/app/");
-        $this->router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $this->router = \FastRoute\simpleDispatcher(function (RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
                 "name" => "load"
             ]);
@@ -23,10 +29,10 @@ class AppLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $app = new App($this->router);
 
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/load'))
+        $request = (new Request())
+        ->withUri(new Uri('/load'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
@@ -42,10 +48,10 @@ class AppLoaderTest extends \PHPUnit_Framework_TestCase
 
         $app = new App($this->router, $builder->build());
 
-        $request = (new \Zend\Diactoros\Request())
-        ->withUri(new \Zend\Diactoros\Uri('/load'))
+        $request = (new Request())
+        ->withUri(new Uri('/load'))
         ->withMethod("GET");
-        $response = new \Zend\Diactoros\Response();
+        $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
