@@ -1,8 +1,9 @@
 <?php
+
 namespace GianArb\Penny\Config;
 
-use Zend\Stdlib\Glob;
 use Zend\Stdlib\ArrayUtils;
+use Zend\Stdlib\Glob;
 
 class Loader
 {

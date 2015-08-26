@@ -2,13 +2,19 @@
 
 namespace GianArb\Penny;
 
+use Exception;
+use FastRoute\Dispatcher as BaseDispatcher;
+use FastRoute\Dispatcher as FastRouterDispatcherInterface;
+use GianArb\Penny\Exception\MethodNotAllowed;
+use GianArb\Penny\Exception\RouteNotFound;
 use Psr\Http\Message\RequestInterface;
+
 
 class Dispatcher
 {
     private $router;
 
-    public function __construct($router)
+    public function __construct(FastRouterDispatcherInterface $router)
     {
         $this->router = $router;
     }
@@ -17,18 +23,14 @@ class Dispatcher
     {
         $routeInfo = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
         switch ($routeInfo[0]) {
-            case \FastRoute\Dispatcher::NOT_FOUND:
-                throw new \GianArb\Penny\Exception\RouteNotFound();
-                break;
-            case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                throw new \GianArb\Penny\Exception\MethodNotAllowed();
-                break;
-            case \FastRoute\Dispatcher::FOUND:
+            case BaseDispatcher::NOT_FOUND:
+                throw new RouteNotFound();
+            case BaseDispatcher::METHOD_NOT_ALLOWED:
+                throw new MethodNotAllowed();
+            case BaseDispatcher::FOUND:
                 return $routeInfo;
-                break;
             default:
-                throw new \Exception(null, 500);
-                break;
+                throw new Exception(null, 500);
         }
     }
 }
