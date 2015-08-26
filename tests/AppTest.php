@@ -3,8 +3,8 @@
 namespace GianArb\PennyTest;
 
 use GianArb\Penny\App;
-use GianArb\Penny\Exception\RouteNotFound;
 use GianArb\Penny\Exception\MethodNotAllowed;
+use GianArb\Penny\Exception\RouteNotFound;
 
 class AppTest extends \PHPUnit_Framework_TestCase
 {

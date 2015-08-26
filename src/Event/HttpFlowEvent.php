@@ -2,9 +2,9 @@
 
 namespace GianArb\Penny\Event;
 
-use Zend\EventManager\Event;
-use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event
 {

@@ -2,8 +2,8 @@
 
 namespace GianArb\PennyTest;
 
-use GianArb\Penny\App;
 use DI\ContainerBuilder;
+use GianArb\Penny\App;
 
 class DiTest extends \PHPUnit_Framework_TestCase
 {

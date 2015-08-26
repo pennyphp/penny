@@ -2,9 +2,9 @@
 
 namespace GianArb\PennyTest;
 
+use DI\ContainerBuilder;
 use GianArb\Penny\App;
 use GianArb\Penny\Config\Loader;
-use DI\ContainerBuilder;
 
 class AppLoaderTest extends \PHPUnit_Framework_TestCase
 {

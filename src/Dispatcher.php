@@ -2,8 +2,8 @@
 
 namespace GianArb\Penny;
 
-use Psr\Http\Message\RequestInterface;
 use FastRoute\Dispatcher as FastRouterDispatcherInterface;
+use Psr\Http\Message\RequestInterface;
 
 class Dispatcher
 {
