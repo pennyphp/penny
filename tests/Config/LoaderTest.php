@@ -1,4 +1,5 @@
 <?php
+
 namespace GianArb\PennyTest\Config;
 
 use GianArb\Penny\Config\Loader;

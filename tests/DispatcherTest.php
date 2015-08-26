@@ -1,4 +1,5 @@
 <?php
+
 namespace GianArb\PennyTest;
 
 use GianArb\Penny\Dispatcher;
