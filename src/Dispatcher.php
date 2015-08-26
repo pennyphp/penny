@@ -3,12 +3,13 @@
 namespace GianArb\Penny;
 
 use Psr\Http\Message\RequestInterface;
+use FastRoute\Dispatcher as FastRouterDispatcherInterface;
 
 class Dispatcher
 {
     private $router;
 
-    public function __construct($router)
+    public function __construct(FastRouterDispatcherInterface $router)
     {
         $this->router = $router;
     }
