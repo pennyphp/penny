@@ -2,6 +2,7 @@
 
 namespace TestApp\Controller;
 
+use InvalidArgumentException;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 
@@ -44,6 +45,6 @@ class Index
 
     public function dummy(Request $request, Response $response)
     {
-        throw new \InvalidArgumentException("it doesn't run");
+        throw new InvalidArgumentException("it doesn't run");
     }
 }
