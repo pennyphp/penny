@@ -11,7 +11,7 @@ class AppLoaderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        chdir(dirname(__DIR__."/tests/"));
+        chdir(__DIR__."/app/");
         $this->router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
                 "name" => "load"
