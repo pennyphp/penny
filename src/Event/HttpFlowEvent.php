@@ -16,7 +16,7 @@ class HttpFlowEvent extends Event
 
     public function __construct($name, $request, $response)
     {
-        $this->name = $name;
+        $this->setName($name);
         $this->response = $response;
         $this->request = $request;
     }
