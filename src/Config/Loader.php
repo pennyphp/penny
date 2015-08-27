@@ -7,6 +7,13 @@ use Zend\Stdlib\Glob;
 
 class Loader
 {
+    /**
+     * Configurations loader.
+     *
+     * @param string $pathRole Glob role.
+     *
+     * @return array
+     */
     public static function load($pathRole = './config/{{*}}{{,*.local}}.php')
     {
         $config = [];

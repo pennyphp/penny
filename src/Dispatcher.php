@@ -11,13 +11,33 @@ use Psr\Http\Message\RequestInterface;
 
 class Dispatcher
 {
+    /**
+     * Inner dispatcher.
+     *
+     * @var FastRouterDispatcherInterface
+     */
     private $router;
 
+    /**
+     * Class constructor with required FastRoute dispatcher implementation.
+     *
+     * @param FastRouterDispatcherInterface $router Inner router (based on Nikic FastRouter).
+     */
     public function __construct(FastRouterDispatcherInterface $router)
     {
         $this->router = $router;
     }
 
+    /**
+     * Dispatching.
+     *
+     * @param RequestInterface $request Representation of an outgoing, client-side request.
+     *
+     * @throws RouteNotFound    If the route is not found.
+     * @throws MethodNotAllowed If the method is not allowed.
+     *
+     * @return array
+     */
     public function dispatch(RequestInterface $request)
     {
         $router = $this->router;
