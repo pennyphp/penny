@@ -303,6 +303,7 @@ return [
 To add personal parameters (database username, password) into the VCS is a very dangerous and bad practice, the `conn` key into the
 `parameters` array is only a boilerplate. You can ovveride it, you can add a `/config/*.local.php` file.
 ```
+<?php
 // /config/local.php
 return [
     "parameters" => [
@@ -313,7 +314,7 @@ return [
             ]
         ]
     ],
-]
+];
 ```
 *Add it into the .gitignore*
 
@@ -324,7 +325,7 @@ doctrine has an awesome console that helps you to manage database, schema, cache
 require "vendor/autoload.php";
 
 $app = new \GianArb\Penny\App();
-return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getContainer()->get("doctrine.em");
+return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getContainer()->get("doctrine.em"));
 ```
 
 Now we are ready to use it in your app. We can write our first entity
@@ -454,7 +455,12 @@ class BeerForm extends Form
 
 Plates is very extensible and we have a problem, BeerForm require a render!
 ```php
+<?php
 // /config/app.config.php
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+use \Interop\Container\ContainerInterface;
 
 return [
     "template" => \DI\object(\League\Plates\Engine::class)
@@ -466,6 +472,8 @@ return [
             $config->configureServiceManager($plugins);
             return $zfView;
     }),
+    "form.beer" => \DI\object(\PennyApp\Form\BeerForm::class)
+        ->method("setHydrator", new \Zend\Stdlib\Hydrator\ClassMethods()),
 ];
 ```
 
@@ -507,6 +515,7 @@ return [
 namespace PennyApp\Controller;
 
 use PennyApp\Entity\Beer;
+use Zend\Diactoros\Response\RedirectResponse;
 
 class IndexController
 {
