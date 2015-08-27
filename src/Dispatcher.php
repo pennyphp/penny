@@ -20,7 +20,14 @@ class Dispatcher
 
     public function dispatch(RequestInterface $request)
     {
-        $routeInfo = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
+        $router = $this->router;
+        $uri = $request->getUri();
+
+        $routeInfo = $router->dispatch(
+            $request->getMethod(),
+            $uri->getPath()
+        );
+
         switch ($routeInfo[0]) {
             case BaseDispatcher::NOT_FOUND:
                 throw new RouteNotFound();
