@@ -1,14 +1,15 @@
 # Getting Started
+
 Penny is a framework that helps you to build YOUR own application.
 In this tutorial we will try to build our first skeleton application.
 
-Thissimple HTML application needs also some other components:
+This simple application needs some third-party php components:
 
-* [theleague/plates](https://github.com/theleague/plates) to render your page.
-* [doctrine/doctrine](https://github/doctrine/doctrine2) to persist your data into the mysql database.
-* [zendframework/zend-form](https://github/zendframework/zend-form) to create/update your data.
+* [theleague/plates](https://github.com/theleague/plates) the template system used to render your page.
+* [doctrine/doctrine](https://github/doctrine/doctrine2) the ORM, used to persist and load your data from/to the MySQL database.
+* [zendframework/zend-form](https://github/zendframework/zend-form) to create forms used manipulate your data.
 
-In this tutorial I used [bower](https://bower.io) and [grunt](http://gruntjs.com/) to manage fronted assets.
+In this tutorial I also used [bower](https://bower.io) and [grunt](http://gruntjs.com/) to manage fronted assets.
 
 ## Install
 
@@ -41,9 +42,11 @@ This tutorial proposal is:
     └── index.php
 ```
 
-`app` contains application files. `config` is the value that penny uses by default to load dependency injection configurations.
+- `app` contains application files. 
+- `config` is the folder from wich penny loads dependency injection configurations by default.
 
 Every application has an entrypoint, `public/index.php` is our.
+
 ```php
 // /public/index.php
 
@@ -56,7 +59,7 @@ $emitter = new \Zend\Diactoros\Response\SapiEmitter();
 $emitter->emit($app->run());
 ```
 
-Create this directories or clone [penny-foldering](https://github.com/gianarb/penny-foldering).
+Create these directories or clone [penny-foldering](https://github.com/gianarb/penny-foldering).
 
 ```bash
 git clone git@github.com:gianarb/penny-foldering ./penny-app
@@ -79,13 +82,14 @@ php -S 127.0.0.0:8085 -t public
 
 `nginx/server.d/example.conf`
 
+
 ```
 upstream fpm {
     server unix:/var/run/fpm-example.sock;
 }
 
 server {
-    listen 8080;
+    listen 80;
     server_name example.com;
     proxy_pass_header Server;
     root /var/www/example/public;
@@ -102,7 +106,9 @@ server {
     }
 }
 ```
+
 `php/etc/pool.d/example.conf`
+
 
 ```
 [example]
@@ -112,7 +118,6 @@ user = fpm
 group = fpm
 
 listen = /var/run/fpm-example.sock
-listen.mode = 0666
 
 pm = dynamic
 pm.max_children = 20
@@ -129,13 +134,18 @@ request_terminate_timeout = 600
 ```
 
 # Dependency Injection and routing configuration
-In this moment the default DiC library is PHP-DI and in this tutorial I use it.
+At the moment the default DiC library is PHP-DI and in this tutorial I use it.
 
-The default path to load configuration files is `/config` directory. It loads all `*.php` files and after them it loads `*.local.php`. This strategy is soo useful to override configurations of to load paramters how database configurations or api keys.
+The default path where penny look for configuration files is the `config` directory.
+Files whose name match the `*.php`  pattern are loaded first and then it loads files whose name match the `*.local.php` pattern.
+This strategy is  useful to do configuration overriding for things like database credentials or exteranl services api keys.
 
-The first step is to define a routing, in this moment I use [nikic/FastRoute](https://github.com/nikic/FastRoute) it is very fast and easy to use. We can use the DI to load Router because this strategy help us to uncouple the routing library by the framework.
+The first step is to define a routing strategy, at the moment I'm using [nikic/FastRoute](https://github.com/nikic/FastRoute) and, as the name state, it is very fast and surprisingly easy to use.
+
+At this point we can use the DI to load the router decoupling the routing library by the framework.
 
 Create `/config/config.app.php`
+
 ```php
 <?php
 return [
@@ -147,10 +157,18 @@ return [
     },
 ];
 ```
-In this way GET / resolve `PennyApp\Controller\IndexController` object and it calls `index` function. This is our first route.
+
+In this way GET / resolves to the `PennyApp\Controller\IndexController` controller and then it calls the `index` action.
+
+This is our first route :tada:, now we need the corresponding controller, let's see how to create one.
 
 ## Autoloading
-To manage autoload you can use [composer](https://getcomposer.org). You can add this configuration in your composer.json
+
+To manage autoloading we use [composer](https://getcomposer.org).
+
+You can add this configuration in your composer.json.
+This configuration tells your scripts that the `PennyApp` namespace resides under the `app` directory, that's where we are placing our controllers.
+
 ```json
 {
     "autoload": {
@@ -160,9 +178,11 @@ To manage autoload you can use [composer](https://getcomposer.org). You can add 
     }
 }
 ```
-see [composer.json](https://github.com/gianarb/penny-foldering/blob/master/composer.json)
 
-We are ready to write the controller that resolve our route.
+see the [penny-foldering composer.json](https://github.com/gianarb/penny-foldering/blob/master/composer.json) for reference
+
+Now we are ready to write the controller that resolve our route.
+
 ```php
 // /app/Controller/IndexController.php
 
@@ -177,12 +197,16 @@ class IndexController
     }
 }
 ```
-Only one word "easy".. This is your controller and your action wait $request and $response,
-this implementation use [Zend\Diactoros](https://github.com/zendframework/zend-diactoros) and it is PSR-7 compatible.
 
-## Plates
+Pretty easy right? This is your controller and your action waiting $request and $response,
+
+the above implementation uses [Zend\Diactoros](https://github.com/zendframework/zend-diactoros) and it is PSR-7 compatible.
+
+## Templating with Plates
+
 [Plates](https://github.com/thephpleague/plates) is a native PHP template system that’s fast, easy to use and easy to extend.
-Now we add it into the our application from dependence injection.
+
+Here's how to add it to our application:
 
 ```php
 // /config/config.app.php
@@ -198,7 +222,9 @@ return [
         ->constructor("./app/view/"), // ./app/view is the path of your templates
 ];
 ```
+
 Now you can use it in your controller, update it and create your first template!
+
 ```php
 // /app/Controller/IndexController.php
 
@@ -234,9 +260,11 @@ class IndexController
 </html>
 ```
 
-## Database and doctrine2 integration
-[Doctrine](https://github.com/dotrine/doctrine2) is a famouse Object Relational Mapper (ORM) library and this is the basicly configuration copied by
+## Database integration with Doctrine 2
+
+We are using [Doctrine](https://github.com/dotrine/doctrine2) which is a popular Object Relational Mapper (ORM) library and the following  is it's basic configuration copied directly by
  official site.
+
 ```php
 <?php
 use Doctrine\ORM\Tools\Setup;
@@ -253,7 +281,8 @@ $conn = array(
 $entityManager = EntityManager::create($conn, $config);
 ```
 
-We implement doctrine without factory or other class, we build integration with only dependence injection container.
+Let's see how to integrate it in Penny using the Dependency injection container.
+
 ```php
 // /config/app.config.php
 <?php
@@ -300,8 +329,11 @@ return [
     }),
 ];
 ```
-To add personal parameters (database username, password) into the VCS is a very dangerous and bad practice, the `conn` key into the
-`parameters` array is only a boilerplate. You can ovveride it, you can add a `/config/*.local.php` file.
+
+Adding sensitive parameters (like database credentials) into the VCS is a very dangerous and bad practice, the `conn` configuration into the `parameters` array is the default,  VCS committed. not working one.
+
+You can ovveride it in the local environment, adding a `/config/*.local.php` file where keys override the default ones provided in the default configuration.
+
 ```
 <?php
 // /config/local.php
@@ -316,9 +348,12 @@ return [
     ],
 ];
 ```
+
 *Add it into the .gitignore*
 
-doctrine has an awesome console that helps you to manage database, schema, cache an a lot of other stuff, we should translate [this chapter](http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html)
+Doctrine has an awesome console that helps you to manage database, schema, cache an a lot of other stuff.
+**TODO**: we should give an overview on how to do in Penny things contained in  [this chapter](http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html).
+
 ```php
 <?php
 // cli-config.php
@@ -328,8 +363,9 @@ $app = new \GianArb\Penny\App();
 return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getContainer()->get("doctrine.em"));
 ```
 
-Now we are ready to use it in your app. We can write our first entity
-```
+Now we are ready to use it in your app writing our first entity.
+
+```php
 // /app/Entity/Car.php
 <?php
 namespace PennyApp\Entity;
@@ -389,10 +425,12 @@ class Beer
 ```
 
 ## Form and Validation
-Before persist new record into the database validate and filter them is necessary. `Zend\Validator` and `Zend\Form`
-are good components to implement this features.
 
-Update composer.json configuration with all dependencies
+Before persisting new records into the database validate and filter them is necessary. `Zend\Validator` and `Zend\Form`
+are good components that helps to do that.
+
+Update composer.json configuration adding them as dependencies.
+
 ```json
 {
     "require": {
@@ -417,7 +455,8 @@ Update composer.json configuration with all dependencies
 }
 ```
 
-We can write the form
+Write the first form:
+
 ```php
 // /app/Form/BeerForm.php
 
@@ -453,7 +492,8 @@ class BeerForm extends Form
 }
 ```
 
-Plates is very extensible and we have a problem, BeerForm require a render!
+Plates is very extensible and now we have a problem, BeerForm require a render! Let's see how to create it:
+
 ```php
 <?php
 // /config/app.config.php
@@ -507,6 +547,8 @@ return [
     </body>
 </html>
 ```
+
+As we did previously with other things we now inject the form into our controller.
 
 ```php
 // /app/Controller/IndexController.php
@@ -570,3 +612,7 @@ class IndexController
     }
 }
 ```
+
+That's all for now, we really need your feedback to improve Penny.
+
+**SOCIAL-ALERT:** Feedback is important to us. If you want to share your feedback about this document or about Penny, please do it opening an issue or discussing with us on Twitter using the [#pennyphp hashtag](https://twitter.com/hashtag/pennyphp?src=hash) 
