@@ -350,7 +350,8 @@ return [
 
 *Add it into the .gitignore*
 
-Doctrine has an awesome console that helps you to manage database, schema, cache an a lot of other stuff, we should translate [this chapter](http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html)
+Doctrine has an awesome console that helps you to manage database, schema, cache an a lot of other stuff.
+**TODO**: we should give an overview on how to do in Penny things contained in  [this chapter](http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html).
 
 ```php
 <?php
