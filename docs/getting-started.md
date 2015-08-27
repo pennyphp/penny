@@ -363,7 +363,7 @@ return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getConta
 
 Now we are ready to use it in your app writing our first entity.
 
-```
+```php
 // /app/Entity/Car.php
 <?php
 namespace PennyApp\Entity;
@@ -603,4 +603,6 @@ class IndexController
 }
 ```
 
-That's all for now, we really apprecciate feedback. If something is wrong with this tutorial please let us know opening an issue or discuss with us on twitter using the [#pennyphp hashtag](https://twitter.com/hashtag/pennyphp?src=hash) 
+That's all for now, we really need your feedback to improve Penny.
+
+**SOCIAL-ALERT:** Feedback is important to us. If you want to share your feedback about this document or about Penny, please do it opening an issue or discussing with us on Twitter using the [#pennyphp hashtag](https://twitter.com/hashtag/pennyphp?src=hash) 
