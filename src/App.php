@@ -55,6 +55,7 @@ class App
         $builder = new ContainerBuilder();
         $builder->useAnnotations(true);
         $builder->addDefinitions($config);
+
         return $builder->build();
     }
 
@@ -76,6 +77,7 @@ class App
             $event->setName("ERROR_DISPATCH");
             $event->setException($e);
             $this->getContainer()->get("http.flow")->trigger($event);
+
             return $event->getResponse();
         }
 
@@ -97,7 +99,6 @@ class App
             $response = call_user_func_array([$controller, $method], $args);
             $event->setResponse($response);
         }, 0);
-
 
         try {
             $this->getContainer()->get("http.flow")->trigger($event);

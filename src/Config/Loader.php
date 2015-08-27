@@ -13,6 +13,7 @@ class Loader
         foreach (Glob::glob($pathRole, Glob::GLOB_BRACE) as $file) {
             $config = ArrayUtils::merge($config, include $file);
         }
+
         return $config;
     }
 }
