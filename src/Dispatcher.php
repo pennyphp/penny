@@ -9,7 +9,6 @@ use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
 use Psr\Http\Message\RequestInterface;
 
-
 class Dispatcher
 {
     private $router;
