@@ -1,5 +1,7 @@
 # Application Flow
 
+![Penny Framework Flow](https://raw.githubusercontent.com/gianarb/penny/db53c546d9ac0cb24fdd352e487a24ae3fe14469/docs/assets/img/event_flow.png)
+
 This is the flowchart of penny. It is a middleware based on event. There is only one event that turns into the application flow.  
 Dispather try to match router and request, if this metch exists return the result but if there are a problem trigger an event `ERROR_DISPATH`.  
 There are two possibile problems:
