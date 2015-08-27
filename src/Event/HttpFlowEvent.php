@@ -51,7 +51,6 @@ class HttpFlowEvent extends Event
         $this->routeInfo = $routerInfo;
     }
 
-
     public function setException(Exception $exception)
     {
         $this->exception = $exception;
