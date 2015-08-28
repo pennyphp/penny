@@ -14,10 +14,33 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class App
 {
+    /**
+     * Dependency Injection container.
+     * 
+     * @var mixed
+     */
     private $container;
+
+    /**
+     * Representation of an outgoing, client-side request.
+     *
+     * @var RequestInterface
+     */
     private $request;
+
+    /**
+     * Representation of an outgoing, server-side response.
+     *
+     * @var ResponseInterface
+     */
     private $response;
 
+    /**
+     * Application initialization.
+     * 
+     * @param mixed $router    Routing system.
+     * @param mixed $container Dependency Injection container.
+     */
     public function __construct($router = null, $container = null)
     {
         $this->container = $container;
@@ -50,6 +73,15 @@ class App
         $this->container = $container;
     }
 
+    /**
+     * Container compilation.
+     * 
+     * @param mixed $config Configuration file/array.
+     *
+     * @link http://php-di.org/doc/php-definitions.html
+     * 
+     * @return \DI\Container
+     */
     private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
@@ -59,11 +91,24 @@ class App
         return $builder->build();
     }
 
+    /**
+     * Container getter.
+     * 
+     * @return \DI\Container
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * Application execution.
+     * 
+     * @param RequestInterface|null  $request  Representation of an outgoing, client-side request.
+     * @param ResponseInterface|null $response Representation of an outgoing, server-side response.
+     * 
+     * @return RequestInterface|mixed
+     */
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
         ($request != null) ?: $request = $this->request;
