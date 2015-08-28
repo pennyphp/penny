@@ -102,6 +102,30 @@ class App
     }
 
     /**
+     * Penny dispatcher getter.
+     * 
+     * @return Dispatcher
+     */
+    private function getDispatcher()
+    {
+        $container = $this->container;
+
+        return $container->get('dispatcher');
+    }
+
+    /**
+     * Penny HTTP flow event getter.
+     * 
+     * @return HttpFlowEvent
+     */
+    private function getHttpFlow()
+    {
+        $container = $this->container;
+
+        return $container->get('http.flow');
+    }
+
+    /**
      * Application execution.
      * 
      * @param RequestInterface|null  $request  Representation of an outgoing, client-side request.
@@ -115,42 +139,41 @@ class App
         ($response != null) ?: $response = $this->response;
         $event = new HttpFlowEvent("bootstrap", $request, $response);
 
+        $container = $this->getContainer();
+        $dispatcher = $this->getDispatcher();
+        $httpFlow = $this->getHttpFlow();
+
         try {
-            $routerInfo = $this->getContainer()->get("dispatcher")
-                ->dispatch($request);
-        } catch (Exception $e) {
+            $routerInfo = $dispatcher->dispatch($request);
+        } catch (Exception $exception) {
             $event->setName("ERROR_DISPATCH");
-            $event->setException($e);
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $event->setException($exception);
+            $httpFlow->trigger($event);
 
             return $event->getResponse();
         }
 
-        $controller = $this->getContainer()->get($routerInfo[1][0]);
+        $controller = $container->get($routerInfo[1][0]);
         $method = $routerInfo[1][1];
-        $function = new ReflectionClass($controller);
-        $name = strtolower($function->getShortName());
+        $function = (new ReflectionClass($controller))->getShortName();
 
-        $eventName = "{$name}.{$method}";
+        $eventName = sprintf('%s.%s', strtolower($function), $method);
         $event->setName($eventName);
         $event->setRouteInfo($routerInfo);
 
-        $this->getContainer()->get("http.flow")->attach($eventName, function ($event) use ($controller, $method) {
-            $args = [
-                $event->getRequest(),
-                $event->getResponse(),
-            ]+$event->getRouteInfo()[2];
-
-            $response = call_user_func_array([$controller, $method], $args);
-            $event->setResponse($response);
+        $httpFlow->attach($eventName, function ($event) use ($controller, $method) {
+            $event->setResponse(call_user_func_array(
+                [$controller, $method],
+                [$event->getRequest(), $event->getResponse()] + $event->getRouteInfo()[2]
+            ));
         }, 0);
 
         try {
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $httpFlow->trigger($event);
         } catch (Exception $exception) {
             $event->setName($eventName."_error");
             $event->setException($exception);
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $httpFlow->trigger($event);
         }
 
         return $event->getResponse();
