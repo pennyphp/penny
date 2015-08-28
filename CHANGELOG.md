@@ -1,5 +1,14 @@
 # Changelog
 
+# 0.1.2
+* [[#19]](https://github.com/gianarb/penny/pull/19) Add support to php 5.4
+* [[#20]](https://github.com/gianarb/penny/pull/20) Remove unused code
+* [[#23]](https://github.com/gianarb/penny/pull/13) Clean sum array without foreach
+* [[#24]](https://github.com/gianarb/penny/pull/24) FQCN
+* [[#26]](https://github.com/gianarb/penny/pull/26) Removed useless white lines
+* [[#27]](https://github.com/gianarb/penny/pull/27) Added phpcs check on Travis-CI
+* [[#29]](https://github.com/gianarb/penny/pull/29) Fixes typo
+
 # 0.1.1
 * [[61a27f4]](https://github.com/gianarb/penny/commit/61a27f4) Fixed wrong markdown syntax
 
