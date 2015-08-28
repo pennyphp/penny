@@ -2,22 +2,30 @@
 
 ![Penny Framework Flow](https://raw.githubusercontent.com/gianarb/penny/db53c546d9ac0cb24fdd352e487a24ae3fe14469/docs/assets/img/event_flow.png)
 
-This is the flowchart of penny. It is a middleware based on event. There is only one event that turns into the application flow.  
-Dispather try to match router and request, if this metch exists return the result but if there are a problem trigger an event `ERROR_DISPATH`.  
-There are two possibile problems:
-* Route doesn't exist, penny return an exception instance of `GianArb\Penny\Exception\RouteNotFound`
-* Route exists but the HTTP Method is not metched, penny return an exception instance of `GianArb\Penny\Exception\MethodNotAllowed`
-After this event penny returns a response.
+This is the Penny's flowchart.
+It is a event-based middleware. There is only one main event that turns into the application flow.  
 
-If route is matched there is a callable to call for this example IndexController, index function.
+Dispatcher tries to match router and request, if this metch exists it returns the result, if not, or in case of problems it triggers an `ERROR_DISPATCH` event.
+
+There are two possibile kind of problems:
+
+* Route doesn't exist, an `GianArb\Penny\Exception\RouteNotFound` Exception is thrown;
+* Route exists but the HTTP Method hasn't been matched, an `GianArb\Penny\Exception\MethodNotAllowed` Exception is thrown;
+
+If no exception are thrown, a response is returned back.
+
+If a route matches, the corresponding callback is invoked, in this case the callable is the `PennyApp\Controller\IndexController`'s  `index` method.
+
 ```php
 $r->addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
 ```
-The system triggers an event called `indexcontroller.index` an with priority zero exec a index function.
-All listeners attached before and next it run correcly the framework returns response,
-if there is an exception it triggers the last event `indexcontroller.index_error`.
 
-The basically way to manage all exceptions is:
+At this point the system triggers an event called `indexcontroller.index` with zero priority and execute the route callback.
+
+All listeners attached after and before it will be called correcly until the framework returns response,
+if an exception is thrown it will trigger an event named `indexcontroller.index_error`.
+
+The most common way to manage all exceptions is:
 
 ```php
 <?php
