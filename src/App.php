@@ -16,7 +16,7 @@ class App
 {
     /**
      * Dependency Injection container.
-     * 
+     *
      * @var mixed
      */
     private $container;
@@ -37,7 +37,7 @@ class App
 
     /**
      * Application initialization.
-     * 
+     *
      * @param mixed $router    Routing system.
      * @param mixed $container Dependency Injection container.
      */
@@ -75,11 +75,11 @@ class App
 
     /**
      * Container compilation.
-     * 
+     *
      * @param mixed $config Configuration file/array.
      *
      * @link http://php-di.org/doc/php-definitions.html
-     * 
+     *
      * @return \DI\Container
      */
     private function buildContainer($config)
@@ -93,7 +93,7 @@ class App
 
     /**
      * Container getter.
-     * 
+     *
      * @return \DI\Container
      */
     public function getContainer()
@@ -103,7 +103,7 @@ class App
 
     /**
      * Penny dispatcher getter.
-     * 
+     *
      * @return Dispatcher
      */
     private function getDispatcher()
@@ -115,7 +115,7 @@ class App
 
     /**
      * Penny HTTP flow event getter.
-     * 
+     *
      * @return HttpFlowEvent
      */
     private function getHttpFlow()
@@ -127,10 +127,10 @@ class App
 
     /**
      * Application execution.
-     * 
+     *
      * @param RequestInterface|null  $request  Representation of an outgoing, client-side request.
      * @param ResponseInterface|null $response Representation of an outgoing, server-side response.
-     * 
+     *
      * @return RequestInterface|mixed
      */
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
