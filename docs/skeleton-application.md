@@ -2,15 +2,15 @@
 
 ## Table of contents
 
-- Introduction
-- Installation
-    * Get it
-    * Requirements
-    * PHP Dependencies
-    * Build assets
-- Web server setup
-    * PHP built-in Web server
-    * Docker
+- [Introduction](#introduction)
+- [Installation](#installation)
+    * [Get it](#get-it)
+    * [Requirements](#requirements)
+    * [PHP Dependencies](#php-dependencies)
+    * [Build assets](#build-assets)
+- [Web server setup](#web-server-setup)
+    * [PHP built-in Web server](#php-built-in-web-server)
+    * [Docker](#docker)
 
 # Introduction
 
@@ -49,22 +49,22 @@ PHP dependencies and autoloading are managed trough composer. [New to composer?]
 Javascript frontend dependencies are managed trough [bower](http://bower.io/) and built using [grunt](http://gruntjs.com).
 Grunt and other build tools are 
 
-Note: The following commands must be issued in the skeleton application folder:
+**Note:** *The following commands must be issued in the skeleton application folder*
 
-Resolve node dependencies
+*Resolve node dependencies*
 
 ```
 sudo npm install -G grunt-cli
 npm install
 ```
 
-Resolve frontend dependencies
+*Resolve frontend dependencies*
 
 ```
 ./node_modules/bower/bin/bower install
 ```
 
-Build assets
+*Build assets*
 
 ```
 grunt dev
