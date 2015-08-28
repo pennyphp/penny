@@ -28,48 +28,48 @@ The most common ways to get it are:
 ### Via git clone
 
 ```bash
-https://github.com/gianarb/penny-classic-app.git
+git clone https://github.com/gianarb/penny-classic-app.git
 ```
 
 ### Downloading the latest master archive
 
-```
+```bash
 wget -nv -O - https://github.com/gianarb/penny-classic-app/archive/master.zip | tar zx
 ```
 
 ## Requirements
 
-- PHP >= 5.4
-- Composer (Required to manage PHP dependencies)
-- Node and npm  (Required to build frontend assets)
+- PHP >= 5.4 .
+- Composer (Required to manage PHP dependencies).
+- Node and npm  (Required to build frontend assets).
 
 ## PHP Dependencies
 
-PHP dependencies and autoloading are managed trough composer. [New to composer?](https://getcomposer.org/doc/00-intro.md)
+PHP dependencies and autoloading are managed trough composer. [New to composer?](https://getcomposer.org/doc/00-intro.md).
 
 ## Build assets
 
 Javascript frontend dependencies are managed trough [bower](http://bower.io/) and built using [grunt](http://gruntjs.com).
 Grunt and other build tools are 
 
-**Note:** *The following commands must be issued in the skeleton application folder*
+**Note:** *The following commands must be issued in the skeleton application folder*,
 
 *Resolve node dependencies*
 
-```
+```bash
 sudo npm install -G grunt-cli
 npm install
 ```
 
 *Resolve frontend dependencies*
 
-```
+```bash
 ./node_modules/bower/bin/bower install
 ```
 
 *Build assets*
 
-```
+```bash
 grunt dev
 ```
 
@@ -81,7 +81,7 @@ grunt dev
 
 In the skeleton application folder issue a:
 
-```
+```bash
 php -S 0.0.0.0:80 -t public
 ```
 
