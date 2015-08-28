@@ -1,4 +1,4 @@
-# Skeleton Application
+# Penny Skeleton Application
 
 ## Table of contents
 
@@ -11,8 +11,11 @@
 - [Web server setup](#web-server-setup)
     * [PHP built-in Web server](#php-built-in-web-server)
     * [Docker](#docker)
+- [Next Steps](#next-steps)
 
 # Introduction
+
+The Penny Skeleton Application aims to be the starting point to bootstrap a typical web application made of controllers and views.
 
 # Installation
 
@@ -129,3 +132,8 @@ IP addresses can be configured in `docker-compose.yml`
 
 - Application:  `http://127.0.0.10`
 - Z-Ray:  `http://127.0.0.10:10081/ZendServer`
+
+
+# Next Steps
+
+Add links about Doctrine integration, writing templates with Plates, creating forms, validating forms etc..
