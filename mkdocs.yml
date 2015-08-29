@@ -6,6 +6,7 @@ repo_url: https://github.com/gianarb/penny
 pages:
 - ['index.md', 'Introduction']
 - ['getting-started.md', 'Getting started']
+- ['skeleton-application.md', 'Skeleton Application']
 - ['install.md', 'Install']
 - ['flow.md', 'Application flow']
 - ['use-case.md', 'Use case']
