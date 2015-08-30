@@ -1,0 +1,16 @@
+site_name: Penny
+site_description: Php Framework made of other components
+
+repo_url: https://github.com/gianarb/penny
+
+pages:
+- ['index.md', 'Introduction']
+- ['getting-started.md', 'Getting started']
+- ['skeleton-application.md', 'Skeleton Application']
+- ['install.md', 'Install']
+- ['flow.md', 'Application flow']
+- ['use-case.md', 'Use case']
+- ['license.md', 'License']
+
+copyright: Copyright &copy; 2015, <a href="https://github.com/gianarb">Gianluca Arbezzano</a>.
+google_analytics: ["UA-60029542-3", "http://penny.readthedocs.org"]
