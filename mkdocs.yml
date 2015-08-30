@@ -14,3 +14,4 @@ pages:
 
 copyright: Copyright &copy; 2015, <a href="https://github.com/gianarb">Gianluca Arbezzano</a>.
 google_analytics: ["UA-60029542-3", "http://penny.readthedocs.org"]
+theme_dir: 'playout'
