@@ -14,10 +14,33 @@ use Zend\Diactoros\ServerRequestFactory;
 
 class App
 {
+    /**
+     * Dependency Injection container.
+     *
+     * @var mixed
+     */
     private $container;
+
+    /**
+     * Representation of an outgoing, client-side request.
+     *
+     * @var RequestInterface
+     */
     private $request;
+
+    /**
+     * Representation of an outgoing, server-side response.
+     *
+     * @var ResponseInterface
+     */
     private $response;
 
+    /**
+     * Application initialization.
+     *
+     * @param mixed $router    Routing system.
+     * @param mixed $container Dependency Injection container.
+     */
     public function __construct($router = null, $container = null)
     {
         $this->container = $container;
@@ -50,6 +73,15 @@ class App
         $this->container = $container;
     }
 
+    /**
+     * Container compilation.
+     *
+     * @param mixed $config Configuration file/array.
+     *
+     * @link http://php-di.org/doc/php-definitions.html
+     *
+     * @return \DI\Container
+     */
     private function buildContainer($config)
     {
         $builder = new ContainerBuilder();
@@ -59,53 +91,89 @@ class App
         return $builder->build();
     }
 
+    /**
+     * Container getter.
+     *
+     * @return \DI\Container
+     */
     public function getContainer()
     {
         return $this->container;
     }
 
+    /**
+     * Penny dispatcher getter.
+     *
+     * @return Dispatcher
+     */
+    private function getDispatcher()
+    {
+        $container = $this->container;
+
+        return $container->get('dispatcher');
+    }
+
+    /**
+     * Penny HTTP flow event getter.
+     *
+     * @return HttpFlowEvent
+     */
+    private function getHttpFlow()
+    {
+        $container = $this->container;
+
+        return $container->get('http.flow');
+    }
+
+    /**
+     * Application execution.
+     *
+     * @param RequestInterface|null  $request  Representation of an outgoing, client-side request.
+     * @param ResponseInterface|null $response Representation of an outgoing, server-side response.
+     *
+     * @return RequestInterface|mixed
+     */
     public function run(RequestInterface $request = null, ResponseInterface $response = null)
     {
         ($request != null) ?: $request = $this->request;
         ($response != null) ?: $response = $this->response;
         $event = new HttpFlowEvent("bootstrap", $request, $response);
 
+        $container = $this->getContainer();
+        $dispatcher = $this->getDispatcher();
+        $httpFlow = $this->getHttpFlow();
+
         try {
-            $routerInfo = $this->getContainer()->get("dispatcher")
-                ->dispatch($request);
-        } catch (Exception $e) {
+            $routerInfo = $dispatcher->dispatch($request);
+        } catch (Exception $exception) {
             $event->setName("ERROR_DISPATCH");
-            $event->setException($e);
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $event->setException($exception);
+            $httpFlow->trigger($event);
 
             return $event->getResponse();
         }
 
-        $controller = $this->getContainer()->get($routerInfo[1][0]);
+        $controller = $container->get($routerInfo[1][0]);
         $method = $routerInfo[1][1];
-        $function = new ReflectionClass($controller);
-        $name = strtolower($function->getShortName());
+        $function = (new ReflectionClass($controller))->getShortName();
 
-        $eventName = "{$name}.{$method}";
+        $eventName = sprintf('%s.%s', strtolower($function), $method);
         $event->setName($eventName);
         $event->setRouteInfo($routerInfo);
 
-        $this->getContainer()->get("http.flow")->attach($eventName, function ($event) use ($controller, $method) {
-            $args = [
-                $event->getRequest(),
-                $event->getResponse(),
-            ]+$event->getRouteInfo()[2];
-
-            $response = call_user_func_array([$controller, $method], $args);
-            $event->setResponse($response);
+        $httpFlow->attach($eventName, function ($event) use ($controller, $method) {
+            $event->setResponse(call_user_func_array(
+                [$controller, $method],
+                [$event->getRequest(), $event->getResponse()] + $event->getRouteInfo()[2]
+            ));
         }, 0);
 
         try {
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $httpFlow->trigger($event);
         } catch (Exception $exception) {
             $event->setName($eventName."_error");
             $event->setException($exception);
-            $this->getContainer()->get("http.flow")->trigger($event);
+            $httpFlow->trigger($event);
         }
 
         return $event->getResponse();
