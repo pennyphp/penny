@@ -1,3 +1,0 @@
-[submodule "playout"]
-	path = playout
-	url = git@github.com:pennyphp/playout.git
