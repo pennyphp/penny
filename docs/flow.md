@@ -5,9 +5,9 @@
 This is the Penny's flowchart.
 It is a event-based middleware. There is only one main event that turns into the application flow.  
 
-Dispatcher tries to match router and request, if this metch exists it returns the result, if not, or in case of problems it triggers an `ERROR_DISPATCH` event.
+Dispatcher tries to match router and request, if this match exists it returns the result, if not, or in case of problems it triggers an `ERROR_DISPATCH` event.
 
-There are two possibile kind of problems:
+There are two possible kind of problems:
 
 * Route doesn't exist, an `GianArb\Penny\Exception\RouteNotFound` Exception is thrown;
 * Route exists but the HTTP Method hasn't been matched, an `GianArb\Penny\Exception\MethodNotAllowed` Exception is thrown;
@@ -22,7 +22,7 @@ $r->addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
 
 At this point the system triggers an event called `indexcontroller.index` with zero priority and execute the route callback.
 
-All listeners attached after and before it will be called correcly until the framework returns response,
+All listeners attached after and before it will be called correctly until the framework returns response,
 if an exception is thrown it will trigger an event named `indexcontroller.index_error`.
 
 The most common way to manage all exceptions is:

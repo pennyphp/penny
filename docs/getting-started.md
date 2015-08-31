@@ -42,10 +42,10 @@ This tutorial proposal is:
     └── index.php
 ```
 
-- `app` contains application files. 
-- `config` is the folder from wich penny loads dependency injection configurations by default.
+- `app` contains application files.
+- `config` is the folder from which penny loads dependency injection configurations by default.
 
-Every application has an entrypoint, `public/index.php` is our.
+Every application has an entry point, `public/index.php` is our.
 
 ```php
 // /public/index.php
@@ -69,7 +69,7 @@ composer install
 
 # WebServer
 
-Of courese you can use your favourite webserver. Here are just a few examples
+Of courese you can use your favorite web server. Here are just a few examples
 
 ## PHP
 In develop I use the PHP Internal Server. You go in the root of project and run it.
@@ -138,7 +138,7 @@ At the moment the default DiC library is PHP-DI and in this tutorial I use it.
 
 The default path where penny look for configuration files is the `config` directory.
 Files whose name match the `*.php`  pattern are loaded first and then it loads files whose name match the `*.local.php` pattern.
-This strategy is  useful to do configuration overriding for things like database credentials or exteranl services api keys.
+This strategy is  useful to do configuration overriding for things like database credentials or external services api keys.
 
 The first step is to define a routing strategy, at the moment I'm using [nikic/FastRoute](https://github.com/nikic/FastRoute) and, as the name state, it is very fast and surprisingly easy to use.
 
@@ -615,4 +615,4 @@ class IndexController
 
 That's all for now, we really need your feedback to improve Penny.
 
-**SOCIAL-ALERT:** Feedback is important to us. If you want to share your feedback about this document or about Penny, please do it opening an issue or discussing with us on Twitter using the [#pennyphp hashtag](https://twitter.com/hashtag/pennyphp?src=hash) 
+**SOCIAL-ALERT:** Feedback is important to us. If you want to share your feedback about this document or about Penny, please do it opening an issue or discussing with us on Twitter using the [#pennyphp hashtag](https://twitter.com/hashtag/pennyphp?src=hash)

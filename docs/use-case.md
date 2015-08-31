@@ -11,4 +11,4 @@ It uses [thephpleague/plates](https://github.com/thephpleague/plates) as templat
 
 # Applications
 
-* [currency-fair](https://github.com/gianarb/currency-fair-codetest) if you look at the backend directory there's an API system implementated using Penny. It uses [predis](https://github.com/nrk/predis) and few ZF2 components.
+* [currency-fair](https://github.com/gianarb/currency-fair-codetest) if you look at the backend directory there's an API system implemented using Penny. It uses [predis](https://github.com/nrk/predis) and few ZF2 components.
