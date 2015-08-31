@@ -23,7 +23,7 @@ The Penny Skeleton Application aims to be the starting point to bootstrap a typi
 
 The Penny skeleton application is [hosted on GitHub](https://github.com/gianarb/penny-classic-app)
 
-The most common ways to get it are: 
+The most common ways to get it are:
 
 ### Via git clone
 
@@ -49,8 +49,8 @@ PHP dependencies and autoloading are managed trough composer. [New to composer?]
 
 ## Build assets
 
-Javascript frontend dependencies are managed trough [bower](http://bower.io/) and built using [grunt](http://gruntjs.com).
-Grunt and other build tools are 
+Javascript front end dependencies are managed trough [bower](http://bower.io/) and built using [grunt](http://gruntjs.com).
+Grunt and other build tools are
 
 **Note:** *The following commands must be issued in the skeleton application folder*,
 
@@ -91,7 +91,7 @@ php -S 0.0.0.0:80 -t public
 If you want to use it in production you have to: disable error reporting, persist logs, disable Z-Ray, raise limits and fine tune your configurations.
 
 The `penny-classic-app` repository contains a `docker-compose.yml.dist` file which currently configures two containers, one
-running the NGINX webserver and one running php-fpm.
+running the NGINX web server and one running php-fpm.
 This file should work as is but  *must be renamed* into `docker-compose.yml`. You can modify if you need something specific for your system like paths, ip addresses, ports, additional services (databases, queues, caching layers) and so on.
 Remember that the docker-compose.yml file is in `.gitignore` since this is very specific to the current installation.
 
