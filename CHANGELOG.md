@@ -1,5 +1,12 @@
 # Changelog
 
+# 0.2.0
+* [[#11]](https://github.com/gianarb/penny/pull/11) Feature/docs
+* [[#28]](https://github.com/gianarb/penny/pull/28) OC + PHPDoc
+* [[#35]](https://github.com/gianarb/penny/pull/35) Try read the docs layout configuration
+* [[#36]](https://github.com/gianarb/penny/pull/36) Revert "Try read the docs layout configuration"
+* [[#37]](https://github.com/gianarb/penny/pull/37) Fixes typos
+
 # 0.1.2
 * [[#19]](https://github.com/gianarb/penny/pull/19) Add support to php 5.4
 * [[#20]](https://github.com/gianarb/penny/pull/20) Remove unused code
