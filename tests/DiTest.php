@@ -3,7 +3,7 @@
 namespace GianArb\PennyTest;
 
 use DI\ContainerBuilder;
-use FastRoute\RouteCollector;
+use FastRoute;
 use GianArb\Penny\App;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
@@ -17,10 +17,9 @@ class DiTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = \FastRoute\simpleDispatcher(function (RouteCollector $router) {
+        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
             $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
-
 
         $builder = new ContainerBuilder();
         $builder->useAnnotations(true);

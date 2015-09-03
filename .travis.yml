@@ -14,8 +14,10 @@ before_script:
 
 install:
   - composer install --prefer-source
+  - composer require --dev squizlabs/php_codesniffer
 
 script:
+  - vendor/bin/phpcs --standard=psr2 src/
   - vendor/bin/phpunit --coverage-clover=clover.xml
 
 after_script:

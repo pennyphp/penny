@@ -2,7 +2,7 @@
 
 namespace GianArb\PennyTest;
 
-use FastRoute\RouteCollector;
+use FastRoute;
 use GianArb\Penny\App;
 use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
@@ -17,7 +17,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = \FastRoute\simpleDispatcher(function (RouteCollector $r) {
+        $router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
             $r->addRoute('GET', '/{id:\d+}', ['TestApp\Controller\Index', 'getSingle']);
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);

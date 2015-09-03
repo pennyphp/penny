@@ -3,7 +3,7 @@
 namespace GianArb\PennyTest;
 
 use DI\ContainerBuilder;
-use FastRoute\RouteCollector;
+use FastRoute;
 use GianArb\Penny\App;
 use GianArb\Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
@@ -18,7 +18,7 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         chdir(__DIR__."/app/");
-        $this->router = \FastRoute\simpleDispatcher(function (RouteCollector $r) {
+        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
                 "name" => "load"
             ]);
