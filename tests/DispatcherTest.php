@@ -2,7 +2,7 @@
 
 namespace GianArb\PennyTest;
 
-use FastRoute\RouteCollector;
+use FastRoute;
 use GianArb\Penny\Dispatcher;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
@@ -14,7 +14,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = \FastRoute\simpleDispatcher(function (RouteCollector $manager) {
+        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $manager) {
             $manager->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
                 "name" => "index"
             ]);
