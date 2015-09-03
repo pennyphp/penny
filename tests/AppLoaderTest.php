@@ -17,10 +17,10 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        chdir(__DIR__."/app/");
+        chdir(__DIR__.'/app/');
         $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
-                "name" => "load"
+                'name' => 'load',
             ]);
         });
     }
@@ -31,17 +31,16 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
 
         $request = (new Request())
         ->withUri(new Uri('/load'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals("eureka", $response->getBody()->__toString());
+        $this->assertEquals('eureka', $response->getBody()->__toString());
     }
 
     public function testCorrectInjectionWithExternalContainer()
     {
-
         $builder = new ContainerBuilder();
         $builder->addDefinitions(Loader::load());
         $builder->useAnnotations(true);
@@ -50,11 +49,11 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
 
         $request = (new Request())
         ->withUri(new Uri('/load'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals("eureka", $response->getBody()->__toString());
+        $this->assertEquals('eureka', $response->getBody()->__toString());
     }
 }

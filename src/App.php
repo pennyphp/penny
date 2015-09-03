@@ -60,15 +60,15 @@ class App
             $container = $this->buildContainer($config);
         }
 
-        if ($router == null && $container->has("router") == false) {
-            throw new Exception("Define router config");
-        } elseif ($container->has("router") == false) {
-            $container->set("router", $router);
+        if ($router == null && $container->has('router') == false) {
+            throw new Exception('Define router config');
+        } elseif ($container->has('router') == false) {
+            $container->set('router', $router);
         }
 
-        $container->set("http.flow", DI\object('Zend\EventManager\EventManager'));
+        $container->set('http.flow', DI\object('Zend\EventManager\EventManager'));
         $container->set('dispatcher', DI\object('GianArb\Penny\Dispatcher')
-            ->constructor($container->get("router")));
+            ->constructor($container->get('router')));
         $container->set('di', $container);
         $this->container = $container;
     }
@@ -137,7 +137,7 @@ class App
     {
         ($request != null) ?: $request = $this->request;
         ($response != null) ?: $response = $this->response;
-        $event = new HttpFlowEvent("bootstrap", $request, $response);
+        $event = new HttpFlowEvent('bootstrap', $request, $response);
 
         $container = $this->getContainer();
         $dispatcher = $this->getDispatcher();
@@ -146,7 +146,7 @@ class App
         try {
             $routerInfo = $dispatcher->dispatch($request);
         } catch (Exception $exception) {
-            $event->setName("ERROR_DISPATCH");
+            $event->setName('ERROR_DISPATCH');
             $event->setException($exception);
             $httpFlow->trigger($event);
 
@@ -171,7 +171,7 @@ class App
         try {
             $httpFlow->trigger($event);
         } catch (Exception $exception) {
-            $event->setName($eventName."_error");
+            $event->setName($eventName.'_error');
             $event->setException($exception);
             $httpFlow->trigger($event);
         }
