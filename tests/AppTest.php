@@ -26,7 +26,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $this->app = new App($router);
 
-        $this->app->getContainer()->get("http.flow")->attach("ERROR_DISPATCH", function ($e) {
+        $this->app->getContainer()->get('http.flow')->attach('ERROR_DISPATCH', function ($e) {
             if ($e->getException() instanceof RouteNotFound) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
@@ -37,14 +37,13 @@ class AppTest extends PHPUnit_Framework_TestCase
                 $e->setResponse($response);
             }
         });
-
     }
 
     public function testChangeResponseStatusCode()
     {
         $request = (new Request())
         ->withUri(new Uri('/fail'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $this->app->run($request, $response);
@@ -55,7 +54,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $this->app->run($request, $response);
@@ -66,21 +65,21 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $request = (new Request())
         ->withUri(new Uri('/10'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $this->app->run($request, $response);
-        $this->assertRegExp("/id=10/", $response->getBody()->__toString());
+        $this->assertRegExp('/id=10/', $response->getBody()->__toString());
     }
 
     public function testEventPostExecuted()
     {
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
+        $this->app->getContainer()->get('http.flow')->attach('index.index', function ($e) {
             $response = $e->getResponse();
             $response->getBody()->write("I'm very happy!");
             $e->setResponse($response);
@@ -95,12 +94,12 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get("http.flow")->attach("index.index", function ($e) {
+        $this->app->getContainer()->get('http.flow')->attach('index.index', function ($e) {
             $response = $e->getResponse();
-            $response->getBody()->write("This is");
+            $response->getBody()->write('This is');
             $e->setResponse($response);
         }, 10);
 
@@ -114,12 +113,12 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('InvalidArgumentException');
         $request = (new Request())
         ->withUri(new Uri('/dummy'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
         $count = 0;
 
-        $this->app->getContainer()->get("http.flow")->attach("index.dummy_error", function ($e) use (&$count) {
-            $count = &$count +1;
+        $this->app->getContainer()->get('http.flow')->attach('index.dummy_error', function ($e) use (&$count) {
+            $count = &$count + 1;
             throw $e->getException();
         }, 10);
 
@@ -130,7 +129,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $request = (new Request())
         ->withUri(new Uri('/doh'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $this->app->run($request, $response);
@@ -141,7 +140,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("POST");
+        ->withMethod('POST');
         $response = new Response();
 
         $response = $this->app->run($request, $response);

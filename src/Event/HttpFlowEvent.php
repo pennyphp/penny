@@ -65,8 +65,6 @@ class HttpFlowEvent extends Event
      * Response setter.
      *
      * @param ResponseInterface $response Representation of an outgoing, server-side response.
-     *
-     * @return void
      */
     public function setResponse(ResponseInterface $response)
     {
@@ -77,8 +75,6 @@ class HttpFlowEvent extends Event
      * Request setter.
      *
      * @param RequestInterface $request Representation of an outgoing, client-side request.
-     *
-     * @return void
      */
     public function setRequest(RequestInterface $request)
     {
@@ -109,8 +105,6 @@ class HttpFlowEvent extends Event
      * Route info setter.
      *
      * @param array $routerInfo Routing information.
-     *
-     * @return void
      */
     public function setRouteInfo(array $routerInfo)
     {
@@ -121,8 +115,6 @@ class HttpFlowEvent extends Event
      * Exception setter.
      *
      * @param Exception $exception Exception thrown during execution.
-     *
-     * @return void
      */
     public function setException(Exception $exception)
     {

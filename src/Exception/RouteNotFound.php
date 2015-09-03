@@ -9,7 +9,7 @@ final class RouteNotFound extends Exception
     /**
      * Exception code.
      *
-     * @var integer
+     * @var int
      */
     protected $code = 404;
 }

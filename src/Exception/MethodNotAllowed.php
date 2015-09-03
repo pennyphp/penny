@@ -9,7 +9,7 @@ final class MethodNotAllowed extends Exception
     /**
      * Exception code.
      *
-     * @var integer
+     * @var int
      */
     protected $code = 405;
 }

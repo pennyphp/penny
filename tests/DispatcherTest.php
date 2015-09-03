@@ -16,13 +16,13 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $manager) {
             $manager->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
-                "name" => "index"
+                'name' => 'index',
             ]);
             $manager->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'none'], [
-                "name" => "fail"
+                'name' => 'fail',
             ]);
             $manager->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy'], [
-                "name" => "dummy"
+                'name' => 'dummy',
             ]);
         });
     }
@@ -38,7 +38,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('GianArb\Penny\Exception\RouteNotFound');
         $request = (new Request())
         ->withUri(new Uri('/doh'))
-        ->withMethod("GET");
+        ->withMethod('GET');
 
         $dispatcher = new Dispatcher($this->router);
         $dispatcher->dispatch($request);
@@ -49,7 +49,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('GianArb\Penny\Exception\MethodNotAllowed');
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("POST");
+        ->withMethod('POST');
 
         $dispatcher = new Dispatcher($this->router);
         $dispatcher->dispatch($request);
