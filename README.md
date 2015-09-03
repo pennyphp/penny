@@ -7,6 +7,8 @@
 Another PHP Framework made of other components.  
 One penny is valueless but a lot of pennies build an empire.  
 
+![Penny PHP logo](https://raw.githubusercontent.com/gianarb/penny/master/docs/assets/img/pennyphp.png)
+
 ## What is penny?
 Penny is a library that help you to build PHP application. it is focused around the interoperability concept.  
 At moment Symfony, Zend Framework, Laravel are very big projects and this complexity often is not required.  

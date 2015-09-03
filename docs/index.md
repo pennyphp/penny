@@ -1,6 +1,8 @@
 # What is Penny?
 Penny is a framework that helps you to build middleware applications, it is based on an event system and allows you to combine the perfect libraries for your application.
 
+![Penny PHP logo](https://raw.githubusercontent.com/gianarb/penny/master/docs/assets/img/pennyphp.png)
+
 # Perfect Libraries
 PHP has a very powerful open source ecosystem. There are a lot of developers and a lot of companies that work and put effort  on some of the best libraries with wich we can use to build our applications.
 Penny was born to manage integration between your favorite libraries and it does not force you to use nothing you don't want to.
