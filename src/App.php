@@ -2,7 +2,7 @@
 
 namespace GianArb\Penny;
 
-use DI\ContainerBuilder;
+use DI;
 use Exception;
 use GianArb\Penny\Config\Loader;
 use GianArb\Penny\Event\HttpFlowEvent;
@@ -66,8 +66,8 @@ class App
             $container->set("router", $router);
         }
 
-        $container->set("http.flow", \DI\object('Zend\EventManager\EventManager'));
-        $container->set('dispatcher', \DI\object('GianArb\Penny\Dispatcher')
+        $container->set("http.flow", DI\object('Zend\EventManager\EventManager'));
+        $container->set('dispatcher', DI\object('GianArb\Penny\Dispatcher')
             ->constructor($container->get("router")));
         $container->set('di', $container);
         $this->container = $container;
@@ -80,11 +80,11 @@ class App
      *
      * @link http://php-di.org/doc/php-definitions.html
      *
-     * @return \DI\Container
+     * @return DI\Container
      */
     private function buildContainer($config)
     {
-        $builder = new ContainerBuilder();
+        $builder = new DI\ContainerBuilder();
         $builder->useAnnotations(true);
         $builder->addDefinitions($config);
 
@@ -94,7 +94,7 @@ class App
     /**
      * Container getter.
      *
-     * @return \DI\Container
+     * @return DI\Container
      */
     public function getContainer()
     {
