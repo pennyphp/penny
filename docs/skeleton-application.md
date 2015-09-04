@@ -17,6 +17,16 @@
 
 The Penny Skeleton Application aims to be the starting point to bootstrap a typical web application made of controllers and views.
 
+## Requirements
+
+- PHP >= 5.4 .
+- [Composer](https://getcomposer.org/)  (Required to manage PHP dependencies).
+- Node and npm  (Required to build frontend assets).
+
+## PHP Dependencies
+
+PHP dependencies and autoloading are managed trough composer. [New to composer?](https://getcomposer.org/doc/00-intro.md).
+
 # Installation
 
 ## Get it
@@ -25,27 +35,25 @@ The Penny skeleton application is [hosted on GitHub](https://github.com/gianarb/
 
 The most common ways to get it are:
 
+### Via Composer
+
+```
+$ composer create-project penny/classic-app -s dev
+```
+
 ### Via git clone
 
 ```bash
-git clone https://github.com/gianarb/penny-classic-app.git
+$ git clone https://github.com/gianarb/penny-classic-app.git
+$ cd penny-classic-app && composer install
 ```
 
 ### Downloading the latest master archive
 
 ```bash
-wget -nv -O - https://github.com/gianarb/penny-classic-app/archive/master.zip | tar zx
+$ wget -nv -O - https://github.com/gianarb/penny-classic-app/archive/master.zip | tar zx
+$ cd penny-classic-app-master && composer install
 ```
-
-## Requirements
-
-- PHP >= 5.4 .
-- Composer (Required to manage PHP dependencies).
-- Node and npm  (Required to build frontend assets).
-
-## PHP Dependencies
-
-PHP dependencies and autoloading are managed trough composer. [New to composer?](https://getcomposer.org/doc/00-intro.md).
 
 ## Build assets
 
@@ -57,20 +65,20 @@ Grunt and other build tools are
 *Resolve node dependencies*
 
 ```bash
-sudo npm install -G grunt-cli
-npm install
+$ sudo npm install -G grunt-cli
+$ npm install
 ```
 
 *Resolve frontend dependencies*
 
 ```bash
-./node_modules/bower/bin/bower install
+$ ./node_modules/bower/bin/bower install
 ```
 
 *Build assets*
 
 ```bash
-grunt dev
+$ grunt dev
 ```
 
 # Web server setup
@@ -82,7 +90,7 @@ grunt dev
 In the skeleton application folder issue a:
 
 ```bash
-php -S 0.0.0.0:80 -t public
+$ php -S 0.0.0.0:80 -t public
 ```
 
 ## Docker
@@ -103,21 +111,21 @@ Remember that the docker-compose.yml file is in `.gitignore` since this is very 
 ### Create your docker-compose.yml
 
 ```bash
-cp docker-compose.yml.dist docker-compose.yml
+$ cp docker-compose.yml.dist docker-compose.yml
 # edit it for your specific needs
-vi docker-compose.yml ```
+$ vi docker-compose.yml ```
 
 ### Build
 Before starting you have to build penny-classic specific images, to do it issue a:
 
 ```bash
-docker-compose build
+$ docker-compose build
 ```
 
 ### Up and running
 
 ```bash
-docker-compose up -d
+$ docker-compose up -d
 ```
 
 ### Z-Ray
