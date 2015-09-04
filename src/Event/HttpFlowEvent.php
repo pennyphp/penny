@@ -3,23 +3,17 @@
 namespace GianArb\Penny\Event;
 
 use Exception;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event
 {
     /**
      * Representation of an outgoing, client-side request.
-     *
-     * @var RequestInterface|mixed
      */
     private $request;
 
     /**
      * Representation of an outgoing, server-side response.
-     *
-     * @var ResponseInterface|mixed
      */
     private $response;
 
@@ -63,28 +57,22 @@ class HttpFlowEvent extends Event
 
     /**
      * Response setter.
-     *
-     * @param ResponseInterface $response Representation of an outgoing, server-side response.
      */
-    public function setResponse(ResponseInterface $response)
+    public function setResponse($response)
     {
         $this->response = $response;
     }
 
     /**
      * Request setter.
-     *
-     * @param RequestInterface $request Representation of an outgoing, client-side request.
      */
-    public function setRequest(RequestInterface $request)
+    public function setRequest($request)
     {
         $this->request = $request;
     }
 
     /**
      * Request getter.
-     *
-     * @return RequestInterface|mixed
      */
     public function getRequest()
     {
