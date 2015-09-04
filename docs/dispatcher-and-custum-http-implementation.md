@@ -1,31 +1,29 @@
-# Dispatcher and custom HTTP implementation
+# The Dispatcher concept
 
-## HTTP implementation
-With "PHP implementation" I mean a layer that helps you to work with Request and Response, it helps you to read a request, to write a response and
-send it.
+## HTTP Libraries
 
-In PHP there are a lot of libraries with this purpose:
+By "HTTP implementation" I mean: *a layer that helps you to work with Request and Response in terms of reading a request, create a response and send it back to the client.*
+
+In PHP there are a lot of libraries that do that:
 
 * [Zend\Http](https://github.com/zendframework/zend-http)
 * [Zend\Diactoros](https://github.com/zendframework/zend-diactoros)
 * [Symfony\HttpFoundation](https://github.com/symfony/HttpFoundation)
 * [guzzle/psr7](https://github.com/guzzle/psr7)
 
-## Penny implementation
+## Dispatcher
 
-At the moment Zend\Diactoros is our default library to manage this topic in penny.
-
-* It is supported by Zend Framework community
-* It follows PSR-7 standard. [(what is PSR-7?)](http://www.php-fig.org/psr/psr-7/)
-
-But it follows the same philosophy of other components, we can replace it with your best library.
-The core of this process is [Dispatcher](https://github.com/gianarb/penny/blob/master/src/Dispatcher.php) (click link to show current implementation), it is the blob between router and
+The [Dispatcher](https://github.com/gianarb/penny/blob/master/src/Dispatcher.php) (click link to show current implementation), in penny represents the link between: router,
 request and response.
 
-We decided to remove PSR-7 because at the moment it useless, you change our Dispatcher with your implementation to manage different Router or HTTP implementation library.
+The default Penny Dispatcher implementation uses `Zend\Diactoros`. You can write your own dispatcher that makes use of your favorite HTTP library 
+
+Main advantages gained by using `Zend\Diactoros` are:
+* It is supported by the Zend Framework community
+* It follows PSR-7 standard. [(what is PSR-7?)](http://www.php-fig.org/psr/psr-7/)
 
 ## Penny, FastRouter and Symfony\HttpFoundation
-In this chapter we replace Diactoros with Symfony\HttpFoundation.
+Here we are going to see how to write a dispatcher to use with the `Symfony\HttpFoundation` component.
 
 1. Install it.
 
@@ -33,7 +31,8 @@ In this chapter we replace Diactoros with Symfony\HttpFoundation.
 composer require symfony/http-foundation
 ```
 
-2. Write your dispatcher that metch FastRouter route by HttpFoundation\Request
+2. Write your dispatcher that uses the `HttpFoundation\Request`
+
 ```php
 <?php
 
@@ -72,7 +71,8 @@ class FastSymfonyDispatcher
 
 ```
 
-3. Create custom endpoint that consum Symfony\Component\HttpFoundation\Request and Response
+3. Create custom endpoint that consume `Symfony\Component\HttpFoundation\Request` and `Response`
+
 ```php
 <?php
 use GianArb\Penny\App;
@@ -86,10 +86,5 @@ $this->app->getContainer()->set("dispatcher", $dispatcher);
 $this->app->run($request, $response);
 ```
 
-Now your application works with Symfony\HttpFoundation library.
+Now your application runs using the  `Symfony\HttpFoundation` instead of `Zend\Diactoros`.
 
-## Why PSR-7?
-PSR-7 is a standard promotes by [php-fig](http://www.php-fig.org) groups. This solution was developed
-from a strong team of developers that rapresenting most important PHP projects, this standard wants to be
-a common layer to increase interoperability between different libraries and framework, we promote it because
-it is a good common started point to build interoperable applications.
