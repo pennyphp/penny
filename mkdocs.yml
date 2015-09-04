@@ -9,6 +9,7 @@ pages:
 - ['skeleton-application.md', 'Skeleton Application']
 - ['install.md', 'Install']
 - ['flow.md', 'Application flow']
+- ['the-dispatcher-concept.md', 'The dispatcher concept']
 - ['use-case.md', 'Use case']
 - ['license.md', 'License']
 
