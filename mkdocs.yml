@@ -9,7 +9,7 @@ pages:
 - ['skeleton-application.md', 'Skeleton Application']
 - ['install.md', 'Install']
 - ['flow.md', 'Application flow']
-- ['dispatcher-and-custom-http-implementation.md', 'Dispatcher and custom HTTP implementation']
+- ['the-dispatcher-concept.md', 'The dispatcher concept']
 - ['use-case.md', 'Use case']
 - ['license.md', 'License']
 
