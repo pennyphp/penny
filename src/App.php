@@ -9,27 +9,28 @@ use GianArb\Penny\Event\HttpFlowEvent;
 use ReflectionClass;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
+use Interop\Container\ContainerInterface;
 
 class App
 {
     /**
      * Dependency Injection container.
      *
-     * @var mixed
+     * @var ContainerInterface
      */
     private $container;
 
     /**
      * Representation of an outgoing, client-side request.
      *
-     * @var RequestInterface
+     * @var mixed
      */
     private $request;
 
     /**
      * Representation of an outgoing, server-side response.
      *
-     * @var ResponseInterface
+     * @var mixed
      */
     private $response;
 
@@ -37,9 +38,9 @@ class App
      * Application initialization.
      *
      * @param mixed $router    Routing system.
-     * @param mixed $container Dependency Injection container.
+     * @param ContainerInterface $container Dependency Injection container.
      */
-    public function __construct($router = null, $container = null)
+    public function __construct($router = null, ContainerInterface $container = null)
     {
         $this->container = $container;
 
@@ -78,7 +79,7 @@ class App
      *
      * @link http://php-di.org/doc/php-definitions.html
      *
-     * @return DI\Container
+     * @return ContainerInterface
      */
     private function buildContainer($config)
     {
@@ -92,7 +93,7 @@ class App
     /**
      * Container getter.
      *
-     * @return DI\Container
+     * @return ContainerInterface
      */
     public function getContainer()
     {
@@ -129,7 +130,7 @@ class App
      * @param mixed|null  $request  Representation of an outgoing, client-side request.
      * @param mixed|null $response Representation of an outgoing, server-side response.
      *
-     * @return RequestInterface|mixed
+     * @return mixed
      */
     public function run($request = null, $response = null)
     {
