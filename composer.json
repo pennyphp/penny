@@ -1,6 +1,12 @@
 {
     "name": "gianarb/penny",
     "description": "Another PHP framework made of other components",
+    "keywords": [
+        "middleware",
+        "container",
+        "route",
+        "http-flow"
+    ],
     "require": {
 	"php": ">=5.4",
         "nikic/fast-route": "~0.4",
