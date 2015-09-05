@@ -39,6 +39,11 @@ class AppTest extends PHPUnit_Framework_TestCase
         });
     }
 
+    public function testContainerInstanceOfInteropContainerInterface()
+    {
+        $this->assertInstanceOf('Interop\Container\ContainerInterface', $this->app->getContainer());
+    }
+
     public function testChangeResponseStatusCode()
     {
         $request = (new Request())
