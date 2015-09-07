@@ -14,6 +14,18 @@ Penny is a library that help you to build PHP application. it is focused around 
 At moment Symfony, Zend Framework, Laravel are very big projects and this complexity often is not required.  
 This project help you to create applications with the best standalone components.  
 
+## Getting Started
+[classic app](https://github.com/gianarb/penny-classic-app) is a first penny implementation. "Classic" because it integrates league/plates and help you to build an HTML application.
+
+### Installation
+
+$ composer create-project penny/classic-app -s dev
+
+### Built-in webserver
+
+$ php -S 127.0.0.1:8080 -t public
+it's ready! You can visit 127.0.0.1:8080
+
 ## Projects
 [penny-foldering](https://github.com/gianarb/penny-foldering) represents only a foldering implementation. This is the simplest starting poin
 
