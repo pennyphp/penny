@@ -27,8 +27,11 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->app = new App($router);
 
         $this->app->getContainer()->get('http.flow')->attach('ERROR_DISPATCH', function ($e) {
-            $response = $e->getResponse()->withStatus($e->getException()->getCode());
-            $e->setResponse($response);
+            $code = $e->getException()->getCode();
+            if ($code >= 100 && $code <= 599) {
+                $response = $e->getResponse()->withStatus($code);
+                $e->setResponse($response);
+            }
         });
     }
 
