@@ -65,7 +65,7 @@ class App
             $container->set('router', $router);
         }
 
-        $container->set('http.flow', DI\object('Zend\EventManager\EventManager'));
+        $container->set('event_manager', DI\object('Zend\EventManager\EventManager'));
         $container->set('dispatcher', DI\object('GianArb\Penny\Dispatcher')
             ->constructor($container->get('router')));
         $container->set('di', $container);
@@ -117,11 +117,11 @@ class App
      *
      * @return HttpFlowEvent
      */
-    private function getHttpFlow()
+    private function getEventManager()
     {
         $container = $this->container;
 
-        return $container->get('http.flow');
+        return $container->get('event_manager');
     }
 
     /**
@@ -140,7 +140,7 @@ class App
 
         $container = $this->getContainer();
         $dispatcher = $this->getDispatcher();
-        $httpFlow = $this->getHttpFlow();
+        $httpFlow = $this->getEventManager();
 
         try {
             $routerInfo = $dispatcher->dispatch($request);

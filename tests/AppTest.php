@@ -26,7 +26,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $this->app = new App($router);
 
-        $this->app->getContainer()->get('http.flow')->attach('ERROR_DISPATCH', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) {
             if ($e->getException() instanceof RouteNotFound) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
@@ -84,7 +84,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get('http.flow')->attach('index.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach('index.index', function ($e) {
             $response = $e->getResponse();
             $response->getBody()->write("I'm very happy!");
             $e->setResponse($response);
@@ -102,7 +102,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get('http.flow')->attach('index.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach('index.index', function ($e) {
             $response = $e->getResponse();
             $response->getBody()->write('This is');
             $e->setResponse($response);
@@ -122,7 +122,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $response = new Response();
         $count = 0;
 
-        $this->app->getContainer()->get('http.flow')->attach('index.dummy_error', function ($e) use (&$count) {
+        $this->app->getContainer()->get('event_manager')->attach('index.dummy_error', function ($e) use (&$count) {
             $count = &$count + 1;
             throw $e->getException();
         }, 10);

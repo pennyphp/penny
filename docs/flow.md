@@ -37,7 +37,7 @@ require_once "./vendor/autoload.php";
 
 $app = new \GianArb\Penny\App();
 
-$app->getContainer()->get("http.flow")->attach("*", function ($event) {
+$app->getContainer()->get("eventManager")->attach("*", function ($event) {
     $e = $event->getException();
     if ($e instanceof Exception) {
         throw $e;
