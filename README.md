@@ -22,8 +22,9 @@ This project help you to create applications with the best standalone components
 $ composer create-project penny/classic-app -s dev
 
 ### Built-in webserver
-
+```
 $ php -S 127.0.0.1:8080 -t public
+```
 it's ready! You can visit 127.0.0.1:8080
 
 ## Projects
