@@ -42,34 +42,26 @@ class App
      */
     public function __construct($router = null, ContainerInterface $container = null)
     {
-        $this->container = $container;
+        $this->container = $container ?: $this->buildContainer(Loader::load());
+        $container = &$this->container;
 
         $this->response = new Response();
-
-        $this->request = ServerRequestFactory::fromGlobals(
-            $_SERVER,
-            $_GET,
-            $_POST,
-            $_COOKIE,
-            $_FILES
-        );
-
-        if ($this->container == null) {
-            $config = Loader::load();
-            $container = $this->buildContainer($config);
-        }
+        $this->request = ServerRequestFactory::fromGlobals();
 
         if ($router == null && $container->has('router') == false) {
             throw new Exception('Define router config');
-        } elseif ($container->has('router') == false) {
+        }
+
+        if ($container->has('router') == false) {
             $container->set('router', $router);
         }
 
         $container->set('event_manager', DI\object('Zend\EventManager\EventManager'));
-        $container->set('dispatcher', DI\object('GianArb\Penny\Dispatcher')
-            ->constructor($container->get('router')));
+        $container->set(
+            'dispatcher',
+            DI\object('GianArb\Penny\Dispatcher')->constructor($container->get('router'))
+        );
         $container->set('di', $container);
-        $this->container = $container;
     }
 
     /**
