@@ -37,7 +37,7 @@ class App
     /**
      * Application initialization.
      *
-     * @param mixed $router    Routing system.
+     * @param mixed              $router    Routing system.
      * @param ContainerInterface $container Dependency Injection container.
      */
     public function __construct($router = null, ContainerInterface $container = null)
