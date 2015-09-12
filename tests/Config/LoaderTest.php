@@ -9,26 +9,26 @@ class LoaderTest extends PHPUnit_Framework_TestCase
 {
     public function setUp()
     {
-        chdir(__DIR__."/../app/");
+        chdir(__DIR__.'/../app/');
     }
 
     public function testLoadsByDefaultPath()
     {
         $config = Loader::load();
-        $this->assertSame(1, $config["one"]);
-        $this->assertInstanceOf("StdClass", $config["two"]["class"]);
-        $this->assertFalse($config["three"]);
+        $this->assertSame(1, $config['one']);
+        $this->assertInstanceOf('StdClass', $config['two']['class']);
+        $this->assertFalse($config['three']);
     }
 
     public function testLoadsOverride()
     {
-        $config = Loader::load("./config/custom/{{*}}{{,*.local}}.php");
-        $this->assertSame("override", $config["one"]);
+        $config = Loader::load('./config/custom/{{*}}{{,*.local}}.php');
+        $this->assertSame('override', $config['one']);
     }
 
     public function testLoadsByCustomPath()
     {
-        $config = Loader::load("./config/custom/{{*}}{{,*.local}}.php");
-        $this->assertTrue($config["nine"]);
+        $config = Loader::load('./config/custom/{{*}}{{,*.local}}.php');
+        $this->assertTrue($config['nine']);
     }
 }

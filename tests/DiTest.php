@@ -3,7 +3,7 @@
 namespace GianArb\PennyTest;
 
 use DI\ContainerBuilder;
-use FastRoute\RouteCollector;
+use FastRoute;
 use GianArb\Penny\App;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
@@ -17,7 +17,7 @@ class DiTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = \FastRoute\simpleDispatcher(function (RouteCollector $router) {
+        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
             $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
 
@@ -26,21 +26,20 @@ class DiTest extends PHPUnit_Framework_TestCase
         $dic = $builder->build();
 
         $this->container = $dic;
-
     }
 
     public function testInjectionHttpFlow()
     {
-        $this->container->set("troyan", "call me");
+        $this->container->set('troyan', 'call me');
         $app = new App($this->router, $this->container);
 
         $request = (new Request())
         ->withUri(new Uri('/'))
-        ->withMethod("GET");
+        ->withMethod('GET');
         $response = new Response();
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals("call me", $response->getBody()->__toString());
+        $this->assertEquals('call me', $response->getBody()->__toString());
     }
 }

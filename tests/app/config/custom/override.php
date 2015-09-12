@@ -1,5 +1,6 @@
 <?php
+
 return [
-    "one" => "pluto",
-    "nine" => true
+    'one' => 'pluto',
+    'nine' => true,
 ];
