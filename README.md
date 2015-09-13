@@ -1,5 +1,5 @@
 # Penny
-[![Build Status](https://travis-ci.org/gianarb/penny.svg?branch=master)](https://travis-ci.org/gianarb/penny)
+[![Build Status](https://travis-ci.org/pennyphp/penny.svg?branch=master)](https://travis-ci.org/pennyphp/penny)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/gianarb/penny/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/gianarb/penny/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/gianarb/penny/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/gianarb/penny/?branch=master)
 [![Dependency Status](https://www.versioneye.com/user/projects/55dadff98d9c4b0018000466/badge.svg?style=flat)](https://www.versioneye.com/user/projects/55dadff98d9c4b0018000466)
