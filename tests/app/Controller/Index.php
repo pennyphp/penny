@@ -9,19 +9,21 @@ use Zend\Diactoros\Response;
 class Index
 {
     /**
-     * @Inject("di")
-     */
+      * @Inject("di")
+      */
      private $di;
 
     public function index(Request $request, Response $response)
     {
-        $response->getBody()->write(" a beautiful job");
+        $response->getBody()->write(' a beautiful job');
+
         return $response;
     }
 
     public function getSingle(Request $request, Response $response, $id)
     {
         $response->getBody()->write("id=$id");
+
         return $response;
     }
 
@@ -32,14 +34,16 @@ class Index
 
     public function diTest(Request $request, Response $response)
     {
-        $this->di->get("troyan");
-        $response->getBody()->write($this->di->get("troyan"));
+        $this->di->get('troyan');
+        $response->getBody()->write($this->di->get('troyan'));
+
         return $response;
     }
 
     public function loadedParams(Request $request, Response $response)
     {
-        $response->getBody()->write($this->di->get("fromFile"));
+        $response->getBody()->write($this->di->get('fromFile'));
+
         return $response;
     }
 

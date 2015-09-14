@@ -9,19 +9,45 @@ use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
 use Psr\Http\Message\RequestInterface;
 
-
 class Dispatcher
 {
+    /**
+     * Inner dispatcher.
+     *
+     * @var FastRouterDispatcherInterface
+     */
     private $router;
 
+    /**
+     * Class constructor with required FastRoute dispatcher implementation.
+     *
+     * @param FastRouterDispatcherInterface $router Inner router (based on Nikic FastRouter).
+     */
     public function __construct(FastRouterDispatcherInterface $router)
     {
         $this->router = $router;
     }
 
+    /**
+     * Dispatching.
+     *
+     * @param RequestInterface $request Representation of an outgoing, client-side request.
+     *
+     * @throws RouteNotFound    If the route is not found.
+     * @throws MethodNotAllowed If the method is not allowed.
+     *
+     * @return array
+     */
     public function dispatch(RequestInterface $request)
     {
-        $routeInfo = $this->router->dispatch($request->getMethod(), $request->getUri()->getPath());
+        $router = $this->router;
+        $uri = $request->getUri();
+
+        $routeInfo = $router->dispatch(
+            $request->getMethod(),
+            $uri->getPath()
+        );
+
         switch ($routeInfo[0]) {
             case BaseDispatcher::NOT_FOUND:
                 throw new RouteNotFound();

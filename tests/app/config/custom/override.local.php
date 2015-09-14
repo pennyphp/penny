@@ -1,5 +1,6 @@
 <?php
+
 return [
-    "one" => "override",
-    "four" => 56
+    'one' => 'override',
+    'four' => 56,
 ];
