@@ -1,7 +1,3 @@
-.idea
-tags
 vendor
 composer.phar
 composer.lock
-playout
-site
