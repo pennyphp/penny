@@ -10,12 +10,13 @@ One penny is valueless but a lot of pennies build an empire.
 ![Penny PHP logo](https://raw.githubusercontent.com/gianarb/penny/master/docs/assets/img/pennyphp.png)
 
 ## What is penny?
-Penny is a library that help you to build PHP application. it is focused around the interoperability concept.  
-At moment Symfony, Zend Framework, Laravel are very big projects and this complexity often is not required.  
-This project help you to create applications with the best standalone components.  
+Penny is a library that helps you to build PHP application. It is focused around the interoperability concept.  
+At the moment Symfony, Zend Framework and Laravel are very big projects and this complexity often is not required.  
+This project helps you to create applications with the best standalone components.  
 
 ## Getting Started
-[classic app](https://github.com/gianarb/penny-classic-app) is a first penny implementation. "Classic" because it integrates league/plates and help you to build an HTML application.
+[classic app](https://github.com/gianarb/penny-classic-app) is a first penny implementation.
+"Classic" because it integrates league/plates and helps you to build an HTML application.
 
 ### Installation
 
@@ -28,8 +29,11 @@ $ php -S 127.0.0.1:8080 -t public
 it's ready! You can visit 127.0.0.1:8080
 
 ## Projects
-[penny-foldering](https://github.com/gianarb/penny-foldering) represents only a foldering implementation. This is the simplest starting poin
+[penny-foldering](https://github.com/gianarb/penny-foldering) represents only a foldering implementation.
+This is the simplest starting point.
 
-[classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with a HTML Render. It implements [thephpleague/plates](https://github.com/thephpleague/plates) how template engine.
+[classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with a HTML Render.
+It implements [thephpleague/plates](https://github.com/thephpleague/plates) as template engine.
 
-[currency-fair](https://github.com/gianarb/currency-fair-codetest) backend directory is an API system implementations of penny. It implements [predis](https://github.com/nrk/predis) and few zf components.
+[currency-fair](https://github.com/gianarb/currency-fair-codetest) backend directory is an API system implementation of penny.
+It implements [predis](https://github.com/nrk/predis) and few zf components.
