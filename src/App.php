@@ -39,6 +39,8 @@ class App
      *
      * @param mixed              $router    Routing system.
      * @param ContainerInterface $container Dependency Injection container.
+     *
+     * @throws Exception If no router is defined.
      */
     public function __construct($router = null, ContainerInterface $container = null)
     {

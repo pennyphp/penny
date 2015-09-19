@@ -35,6 +35,7 @@ class Dispatcher
      *
      * @throws RouteNotFound    If the route is not found.
      * @throws MethodNotAllowed If the method is not allowed.
+     * @throws Exception        If no one case is matched.
      *
      * @return array
      */
