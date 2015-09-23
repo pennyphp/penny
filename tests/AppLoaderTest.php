@@ -41,11 +41,9 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
 
     public function testCorrectInjectionWithExternalContainer()
     {
-        $builder = new ContainerBuilder();
-        $builder->addDefinitions(Loader::load());
-        $builder->useAnnotations(true);
+        $container = App::buildContainer(Loader::load());
 
-        $app = new App($this->router, $builder->build());
+        $app = new App($this->router, $container);
 
         $request = (new Request())
         ->withUri(new Uri('/load'))

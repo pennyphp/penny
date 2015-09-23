@@ -44,7 +44,7 @@ class App
      */
     public function __construct($router = null, ContainerInterface $container = null)
     {
-        $this->container = $container ?: $this->buildContainer(Loader::load());
+        $this->container = $container ?: static::buildContainer(Loader::load());
         $container = &$this->container;
 
         $this->response = new Response();
@@ -58,11 +58,6 @@ class App
             $container->set('router', $router);
         }
 
-        $container->set('event_manager', DI\object('Zend\EventManager\EventManager'));
-        $container->set(
-            'dispatcher',
-            DI\object('GianArb\Penny\Dispatcher')->constructor($container->get('router'))
-        );
         $container->set('di', $container);
     }
 
@@ -75,10 +70,15 @@ class App
      *
      * @return ContainerInterface
      */
-    private function buildContainer($config)
+    public static function buildContainer($config = [])
     {
         $builder = new DI\ContainerBuilder();
         $builder->useAnnotations(true);
+        $builder->addDefinitions([
+            "event_manager" =>  DI\object('Zend\EventManager\EventManager'),
+            "dispatcher" => DI\object('GianArb\Penny\Dispatcher')
+                ->constructor(DI\get('router')),
+        ]);
         $builder->addDefinitions($config);
 
         return $builder->build();
