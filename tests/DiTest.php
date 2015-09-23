@@ -21,11 +21,7 @@ class DiTest extends PHPUnit_Framework_TestCase
             $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
 
-        $builder = new ContainerBuilder();
-        $builder->useAnnotations(true);
-        $dic = $builder->build();
-
-        $this->container = $dic;
+        $this->container = App::buildContainer();
     }
 
     public function testInjectionHttpFlow()
