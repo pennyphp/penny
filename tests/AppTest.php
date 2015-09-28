@@ -6,6 +6,7 @@ use FastRoute;
 use GianArb\Penny\App;
 use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
+use GianArb\Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
@@ -17,14 +18,15 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
             $r->addRoute('GET', '/{id:\d+}', ['TestApp\Controller\Index', 'getSingle']);
             $r->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'failed']);
             $r->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy']);
         });
 
-        $this->app = new App($router);
+        $this->app = new App(App::buildContainer($config));
 
         $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) {
             if ($e->getException() instanceof RouteNotFound) {

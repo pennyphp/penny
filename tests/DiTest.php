@@ -3,6 +3,7 @@
 namespace GianArb\PennyTest;
 
 use DI\ContainerBuilder;
+use GianArb\Penny\Config\Loader;
 use FastRoute;
 use GianArb\Penny\App;
 use PHPUnit_Framework_TestCase;
@@ -17,17 +18,18 @@ class DiTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $router) {
-            $router->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
 
-        $this->container = App::buildContainer();
+        $this->container = App::buildContainer($config);
     }
 
     public function testInjectionHttpFlow()
     {
         $this->container->set('troyan', 'call me');
-        $app = new App($this->router, $this->container);
+        $app = new App($this->container);
 
         $request = (new Request())
         ->withUri(new Uri('/'))

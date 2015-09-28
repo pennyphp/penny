@@ -13,21 +13,23 @@ use Zend\Diactoros\Uri;
 
 class AppLoaderTest extends PHPUnit_Framework_TestCase
 {
-    private $router;
+    private $container;
 
     public function setUp()
     {
         chdir(__DIR__.'/app/');
-        $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
                 'name' => 'load',
             ]);
         });
+        $this->container = App::buildContainer($config);
     }
 
     public function testCorrectInjection()
     {
-        $app = new App($this->router);
+        $app = new App($this->container);
 
         $request = (new Request())
         ->withUri(new Uri('/load'))
@@ -39,19 +41,4 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('eureka', $response->getBody()->__toString());
     }
 
-    public function testCorrectInjectionWithExternalContainer()
-    {
-        $container = App::buildContainer(Loader::load());
-
-        $app = new App($this->router, $container);
-
-        $request = (new Request())
-        ->withUri(new Uri('/load'))
-        ->withMethod('GET');
-        $response = new Response();
-
-        $response = $app->run($request, $response);
-        $this->assertEquals(200, $response->getStatusCode());
-        $this->assertEquals('eureka', $response->getBody()->__toString());
-    }
 }

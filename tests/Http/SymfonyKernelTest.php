@@ -2,7 +2,8 @@
 namespace GianArb\PennyTest\Http;
 
 use GianArb\Penny\App;
-use GianArb\PennyTest\Utils\FastSymfonyDispatcher;
+use GianArb\Penny\Config\Loader;
+use FastRoute;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -12,13 +13,14 @@ class SymfonyKernelTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $router = \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
             $r->addRoute('GET', '/', [get_class($this), 'index']);
         });
+        $config['dispatcher'] = \Di\object('GianArb\PennyTest\Utils\FastSymfonyDispatcher')
+            ->constructor(\Di\get("router"));
 
-        $this->app = new App($router);
-        $dispatcher = new FastSymfonyDispatcher($router);
-        $this->app->getContainer()->set("dispatcher", $dispatcher);
+        $this->app = new App(App::buildContainer($config));
     }
 
     public function testRunErrorReturnSameHttpObjects()

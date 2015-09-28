@@ -37,12 +37,11 @@ class App
     /**
      * Application initialization.
      *
-     * @param mixed              $router    Routing system.
      * @param ContainerInterface $container Dependency Injection container.
      *
      * @throws Exception If no router is defined.
      */
-    public function __construct($router = null, ContainerInterface $container = null)
+    public function __construct(ContainerInterface $container = null)
     {
         $this->container = $container ?: static::buildContainer(Loader::load());
         $container = &$this->container;
@@ -50,12 +49,8 @@ class App
         $this->response = new Response();
         $this->request = ServerRequestFactory::fromGlobals();
 
-        if ($router == null && $container->has('router') == false) {
-            throw new Exception('Define router config');
-        }
-
         if ($container->has('router') == false) {
-            $container->set('router', $router);
+            throw new Exception('Define router config');
         }
 
         $container->set('di', $container);
