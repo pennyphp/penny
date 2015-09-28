@@ -46,9 +46,6 @@ class App
         $this->container = $container ?: static::buildContainer(Loader::load());
         $container = &$this->container;
 
-        $this->response = new Response();
-        $this->request = ServerRequestFactory::fromGlobals();
-
         if ($container->has('router') == false) {
             throw new Exception('Define router config');
         }
@@ -123,8 +120,8 @@ class App
      */
     public function run($request = null, $response = null)
     {
-        ($request != null) ?: $request = $this->request;
-        ($response != null) ?: $response = $this->response;
+        ($request != null) ?: $request = ServerRequestFactory::fromGlobals();
+        ($response != null) ?: $response = new Response();
         $event = new HttpFlowEvent('bootstrap', $request, $response);
 
         $container = $this->getContainer();
