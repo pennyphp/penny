@@ -95,30 +95,6 @@ class App
     }
 
     /**
-     * Penny dispatcher getter.
-     *
-     * @return Dispatcher
-     */
-    private function getDispatcher()
-    {
-        $container = $this->container;
-
-        return $container->get('dispatcher');
-    }
-
-    /**
-     * Penny HTTP flow event getter.
-     *
-     * @return HttpFlowEvent
-     */
-    private function getEventManager()
-    {
-        $container = $this->container;
-
-        return $container->get('event_manager');
-    }
-
-    /**
      * Application execution.
      *
      * @param mixed|null  $request  Representation of an outgoing, client-side request.
@@ -133,8 +109,8 @@ class App
         $event = new HttpFlowEvent('bootstrap', $request, $response);
 
         $container = $this->getContainer();
-        $dispatcher = $this->getDispatcher();
-        $httpFlow = $this->getEventManager();
+        $dispatcher = $container->get('dispatcher');
+        $httpFlow = $container->get('event_manager');
 
         try {
             $routerInfo = $dispatcher->dispatch($request);
