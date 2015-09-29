@@ -54,4 +54,21 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         $dispatcher = new Dispatcher($this->router);
         $dispatcher->dispatch($request);
     }
+
+    public function testDispatchGot500Exception()
+    {
+        $this->setExpectedException('Exception');
+
+        $router = $this->prophesize('FastRoute\Dispatcher');
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('POST');
+
+        $router->dispatch('POST', '/')->willReturn([
+            0 => 3
+        ]);
+
+        $dispatcher = new Dispatcher($router->reveal());
+        $dispatcher->dispatch($request);
+    }
 }
