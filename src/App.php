@@ -120,8 +120,9 @@ class App
      */
     public function run($request = null, $response = null)
     {
-        ($request != null) ?: $request = ServerRequestFactory::fromGlobals();
-        ($response != null) ?: $response = new Response();
+        $request = ($request != null) ? $request : $request = ServerRequestFactory::fromGlobals();
+        $response = ($response !== null) ? $response : $response = new Response();
+
         $event = new HttpFlowEvent('bootstrap', $request, $response);
 
         $container = $this->getContainer();
