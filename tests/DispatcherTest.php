@@ -66,7 +66,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
         $router->dispatch('POST', '/')->willReturn([
             0 => 3
-        ]);
+        ])->shouldBeCalled();
 
         $dispatcher = new Dispatcher($router->reveal());
         $dispatcher->dispatch($request);
