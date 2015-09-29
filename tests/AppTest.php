@@ -46,6 +46,14 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $this->app->getContainer());
     }
 
+    public function testAppWithContainerThatDoesnotHasRouter()
+    {
+        $this->setExpectedException('Exception', 'Define router config');
+
+        $container = $this->prophesize('Interop\Container\ContainerInterface');
+        $app = new App($container->reveal());
+    }
+
     public function testChangeResponseStatusCode()
     {
         $request = (new Request())
