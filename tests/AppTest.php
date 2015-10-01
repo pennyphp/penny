@@ -161,4 +161,24 @@ class AppTest extends PHPUnit_Framework_TestCase
         $response = $this->app->run($request, $response);
         $this->assertEquals(405, $response->getStatusCode());
     }
+
+    /**
+     * @expectedException \RuntimeException
+     */
+    public function testDispatcherShouldBeCallable()
+    {
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('POST');
+        $response = new Response();
+
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
+        });
+        $config['dispatcher'] = new \StdClass();
+
+        $app = new App(App::buildContainer($config));
+        $app->run($request, $response);
+    }
 }
