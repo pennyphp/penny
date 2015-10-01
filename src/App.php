@@ -133,7 +133,7 @@ class App
         $httpFlow = $this->getEventManager();
 
         try {
-            $routerInfo = $dispatcher($request);
+            $routerInfo = call_user_func($dispatcher, $request);
         } catch (Exception $exception) {
             $event->setName('ERROR_DISPATCH');
             $event->setException($exception);
