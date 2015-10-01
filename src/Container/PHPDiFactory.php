@@ -19,13 +19,17 @@ class PHPDiFactory
     {
         $builder = new DI\ContainerBuilder();
         $builder->useAnnotations(true);
-        $builder->addDefinitions([
-            "event_manager" =>  DI\object('Zend\EventManager\EventManager'),
-            "dispatcher" => DI\object('GianArb\Penny\Dispatcher')
-                ->constructor(DI\get('router')),
-        ]);
+        $builder->addDefinitions(
+            [
+                "event_manager" =>  DI\object('Zend\EventManager\EventManager'),
+                "dispatcher" => DI\object('GianArb\Penny\Dispatcher')
+                    ->constructor(DI\get('router')),
+            ]
+        );
         $builder->addDefinitions($config);
+        $container = $builder->build();
+        $container->set('di', $container);
 
-        return $builder->build();
+        return $container;
     }
 }
