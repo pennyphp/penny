@@ -41,7 +41,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
 
         $dispatcher = new Dispatcher($this->router);
-        $dispatcher->dispatch($request);
+        $dispatcher($request);
     }
 
     public function testDispatchMethodNotAllowedRequest()
@@ -52,7 +52,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ->withMethod('POST');
 
         $dispatcher = new Dispatcher($this->router);
-        $dispatcher->dispatch($request);
+        $dispatcher($request);
     }
 
     public function testDispatchGot500Exception()
@@ -69,6 +69,6 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ])->shouldBeCalled();
 
         $dispatcher = new Dispatcher($router->reveal());
-        $dispatcher->dispatch($request);
+        $dispatcher($request);
     }
 }

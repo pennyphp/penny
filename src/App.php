@@ -94,7 +94,9 @@ class App
     private function getDispatcher()
     {
         $container = $this->container;
-
+        if (!is_callable($container->get("dispatcher"))) {
+            throw new \RuntimeException("Dispatcher must be a callable");
+        }
         return $container->get('dispatcher');
     }
 
@@ -130,7 +132,7 @@ class App
         $httpFlow = $this->getEventManager();
 
         try {
-            $routerInfo = $dispatcher->dispatch($request);
+            $routerInfo = $dispatcher($request);
         } catch (Exception $exception) {
             $event->setName('ERROR_DISPATCH');
             $event->setException($exception);

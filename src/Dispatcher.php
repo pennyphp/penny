@@ -31,7 +31,8 @@ class Dispatcher
     /**
      * Dispatching.
      *
-     * @param RequestInterface $request Representation of an outgoing, client-side request.
+     * @param RequestInterface $request Representation of an outgoing,
+     *  client-side request.
      *
      * @throws RouteNotFound    If the route is not found.
      * @throws MethodNotAllowed If the method is not allowed.
@@ -39,7 +40,7 @@ class Dispatcher
      *
      * @return array
      */
-    public function dispatch(RequestInterface $request)
+    public function __invoke(RequestInterface $request)
     {
         $router = $this->router;
         $uri = $request->getUri();
