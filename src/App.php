@@ -67,8 +67,8 @@ class App
         $builder = new DI\ContainerBuilder();
         $builder->useAnnotations(true);
         $builder->addDefinitions([
-            "event_manager" =>  DI\object('Zend\EventManager\EventManager'),
-            "dispatcher" => DI\object('GianArb\Penny\Dispatcher')
+            'event_manager' => DI\object('Zend\EventManager\EventManager'),
+            'dispatcher' => DI\object('GianArb\Penny\Dispatcher')
                 ->constructor(DI\get('router')),
         ]);
         $builder->addDefinitions($config);
@@ -94,9 +94,10 @@ class App
     private function getDispatcher()
     {
         $container = $this->container;
-        if (!is_callable($container->get("dispatcher"))) {
-            throw new \RuntimeException("Dispatcher must be a callable");
+        if (!is_callable($container->get('dispatcher'))) {
+            throw new \RuntimeException('Dispatcher must be a callable');
         }
+
         return $container->get('dispatcher');
     }
 
@@ -115,14 +116,14 @@ class App
     /**
      * Application execution.
      *
-     * @param mixed|null  $request  Representation of an outgoing, client-side request.
+     * @param mixed|null $request  Representation of an outgoing, client-side request.
      * @param mixed|null $response Representation of an outgoing, server-side response.
      *
      * @return mixed
      */
     public function run($request = null, $response = null)
     {
-        $request  = $request ?: ServerRequestFactory::fromGlobals();
+        $request = $request ?: ServerRequestFactory::fromGlobals();
         $response = $response ?: new Response();
 
         $event = new HttpFlowEvent('bootstrap', $request, $response);
