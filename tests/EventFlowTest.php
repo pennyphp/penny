@@ -5,6 +5,7 @@ namespace GianArb\PennyTest;
 use FastRoute;
 use GianArb\Penny\Config\Loader;
 use GianArb\Penny\App;
+use GianArb\Penny\Container;
 use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
 use PHPUnit_Framework_TestCase;
@@ -23,7 +24,7 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
         });
 
-        $this->app = new App(App::buildContainer($config));
+        $this->app = new App(Container\PHPDiFactory::buildContainer($config));
     }
 
     public function testStopEventFlow() {

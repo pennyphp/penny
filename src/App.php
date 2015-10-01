@@ -2,9 +2,9 @@
 
 namespace GianArb\Penny;
 
-use DI;
 use Exception;
 use GianArb\Penny\Config\Loader;
+use GianArb\Penny\Container;
 use GianArb\Penny\Event\HttpFlowEvent;
 use ReflectionClass;
 use Zend\Diactoros\Response;
@@ -43,7 +43,7 @@ class App
      */
     public function __construct(ContainerInterface $container = null)
     {
-        $this->container = $container ?: static::buildContainer(Loader::load());
+        $this->container = $container ?: Container\PHPDiFactory::buildContainer(Loader::load());
         $container = &$this->container;
 
         if ($container->has('router') == false) {
@@ -51,29 +51,6 @@ class App
         }
 
         $container->set('di', $container);
-    }
-
-    /**
-     * Container compilation.
-     *
-     * @param mixed $config Configuration file/array.
-     *
-     * @link http://php-di.org/doc/php-definitions.html
-     *
-     * @return ContainerInterface
-     */
-    public static function buildContainer($config = [])
-    {
-        $builder = new DI\ContainerBuilder();
-        $builder->useAnnotations(true);
-        $builder->addDefinitions([
-            'event_manager' => DI\object('Zend\EventManager\EventManager'),
-            'dispatcher' => DI\object('GianArb\Penny\Dispatcher')
-                ->constructor(DI\get('router')),
-        ]);
-        $builder->addDefinitions($config);
-
-        return $builder->build();
     }
 
     /**
