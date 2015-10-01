@@ -32,7 +32,7 @@ class Dispatcher
      * Dispatching.
      *
      * @param RequestInterface $request Representation of an outgoing,
-     *  client-side request.
+     *                                  client-side request.
      *
      * @throws RouteNotFound    If the route is not found.
      * @throws MethodNotAllowed If the method is not allowed.
