@@ -1,12 +1,12 @@
 <?php
 
-namespace GianArb\PennyTest;
+namespace PennyTest;
 
 use DI\ContainerBuilder;
 use FastRoute;
-use GianArb\Penny\App;
-use GianArb\Penny\Container;
-use GianArb\Penny\Config\Loader;
+use Penny\App;
+use Penny\Container;
+use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;

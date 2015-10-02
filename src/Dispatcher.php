@@ -1,12 +1,12 @@
 <?php
 
-namespace GianArb\Penny;
+namespace Penny;
 
 use Exception;
 use FastRoute\Dispatcher as BaseDispatcher;
 use FastRoute\Dispatcher as FastRouterDispatcherInterface;
-use GianArb\Penny\Exception\MethodNotAllowed;
-use GianArb\Penny\Exception\RouteNotFound;
+use Penny\Exception\MethodNotAllowed;
+use Penny\Exception\RouteNotFound;
 use Psr\Http\Message\RequestInterface;
 
 class Dispatcher

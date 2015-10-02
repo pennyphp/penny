@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\Penny\Event;
+namespace Penny\Event;
 
 use Exception;
 use Zend\EventManager\Event;

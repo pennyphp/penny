@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\PennyTest\Utils;
+namespace PennyTest\Utils;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,10 +19,10 @@ class FastSymfonyDispatcher
             ->dispatch($request->getMethod(), $request->getPathInfo());
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                throw new \GianArb\Penny\Exception\RouteNotFound();
+                throw new \Penny\Exception\RouteNotFound();
                 break;
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                throw new \GianArb\Penny\Exception\MethodNotAllowed();
+                throw new \Penny\Exception\MethodNotAllowed();
                 break;
             case \FastRoute\Dispatcher::FOUND:
                 return $routeInfo;

@@ -1,9 +1,9 @@
 <?php
 
-namespace GianArb\PennyTest;
+namespace PennyTest;
 
 use FastRoute;
-use GianArb\Penny\Dispatcher;
+use Penny\Dispatcher;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Uri;
@@ -35,7 +35,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testDispatchRouteNotFoundRequest()
     {
-        $this->setExpectedException('GianArb\Penny\Exception\RouteNotFound');
+        $this->setExpectedException('Penny\Exception\RouteNotFound');
         $request = (new Request())
         ->withUri(new Uri('/doh'))
         ->withMethod('GET');
@@ -46,7 +46,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testDispatchMethodNotAllowedRequest()
     {
-        $this->setExpectedException('GianArb\Penny\Exception\MethodNotAllowed');
+        $this->setExpectedException('Penny\Exception\MethodNotAllowed');
         $request = (new Request())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
