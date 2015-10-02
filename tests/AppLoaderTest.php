@@ -5,6 +5,7 @@ namespace GianArb\PennyTest;
 use DI\ContainerBuilder;
 use FastRoute;
 use GianArb\Penny\App;
+use GianArb\Penny\Container;
 use GianArb\Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
@@ -24,7 +25,7 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
                 'name' => 'load',
             ]);
         });
-        $this->container = App::buildContainer($config);
+        $this->container = Container\PHPDiFactory::buildContainer($config);
     }
 
     public function testCorrectInjection()

@@ -4,6 +4,7 @@ namespace GianArb\PennyTest;
 
 use FastRoute;
 use GianArb\Penny\App;
+use GianArb\Penny\Container;
 use GianArb\Penny\Exception\MethodNotAllowed;
 use GianArb\Penny\Exception\RouteNotFound;
 use GianArb\Penny\Config\Loader;
@@ -26,7 +27,7 @@ class AppTest extends PHPUnit_Framework_TestCase
             $r->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy']);
         });
 
-        $this->app = new App(App::buildContainer($config));
+        $this->app = new App(Container\PHPDiFactory::buildContainer($config));
 
         $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) {
             if ($e->getException() instanceof RouteNotFound) {
@@ -178,7 +179,21 @@ class AppTest extends PHPUnit_Framework_TestCase
         });
         $config['dispatcher'] = new \StdClass();
 
-        $app = new App(App::buildContainer($config));
+        $app = new App(Container\PHPDiFactory::buildContainer($config));
         $app->run($request, $response);
+    }
+
+    public function testWithInternalContainerFactory()
+    {
+        chdir(dirname(__DIR__.'/../'));
+        $app = new App();
+
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('GET');
+        $response = new Response();
+
+        $response = $app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }

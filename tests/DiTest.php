@@ -6,6 +6,7 @@ use DI\ContainerBuilder;
 use GianArb\Penny\Config\Loader;
 use FastRoute;
 use GianArb\Penny\App;
+use GianArb\Penny\Container;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
@@ -23,7 +24,7 @@ class DiTest extends PHPUnit_Framework_TestCase
             $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
         });
 
-        $this->container = App::buildContainer($config);
+        $this->container = Container\PHPDiFactory::buildContainer($config);
     }
 
     public function testInjectionHttpFlow()
