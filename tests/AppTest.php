@@ -185,7 +185,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testWithInternalContainerFactory()
     {
-        chdir(dirname(__DIR__.'/../'));
+        chdir(__DIR__.'/app');
         $app = new App();
 
         $request = (new Request())
