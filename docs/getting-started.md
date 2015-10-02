@@ -54,7 +54,7 @@ Every application has an entry point, `public/index.php` is our.
 chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
-$app = new \GianArb\Penny\App();
+$app = new \Penny\App();
 $emitter = new \Zend\Diactoros\Response\SapiEmitter();
 $emitter->emit($app->run());
 ```
@@ -359,7 +359,7 @@ Doctrine has an awesome console that helps you to manage database, schema, cache
 // cli-config.php
 require "vendor/autoload.php";
 
-$app = new \GianArb\Penny\App();
+$app = new \Penny\App();
 return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getContainer()->get("doctrine.em"));
 ```
 
