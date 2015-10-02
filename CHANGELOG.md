@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.5.0
+* [[#82]](https://github.com/pennyphp/penny/pull/82) Remove gianarb prefix
+
 # 0.4.1
 * [[8a8ae85]](https://github.com/pennyphp/penny/commit/8a8ae856fa743cc8359a6f1c02d833cfe13cccff) Fixed for case insensitive file system
 
