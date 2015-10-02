@@ -1,5 +1,8 @@
 # Changelog
 
+# 0.4.1
+* [[8a8ae85]](https://github.com/pennyphp/penny/commit/8a8ae856fa743cc8359a6f1c02d833cfe13cccff) Fixed for case insensitive file system
+
 # 0.4.0
 * [[#56]](https://github.com/pennyphp/penny/pull/56) change badge
 * [[#54]](https://github.com/pennyphp/penny/pull/54) A more clean constructor
