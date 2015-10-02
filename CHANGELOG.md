@@ -1,5 +1,24 @@
 # Changelog
 
+# 0.4.0
+* [[#56]](https://github.com/pennyphp/penny/pull/56) change badge
+* [[#54]](https://github.com/pennyphp/penny/pull/54) A more clean constructor
+* [[#58]](https://github.com/pennyphp/penny/pull/58) Ignored .idea + typos
+* [[#59]](https://github.com/pennyphp/penny/pull/59) Clean .gitignore
+* [[#62]](https://github.com/pennyphp/penny/pull/62) typo errors
+* [[#61]](https://github.com/pennyphp/penny/pull/61) Bullet points to perfect contributions
+* [[#63]](https://github.com/pennyphp/penny/pull/63) Updated docblocks
+* [[#65]](https://github.com/pennyphp/penny/pull/65) PHP-DI bootstrap configuration
+* [[#69]](https://github.com/pennyphp/penny/pull/69) Added tests for #66
+* [[#66]](https://github.com/pennyphp/penny/pull/66) Refactoring app construct
+* [[#67]](https://github.com/pennyphp/penny/pull/67) Refactoring default request and response
+* [[#70]](https://github.com/pennyphp/penny/pull/70) refactor ternary operator
+* [[#71]](https://github.com/pennyphp/penny/pull/71) add tests -> penny is now 100% unit tested
+* [[#76]](https://github.com/pennyphp/penny/pull/76) upgrade requirement to php 5.5, and zf version
+* [[#78]](https://github.com/pennyphp/penny/pull/78) apply call_user_func_array to dispatcher invoke
+* [[#73]](https://github.com/pennyphp/penny/pull/73) Dispatcher must be a callable
+* [[#79]](https://github.com/pennyphp/penny/pull/79) Create container factory
+
 # 0.3.0
 * [[#40]](https://github.com/pennyphp/penny/pull/40) update composer description
 * [[#39]](https://github.com/pennyphp/penny/pull/39) clean up
