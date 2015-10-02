@@ -43,7 +43,10 @@ class App
      */
     public function __construct(ContainerInterface $container = null)
     {
-        $this->container = $container ?: Container\PHPDiFactory::buildContainer(Loader::load());
+        if ($container === null) {
+            $container = Container\PHPDiFactory::buildContainer(Loader::load());
+        }
+        $this->container = $container;
 
         if ($container->has('router') == false) {
             throw new Exception('Define router config');

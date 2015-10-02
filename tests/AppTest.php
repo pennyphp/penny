@@ -179,7 +179,21 @@ class AppTest extends PHPUnit_Framework_TestCase
         });
         $config['dispatcher'] = new \StdClass();
 
-        $app = new App(App::buildContainer($config));
+        $app = new App(Container\PHPDiFactory::buildContainer($config));
         $app->run($request, $response);
+    }
+
+    public function testWithInternalContainerFactory()
+    {
+        chdir(dirname(__DIR__.'/../'));
+        $app = new App();
+
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('GET');
+        $response = new Response();
+
+        $response = $app->run($request, $response);
+        $this->assertEquals(200, $response->getStatusCode());
     }
 }

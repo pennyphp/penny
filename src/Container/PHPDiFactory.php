@@ -21,8 +21,8 @@ class PHPDiFactory
         $builder->useAnnotations(true);
         $builder->addDefinitions(
             [
-                "event_manager" =>  DI\object('Zend\EventManager\EventManager'),
-                "dispatcher" => DI\object('GianArb\Penny\Dispatcher')
+                'event_manager' =>  DI\object('Zend\EventManager\EventManager'),
+                'dispatcher' => DI\object('GianArb\Penny\Dispatcher')
                     ->constructor(DI\get('router')),
             ]
         );
