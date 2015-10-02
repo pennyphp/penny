@@ -13,9 +13,10 @@ class FastSymfonyDispatcher
         $this->router = $router;
     }
 
-    public function dispatch(Request $request)
+    public function __invoke(Request $request)
     {
-        $routeInfo = $this->router->dispatch($request->getMethod(), $request->getPathInfo());
+        $routeInfo = $this->router
+            ->dispatch($request->getMethod(), $request->getPathInfo());
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
                 throw new \GianArb\Penny\Exception\RouteNotFound();
