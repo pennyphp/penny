@@ -1,8 +1,8 @@
 <?php
 
-namespace GianArb\PennyTest\Config;
+namespace PennyTest\Config;
 
-use GianArb\Penny\Config\Loader;
+use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 
 class LoaderTest extends PHPUnit_Framework_TestCase

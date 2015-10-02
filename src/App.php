@@ -1,11 +1,11 @@
 <?php
 
-namespace GianArb\Penny;
+namespace Penny;
 
 use Exception;
-use GianArb\Penny\Config\Loader;
-use GianArb\Penny\Container;
-use GianArb\Penny\Event\HttpFlowEvent;
+use Penny\Config\Loader;
+use Penny\Container;
+use Penny\Event\HttpFlowEvent;
 use ReflectionClass;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;

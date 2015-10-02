@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\Penny\Exception;
+namespace Penny\Exception;
 
 use Exception;
 

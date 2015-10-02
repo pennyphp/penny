@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\Penny\Config;
+namespace Penny\Config;
 
 use Zend\Stdlib\ArrayUtils;
 use Zend\Stdlib\Glob;

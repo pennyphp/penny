@@ -1,6 +1,6 @@
 <?php
 
-namespace GianArb\Penny\Container;
+namespace Penny\Container;
 
 use DI;
 
@@ -22,7 +22,7 @@ class PHPDiFactory
         $builder->addDefinitions(
             [
                 'event_manager' =>  DI\object('Zend\EventManager\EventManager'),
-                'dispatcher' => DI\object('GianArb\Penny\Dispatcher')
+                'dispatcher' => DI\object('Penny\Dispatcher')
                     ->constructor(DI\get('router')),
             ]
         );

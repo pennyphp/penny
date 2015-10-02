@@ -54,10 +54,10 @@ class FastSymfonyDispatcher
         $routeInfo = $this->router->dispatch($request->getMethod(), $request->getPathInfo());
         switch ($routeInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                throw new \GianArb\Penny\Exception\RouteNotFound();
+                throw new \Penny\Exception\RouteNotFound();
                 break;
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                throw new \GianArb\Penny\Exception\MethodNotAllowed();
+                throw new \Penny\Exception\MethodNotAllowed();
                 break;
             case \FastRoute\Dispatcher::FOUND:
                 return $routeInfo;
@@ -75,7 +75,7 @@ class FastSymfonyDispatcher
 
 ```php
 <?php
-use GianArb\Penny\App;
+use Penny\App;
 use YourApp\Dispatcher\FastSymfonyDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
