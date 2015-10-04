@@ -52,6 +52,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->setExpectedException('Exception', 'Define router config');
 
         $container = $this->prophesize('Interop\Container\ContainerInterface');
+        $container->has('router')->willReturn(false)->shouldBeCalled();
         $app = new App($container->reveal());
     }
 

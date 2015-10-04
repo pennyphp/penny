@@ -33,7 +33,7 @@ class App
             $container = Container\PHPDiFactory::buildContainer(Loader::load());
         }
 
-        if ($container->has('router') == false) {
+        if ($container->has('router') === false) {
             throw new Exception('Define router config');
         }
 
