@@ -7,6 +7,7 @@ filter:
         - 'vendor/*'
 tools:
     external_code_coverage: true
+    timeout: 1800
     php_code_sniffer:
         enabled: true
         config:
