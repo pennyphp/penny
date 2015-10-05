@@ -8,6 +8,7 @@ filter:
 tools:
     external_code_coverage:
         timeout: 1800
+        runs: 2
     php_code_sniffer:
         enabled: true
         config:
