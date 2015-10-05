@@ -21,20 +21,6 @@ class App
     private $container;
 
     /**
-     * Representation of an outgoing, client-side request.
-     *
-     * @var mixed
-     */
-    private $request;
-
-    /**
-     * Representation of an outgoing, server-side response.
-     *
-     * @var mixed
-     */
-    private $response;
-
-    /**
      * Application initialization.
      *
      * @param ContainerInterface $container Dependency Injection container.
