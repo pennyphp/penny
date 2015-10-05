@@ -21,7 +21,7 @@ class DiTest extends PHPUnit_Framework_TestCase
     {
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'diTest']);
+            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'diTest']);
         });
 
         $this->container = Container\PHPDiFactory::buildContainer($config);

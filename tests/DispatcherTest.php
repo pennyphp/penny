@@ -15,13 +15,13 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->router = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $manager) {
-            $manager->addRoute('GET', '/', ['TestApp\Controller\Index', 'index'], [
+            $manager->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index'], [
                 'name' => 'index',
             ]);
-            $manager->addRoute('GET', '/fail', ['TestApp\Controller\Index', 'none'], [
+            $manager->addRoute('GET', '/fail', ['TestApp\Controller\IndexController', 'none'], [
                 'name' => 'fail',
             ]);
-            $manager->addRoute('GET', '/dummy', ['TestApp\Controller\Index', 'dummy'], [
+            $manager->addRoute('GET', '/dummy', ['TestApp\Controller\IndexController', 'dummy'], [
                 'name' => 'dummy',
             ]);
         });

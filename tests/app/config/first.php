@@ -2,7 +2,7 @@
 
 return [
     'router' => \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
-        $r->addRoute('GET', '/', ['TestApp\Controller\Index', 'index']);
+        $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
     }),
     'one' => 1,
     'two' => [

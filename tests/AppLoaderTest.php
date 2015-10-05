@@ -21,7 +21,7 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
         chdir(__DIR__.'/app/');
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/load', ['TestApp\Controller\Index', 'loadedParams'], [
+            $r->addRoute('GET', '/load', ['TestApp\Controller\IndexController', 'loadedParams'], [
                 'name' => 'load',
             ]);
         });
