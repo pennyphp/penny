@@ -79,7 +79,7 @@ class App
      * Application execution.
      *
      * @param mixed|null $request  Representation of an outgoing, client-side request.
-     * @param mixed|null $response Representation of an outgoing, server-side response.
+     * @param mixed|null $response Representation of an incoming, server-side response.
      *
      * @return mixed
      */
