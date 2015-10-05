@@ -32,11 +32,12 @@ class App
         if ($container === null) {
             $container = Container\PHPDiFactory::buildContainer(Loader::load());
         }
-        $this->container = $container;
 
-        if ($container->has('router') == false) {
+        if ($container->has('router') === false) {
             throw new Exception('Define router config');
         }
+
+        $this->container = $container;
     }
 
     /**
@@ -56,12 +57,12 @@ class App
      */
     private function getDispatcher()
     {
-        $container = $this->container;
-        if (!is_callable($container->get('dispatcher'))) {
+        $dispatcher = $this->container->get('dispatcher');
+        if (!is_callable($dispatcher)) {
             throw new \RuntimeException('Dispatcher must be a callable');
         }
 
-        return $container->get('dispatcher');
+        return $dispatcher;
     }
 
     /**
@@ -71,9 +72,7 @@ class App
      */
     private function getEventManager()
     {
-        $container = $this->container;
-
-        return $container->get('event_manager');
+        return $this->container->get('event_manager');
     }
 
     /**
@@ -91,7 +90,6 @@ class App
 
         $event = new HttpFlowEvent('bootstrap', $request, $response);
 
-        $container = $this->getContainer();
         $dispatcher = $this->getDispatcher();
         $httpFlow = $this->getEventManager();
 
@@ -105,7 +103,7 @@ class App
             return $event->getResponse();
         }
 
-        $controller = $container->get($routerInfo[1][0]);
+        $controller = $this->container->get($routerInfo[1][0]);
         $method = $routerInfo[1][1];
         $function = (new ReflectionClass($controller))->getShortName();
 
