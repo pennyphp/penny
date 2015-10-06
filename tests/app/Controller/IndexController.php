@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 
-class Index
+class IndexController
 {
     /**
       * @Inject("di")
