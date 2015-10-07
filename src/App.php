@@ -77,17 +77,19 @@ class App
     /**
      * Application execution.
      *
-     * @param mixed|null $request  Representation of an outgoing, client-side request.
-     * @param mixed|null $response Representation of an incoming, server-side response.
+     * @param mixed|null $request  Representation of an outgoing,
+     *  client-side request.
+     * @param mixed|null $response Representation of an incoming,
+     *  server-side response.
      *
      * @return mixed
      */
     public function run($request = null, $response = null)
     {
-        $request = $request ?: ServerRequestFactory::fromGlobals();
-        $response = $response ?: new Response();
+        $request = $request ?: $this->getContainer()->get("request");
+        $response = $response ?: $this->getContainer()->get("response");
 
-        $event = new HttpFlowEvent('bootstrap', $request, $response);
+        $event = $this->getContainer()->get("http_flow_event");
 
         $dispatcher = $this->getDispatcher();
         $httpFlow = $this->getEventManager();
