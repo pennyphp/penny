@@ -5,7 +5,8 @@ namespace Penny\Event;
 use Exception;
 use Zend\EventManager\Event;
 
-class HttpFlowEvent extends Event
+class HttpFlowEvent extends Event implements
+    OverrideInterface
 {
     /**
      * Representation of an outgoing, client-side request.
@@ -35,13 +36,6 @@ class HttpFlowEvent extends Event
      */
     private $routeInfo = [];
 
-    /**
-     * Class constructor.
-     *
-     * @param string $name     Event name.
-     * @param mixed  $request  Representation of an outgoing, client-side request.
-     * @param mixed  $response Representation of an outgoing, server-side response.
-     */
     public function __construct($name, $request, $response)
     {
         $this->setName($name);
@@ -50,9 +44,7 @@ class HttpFlowEvent extends Event
     }
 
     /**
-     * Response getter.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function getResponse()
     {
@@ -60,9 +52,7 @@ class HttpFlowEvent extends Event
     }
 
     /**
-     * Response setter.
-     *
-     * @param mixed $response Representation of an outgoing, server-side response.
+     * {@inheritDoc}
      */
     public function setResponse($response)
     {
@@ -70,9 +60,7 @@ class HttpFlowEvent extends Event
     }
 
     /**
-     * Request setter.
-     *
-     * @param mixed $request Representation of an outgoing, client-side request.
+     * {@inheritDoc}
      */
     public function setRequest($request)
     {
@@ -80,9 +68,7 @@ class HttpFlowEvent extends Event
     }
 
     /**
-     * Request getter.
-     *
-     * @return mixed
+     * {@inheritDoc}
      */
     public function getRequest()
     {

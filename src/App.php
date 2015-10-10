@@ -5,6 +5,7 @@ namespace Penny;
 use Exception;
 use Penny\Config\Loader;
 use Penny\Event\HttpFlowEvent;
+use Penny\Event\OverrideInterface;
 use ReflectionClass;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
@@ -86,10 +87,15 @@ class App
      */
     public function run($request = null, $response = null)
     {
-        $request = $request ?: $this->getContainer()->get("request");
-        $response = $response ?: $this->getContainer()->get("response");
-
         $event = $this->getContainer()->get("http_flow_event");
+        if ($event instanceof OverrideInterface) {
+            if ($request != null) {
+                $event->setRequest($request);
+            }
+            if ($response != null) {
+                $event->setResponse($response);
+            }
+        }
 
         $dispatcher = $this->getDispatcher();
         $httpFlow = $this->getEventManager();
