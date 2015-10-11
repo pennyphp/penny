@@ -6,8 +6,6 @@ use FastRoute;
 use Penny\Config\Loader;
 use Penny\App;
 use Penny\Container;
-use Penny\Exception\MethodNotAllowed;
-use Penny\Exception\RouteNotFound;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
@@ -27,7 +25,8 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
     }
 
-    public function testStopEventFlow() {
+    public function testStopEventFlow()
+    {
         $request = (new Request())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
@@ -44,6 +43,7 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
             $response = $response->withStatus(205);
             $e->setResponse($response);
             $e->stopPropagation();
+
             return $response;
         }, 200);
 

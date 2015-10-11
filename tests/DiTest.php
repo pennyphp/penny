@@ -2,7 +2,6 @@
 
 namespace PennyTest;
 
-use DI\ContainerBuilder;
 use Penny\Config\Loader;
 use FastRoute;
 use Penny\App;
