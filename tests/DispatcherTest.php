@@ -7,6 +7,7 @@ use Penny\Dispatcher;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Uri;
+use Penny\Container\PHPDiFactory;
 
 class DispatcherTest extends PHPUnit_Framework_TestCase
 {
@@ -29,7 +30,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testSetRouter()
     {
-        $dispatcher = new Dispatcher($this->router);
+        $dispatcher = new Dispatcher($this->router, PHPDiFactory::buildContainer());
         $this->assertInstanceof("FastRoute\Dispatcher\GroupCountBased", \PHPUnit_Framework_Assert::readAttribute($dispatcher, 'router'));
     }
 
@@ -40,7 +41,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ->withUri(new Uri('/doh'))
         ->withMethod('GET');
 
-        $dispatcher = new Dispatcher($this->router);
+        $dispatcher = new Dispatcher($this->router, PHPDiFactory::buildContainer());
         $dispatcher($request);
     }
 
@@ -51,7 +52,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         ->withUri(new Uri('/'))
         ->withMethod('POST');
 
-        $dispatcher = new Dispatcher($this->router);
+        $dispatcher = new Dispatcher($this->router, PHPDiFactory::buildContainer());
         $dispatcher($request);
     }
 
@@ -59,7 +60,8 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     {
         $this->setExpectedException('Exception');
 
-        $router = $this->prophesize('FastRoute\Dispatcher');
+        $router = $this->prophesize('FastRoute\Dispatcher', PHPDiFactory::buildContainer());
+        $container = $this->prophesize('Interop\Container\ContainerInterface', PHPDiFactory::buildContainer());
         $request = (new Request())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
@@ -68,7 +70,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
             0 => 3,
         ])->shouldBeCalled();
 
-        $dispatcher = new Dispatcher($router->reveal());
+        $dispatcher = new Dispatcher($router->reveal(), $container->reveal());
         $dispatcher($request);
     }
 }

@@ -2,9 +2,12 @@
 
 namespace Penny;
 
+use Interop\Container\ContainerInterface;
 use Exception;
+use ReflectionClass;
 use FastRoute\Dispatcher as BaseDispatcher;
 use FastRoute\Dispatcher as FastRouterDispatcherInterface;
+use Penny\Route\FastPsr7RouteInfo;
 use Penny\Exception\MethodNotAllowed;
 use Penny\Exception\RouteNotFound;
 use Psr\Http\Message\RequestInterface;
@@ -23,9 +26,10 @@ class Dispatcher
      *
      * @param FastRouterDispatcherInterface $router Inner router (based on Nikic FastRouter).
      */
-    public function __construct(FastRouterDispatcherInterface $router)
+    public function __construct(FastRouterDispatcherInterface $router, ContainerInterface $container)
     {
         $this->router = $router;
+        $this->container = $container;
     }
 
     /**
@@ -56,6 +60,12 @@ class Dispatcher
             case BaseDispatcher::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowed();
             case BaseDispatcher::FOUND:
+                $controller = $this->container->get($routeInfo[1][0]);
+                $method = $routeInfo[1][1];
+                $function = (new ReflectionClass($controller))->getShortName();
+
+                $eventName = sprintf('%s.%s', strtolower($function), $method);
+                $routeInfo = FastPsr7RouteInfo::matched($eventName, [$controller, $routeInfo[1][1]], $routeInfo[2]);
                 return $routeInfo;
             default:
                 throw new Exception(null, 500);

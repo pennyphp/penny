@@ -14,13 +14,12 @@ use Zend\Diactoros\Uri;
 class DiTest extends PHPUnit_Framework_TestCase
 {
     private $container;
-    private $router;
 
     public function setUp()
     {
         $config = Loader::load();
-        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'diTest']);
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $routeCollector) {
+            $routeCollector->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'diTest']);
         });
 
         $this->container = Container\PHPDiFactory::buildContainer($config);

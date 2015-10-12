@@ -3,9 +3,10 @@
 namespace Penny;
 
 use Exception;
+use RuntimeException;
 use Penny\Config\Loader;
 use Penny\Event\PennyEventInterface;
-use ReflectionClass;
+use Penny\Route\RouteInfoInterface;
 use Interop\Container\ContainerInterface;
 use Zend\EventManager\EventManager;
 
@@ -87,49 +88,48 @@ class App
     {
         $event = $this->getContainer()->get('http_flow_event');
         if (!($event instanceof PennyEventInterface)) {
-            throw new \RuntimeException('This event did not supported');
+            throw new RuntimeException('This event did not supported');
         }
-        if ($request != null) {
+        if ($request !== null) {
             $event->setRequest($request);
         }
-        if ($response != null) {
+        if ($response !== null) {
             $event->setResponse($response);
         }
 
         $dispatcher = $this->getDispatcher();
-        $httpFlow = $this->getEventManager();
+        $eventManager = $this->getEventManager();
 
         try {
-            $routerInfo = call_user_func($dispatcher, $event->getRequest());
+            $routeInfo = call_user_func($dispatcher, $event->getRequest());
+
+            if (!($routeInfo instanceof RouteInfoInterface)) {
+                throw new RuntimeException('Dispatch does not return RouteInfo object');
+            }
+
+            $event->setRouteInfo($routeInfo);
+            $event->setName($routeInfo->getName());
         } catch (Exception $exception) {
             $event->setName('ERROR_DISPATCH');
             $event->setException($exception);
-            $httpFlow->trigger($event);
+            $eventManager->trigger($event);
 
             return $event->getResponse();
         }
 
-        $controller = $this->container->get($routerInfo[1][0]);
-        $method = $routerInfo[1][1];
-        $function = (new ReflectionClass($controller))->getShortName();
-
-        $eventName = sprintf('%s.%s', strtolower($function), $method);
-        $event->setName($eventName);
-        $event->setRouteInfo($routerInfo);
-
-        $httpFlow->attach($eventName, function ($event) use ($controller, $method) {
+        $eventManager->attach($event->getName(), function ($event) use ($routeInfo) {
             $event->setResponse(call_user_func_array(
-                [$controller, $method],
-                [$event->getRequest(), $event->getResponse()] + $event->getRouteInfo()[2]
+                $routeInfo->getCallable(),
+                [$event->getRequest(), $event->getResponse()] + $routeInfo->getParams()
             ));
         }, 0);
 
         try {
-            $httpFlow->trigger($event);
+            $eventManager->trigger($event);
         } catch (Exception $exception) {
-            $event->setName($eventName.'_error');
+            $event->setName($routeInfo->getName().'_error');
             $event->setException($exception);
-            $httpFlow->trigger($event);
+            $eventManager->trigger($event);
         }
 
         return $event->getResponse();
