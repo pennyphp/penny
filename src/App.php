@@ -4,7 +4,6 @@ namespace Penny;
 
 use Exception;
 use Penny\Config\Loader;
-use Penny\Container;
 use Penny\Event\HttpFlowEvent;
 use ReflectionClass;
 use Zend\Diactoros\Response;

@@ -2,7 +2,6 @@
 
 namespace PennyTest;
 
-use DI\ContainerBuilder;
 use FastRoute;
 use Penny\App;
 use Penny\Container;
@@ -41,5 +40,4 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('eureka', $response->getBody()->__toString());
     }
-
 }
