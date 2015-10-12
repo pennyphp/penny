@@ -5,9 +5,7 @@ namespace Penny\Event;
 use Exception;
 use Zend\EventManager\Event;
 
-class HttpFlowEvent extends Event implements
-    AllowRuntimeOverrideInterface,
-    PennyEventInterface
+class HttpFlowEvent extends Event implements PennyEventInterface
 {
     /**
      * Representation of an outgoing, client-side request.
