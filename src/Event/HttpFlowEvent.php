@@ -6,7 +6,8 @@ use Exception;
 use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event implements
-    AllowRuntimeOverrideInterface
+    AllowRuntimeOverrideInterface,
+    PennyEventInterface
 {
     /**
      * Representation of an outgoing, client-side request.
@@ -90,7 +91,7 @@ class HttpFlowEvent extends Event implements
      *
      * @param array $routerInfo Routing information.
      */
-    public function setRouteInfo(array $routerInfo)
+    public function setRouteInfo($routerInfo)
     {
         $this->routeInfo = $routerInfo;
     }

@@ -5,6 +5,7 @@ namespace Penny;
 use Exception;
 use Penny\Config\Loader;
 use Penny\Event\HttpFlowEvent;
+use Penny\Event\PennyEventInterface;
 use Penny\Event\AllowRuntimeOverrideInterface;
 use ReflectionClass;
 use Zend\Diactoros\Response;
@@ -88,6 +89,9 @@ class App
     public function run($request = null, $response = null)
     {
         $event = $this->getContainer()->get('http_flow_event');
+        if (!($event instanceof PennyEventInterface)) {
+            throw new \RuntimeException('This event did not supported');
+        }
         if ($event instanceof AllowRuntimeOverrideInterface) {
             if ($request != null) {
                 $event->setRequest($request);
