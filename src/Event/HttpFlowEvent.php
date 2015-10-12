@@ -6,7 +6,7 @@ use Exception;
 use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event implements
-    OverrideInterface
+    AllowRuntimeOverrideInterface
 {
     /**
      * Representation of an outgoing, client-side request.

@@ -2,11 +2,11 @@
 namespace Penny\Event;
 
 /**
- * If your event implement this interface
- * and you populate the app->run with
- * request and response I use them into the app
+ * If your event implements this interface
+ * it supports runtime override of $request and $response
+ * into the app->run method
  */
-interface OverrideInterface
+interface AllowRuntimeOverrideInterface
 {
     /**
      * Response setter.
