@@ -4,11 +4,10 @@ namespace Penny;
 
 use Exception;
 use Penny\Config\Loader;
-use Penny\Event\HttpFlowEvent;
+use Penny\Event\PennyEventInterface;
 use ReflectionClass;
-use Zend\Diactoros\Response;
-use Zend\Diactoros\ServerRequestFactory;
 use Interop\Container\ContainerInterface;
+use Zend\EventManager\EventManager;
 
 class App
 {
@@ -67,7 +66,7 @@ class App
     /**
      * Penny HTTP flow event getter.
      *
-     * @return HttpFlowEvent
+     * @return EventManager
      */
     private function getEventManager()
     {
@@ -77,17 +76,25 @@ class App
     /**
      * Application execution.
      *
-     * @param mixed|null $request  Representation of an outgoing, client-side request.
-     * @param mixed|null $response Representation of an incoming, server-side response.
+     * @param mixed|null $request  Representation of an outgoing,
+     *  client-side request.
+     * @param mixed|null $response Representation of an incoming,
+     *  server-side response.
      *
      * @return mixed
      */
     public function run($request = null, $response = null)
     {
-        $request = $request ?: ServerRequestFactory::fromGlobals();
-        $response = $response ?: new Response();
-
-        $event = new HttpFlowEvent('bootstrap', $request, $response);
+        $event = $this->getContainer()->get('http_flow_event');
+        if (!($event instanceof PennyEventInterface)) {
+            throw new \RuntimeException('This event did not supported');
+        }
+        if ($request != null) {
+            $event->setRequest($request);
+        }
+        if ($response != null) {
+            $event->setResponse($response);
+        }
 
         $dispatcher = $this->getDispatcher();
         $httpFlow = $this->getEventManager();
