@@ -11,7 +11,7 @@ class FastPsr7RouteInfo implements RouteInfoInterface
     {
         $obj = new self();
         $obj->name = $name;
-        $obj->callable = $callable;
+        $obj->callable = (!is_callable($callable)) ? call_user_func($callable[0], $callable[1]) : $callable;
         $obj->params = $params;
         return $obj;
     }
