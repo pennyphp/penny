@@ -65,7 +65,10 @@ class Dispatcher
                 $function = (new ReflectionClass($controller))->getShortName();
 
                 if (version_compare(phpversion(), '7', '>=')) {
-                    $callable = call_user_func($controller, $routeInfo[1][1]);
+                    $controllerMethod = $routeInfo[1][1];
+                    $callable =  function() use ($controller, $controllerMethod) {
+                        return $controller->$controllerMethod();
+                    };
                 } else {
                     $callable = [$controller, $routeInfo[1][1]];
                 }
