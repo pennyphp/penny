@@ -64,8 +64,17 @@ class Dispatcher
                 $method = $routeInfo[1][1];
                 $function = (new ReflectionClass($controller))->getShortName();
 
+                if (version_compare(phpversion(), '7', '>=')) {
+                    $controllerMethod = $routeInfo[1][1];
+                    $callable =  function() use ($controller, $controllerMethod) {
+                        return $controller->$controllerMethod();
+                    };
+                } else {
+                    $callable = [$controller, $routeInfo[1][1]];
+                }
+
                 $eventName = sprintf('%s.%s', strtolower($function), $method);
-                $routeInfo = FastPsr7RouteInfo::matched($eventName, [$controller, $routeInfo[1][1]], $routeInfo[2]);
+                $routeInfo = FastPsr7RouteInfo::matched($eventName, $callable, $routeInfo[2]);
                 return $routeInfo;
             default:
                 throw new Exception(null, 500);
