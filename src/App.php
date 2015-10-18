@@ -101,7 +101,7 @@ class App
         $eventManager = $this->getEventManager();
 
         try {
-            $routeInfo = call_user_func($dispatcher, $event->getRequest());
+            $routeInfo = call_user_func_array($dispatcher, [$event->getRequest()]);
 
             if (!($routeInfo instanceof RouteInfoInterface)) {
                 throw new RuntimeException('Dispatch does not return RouteInfo object');
