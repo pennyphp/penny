@@ -16,11 +16,13 @@ In PHP there are a lot of libraries that do that:
 The [Dispatcher](https://github.com/gianarb/penny/blob/master/src/Dispatcher.php) (click link to show current implementation), in penny represents the link between: router,
 request and response.
 
-The default Penny Dispatcher implementation uses `Zend\Diactoros`. You can write your own dispatcher that makes use of your favorite HTTP library 
+The default Penny Dispatcher implementation uses `Zend\Diactoros`. You can write your own dispatcher that makes use of your favorite HTTP library
 
 Main advantages gained by using `Zend\Diactoros` are:
 * It is supported by the Zend Framework community
 * It follows PSR-7 standard. [(what is PSR-7?)](http://www.php-fig.org/psr/psr-7/)
+
+If the dispatch process is good and exists a callable for your request it returns a RouteInfo implementations.
 
 ## Penny, FastRouter and Symfony\HttpFoundation
 Here we are going to see how to write a dispatcher to use with the `Symfony\HttpFoundation` component.

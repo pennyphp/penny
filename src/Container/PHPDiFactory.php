@@ -30,8 +30,9 @@ class PHPDiFactory
                         DI\get('response')
                     ),
                 'event_manager' =>  DI\object('Zend\EventManager\EventManager'),
-                'dispatcher' => DI\object('Penny\Dispatcher')
-                    ->constructor(DI\get('router')),
+                'dispatcher' => DI\factory(function ($container) {
+                    return new \Penny\Dispatcher($container->get('router'), $container);
+                })
             ]
         );
         $builder->addDefinitions($config);

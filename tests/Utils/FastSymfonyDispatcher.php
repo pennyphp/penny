@@ -3,21 +3,25 @@
 namespace PennyTest\Utils;
 
 use Symfony\Component\HttpFoundation\Request;
+use Penny\Route\FastPsr7RouteInfo;
+use ReflectionClass;
 
 class FastSymfonyDispatcher
 {
     private $router;
+    private $container;
 
-    public function __construct($router)
+    public function __construct($router, $container)
     {
         $this->router = $router;
+        $this->container = $container;
     }
 
     public function __invoke(Request $request)
     {
-        $routeInfo = $this->router
+        $fastRouteInfo = $this->router
             ->dispatch($request->getMethod(), $request->getPathInfo());
-        switch ($routeInfo[0]) {
+        switch ($fastRouteInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
                 throw new \Penny\Exception\RouteNotFound();
                 break;
@@ -25,6 +29,15 @@ class FastSymfonyDispatcher
                 throw new \Penny\Exception\MethodNotAllowed();
                 break;
             case \FastRoute\Dispatcher::FOUND:
+                $controller = $this->container->get($fastRouteInfo[1][0]);
+                $method = $fastRouteInfo[1][1];
+                $function = (new ReflectionClass($controller))->getShortName();
+
+                $eventName = sprintf('%s.%s', strtolower($function), $method);
+                $callback = function($controller, $fastRouteInfo) {
+                    return call_user_func([$controller, $fastRouteInfo[1][1]]);
+                };
+                $routeInfo = FastPsr7RouteInfo::matched($eventName, $callback($controller, $fastRouteInfo[1][1]), $fastRouteInfo[2]);
                 return $routeInfo;
                 break;
             default:
