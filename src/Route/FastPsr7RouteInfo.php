@@ -1,7 +1,6 @@
 <?php
 namespace Penny\Route;
 
-use InvalidArgumentException;
 
 class FastPsr7RouteInfo implements RouteInfoInterface
 {
@@ -9,11 +8,8 @@ class FastPsr7RouteInfo implements RouteInfoInterface
     private $callable;
     private $params;
 
-    public static function matched($name, $callable, $params = [])
+    public static function matched($name, callable $callable, $params = [])
     {
-        if (!is_callable($callable)) {
-            throw new InvalidArgumentException('$callable could be only a callable');
-        }
         $obj = new self();
         $obj->name = $name;
         $obj->callable = $callable;
