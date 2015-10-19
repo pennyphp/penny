@@ -3,8 +3,10 @@
 namespace PennyTest;
 
 use FastRoute;
+use Interop\Container\ContainerInterface;
 use Penny\App;
 use Penny\Container;
+use Penny\Event\HttpFlowEvent;
 use Penny\Exception\MethodNotAllowed;
 use Penny\Exception\RouteNotFound;
 use Penny\Config\Loader;
@@ -13,6 +15,7 @@ use stdClass;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
+use Zend\EventManager\EventManager;
 
 class AppTest extends PHPUnit_Framework_TestCase
 {
@@ -212,6 +215,32 @@ class AppTest extends PHPUnit_Framework_TestCase
         $response = new Response();
 
         $app->getContainer()->set('http_flow_event', new stdClass());
+        $response = $app->run($request, $response);
+    }
+
+    public function testRouteInfoNotInstanceOfRouteInfoInterface()
+    {
+        //$this->setExpectedException('RuntimeException');
+
+        chdir(__DIR__.'/app');
+        $container = $this->prophesize(ContainerInterface::class);
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('GET');
+        $response = new Response();
+
+        $dispatcher = function () use ($request) {
+            return 'callback';
+        };
+        $httpFlowEvent = $this->prophesize(HttpFlowEvent::class);
+        $eventManager = $this->prophesize(EventManager::class);
+
+        $container->has('router')->willReturn(true);
+        $container->get('http_flow_event')->willReturn($httpFlowEvent);
+        $container->get('dispatcher')->willReturn($dispatcher);
+        $container->get('event_manager')->willReturn($eventManager);
+
+        $app = new App($container->reveal());
         $response = $app->run($request, $response);
     }
 }
