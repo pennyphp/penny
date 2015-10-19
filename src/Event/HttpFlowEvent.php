@@ -3,6 +3,7 @@
 namespace Penny\Event;
 
 use Exception;
+use Penny\Route\RouteInfoInterface;
 use Zend\EventManager\Event;
 
 class HttpFlowEvent extends Event implements PennyEventInterface
@@ -31,9 +32,9 @@ class HttpFlowEvent extends Event implements PennyEventInterface
     /**
      * Routing information.
      *
-     * @var array
+     * @var RouteInfoInterface
      */
-    private $routeInfo = [];
+    private $routeInfo;
 
     public function __construct($name, $request, $response)
     {
@@ -77,7 +78,7 @@ class HttpFlowEvent extends Event implements PennyEventInterface
     /**
      * Route info getter.
      *
-     * @return array
+     * @return RouteInfoInterface
      */
     public function getRouteInfo()
     {
@@ -87,9 +88,9 @@ class HttpFlowEvent extends Event implements PennyEventInterface
     /**
      * Route info setter.
      *
-     * @param array $routerInfo Routing information.
+     * @param RouteInfoInterface $routerInfo Routing information.
      */
-    public function setRouteInfo($routerInfo)
+    public function setRouteInfo(RouteInfoInterface $routerInfo)
     {
         $this->routeInfo = $routerInfo;
     }
