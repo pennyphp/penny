@@ -9,6 +9,7 @@ use Penny\Exception\MethodNotAllowed;
 use Penny\Exception\RouteNotFound;
 use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
+use stdClass;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
@@ -196,5 +197,21 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $response = $app->run($request, $response);
         $this->assertEquals(200, $response->getStatusCode());
+    }
+
+    public function testHttpFlowEventNotInstanceOfPennyEventInterface()
+    {
+        $this->setExpectedException('RuntimeException');
+
+        chdir(__DIR__.'/app');
+        $app = new App();
+
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('GET');
+        $response = new Response();
+
+        $app->getContainer()->set('http_flow_event', new stdClass());
+        $response = $app->run($request, $response);
     }
 }
