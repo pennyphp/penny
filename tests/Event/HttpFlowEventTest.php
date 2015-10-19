@@ -26,17 +26,12 @@ class HttpFlowEventTest extends PHPUnit_Framework_TestCase
 
     public function testGetResponse()
     {
-        $response = new Response();
-        $this->assertSame($response, $this->event->getResponse());
+        $this->assertInstanceOf(Response::class, $this->event->getResponse());
     }
 
     public function testGetRequest()
     {
-        $request = (new Request())
-        ->withUri(new Uri('/'))
-        ->withMethod('GET');
-
-        $this->assertSame($request, $this->event->getRequest());
+        $this->assertInstanceOf(Request::class, $this->event->getRequest());
     }
 
     public function testSetGetRouteInfo()
