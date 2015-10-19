@@ -34,7 +34,10 @@ class FastSymfonyDispatcher
                 $function = (new ReflectionClass($controller))->getShortName();
 
                 $eventName = sprintf('%s.%s', strtolower($function), $method);
-                $routeInfo = FastPsr7RouteInfo::matched($eventName, [$controller, $fastRouteInfo[1][1]], $fastRouteInfo[2]);
+                $callback = function($controller, $fastRouteInfo) {
+                    return call_user_func([$controller, $fastRouteInfo[1][1]]);
+                };
+                $routeInfo = FastPsr7RouteInfo::matched($eventName, $callback($controller, $fastRouteInfo[1][1]), $fastRouteInfo[2]);
                 return $routeInfo;
                 break;
             default:
