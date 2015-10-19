@@ -220,8 +220,6 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testRouteInfoNotInstanceOfRouteInfoInterface()
     {
-        //$this->setExpectedException('RuntimeException');
-
         chdir(__DIR__.'/app');
         $container = $this->prophesize(ContainerInterface::class);
         $request = (new Request())
