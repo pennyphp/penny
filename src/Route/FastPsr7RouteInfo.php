@@ -1,7 +1,6 @@
 <?php
 namespace Penny\Route;
 
-
 class FastPsr7RouteInfo implements RouteInfoInterface
 {
     private $name;
