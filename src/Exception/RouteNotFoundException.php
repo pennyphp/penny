@@ -2,9 +2,7 @@
 
 namespace Penny\Exception;
 
-use Exception;
-
-final class RouteNotFound extends Exception
+final class RouteNotFoundException extends Exception
 {
     /**
      * Exception code.

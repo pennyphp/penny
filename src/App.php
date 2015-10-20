@@ -3,11 +3,12 @@
 namespace Penny;
 
 use Exception;
-use RuntimeException;
+use Interop\Container\ContainerInterface;
 use Penny\Config\Loader;
 use Penny\Event\PennyEventInterface;
+use Penny\Exception\Exception as PennyException;
+use Penny\Exception\RuntimeException;
 use Penny\Route\RouteInfoInterface;
-use Interop\Container\ContainerInterface;
 use Zend\EventManager\EventManager;
 
 class App
@@ -24,7 +25,7 @@ class App
      *
      * @param ContainerInterface $container Dependency Injection container.
      *
-     * @throws Exception If no router is defined.
+     * @throws PennyException If no router is defined.
      */
     public function __construct(ContainerInterface $container = null)
     {
@@ -33,7 +34,7 @@ class App
         }
 
         if ($container->has('router') === false) {
-            throw new Exception('Define router config');
+            throw new PennyException('Define router config');
         }
 
         $this->container = $container;
@@ -58,7 +59,7 @@ class App
     {
         $dispatcher = $this->container->get('dispatcher');
         if (!is_callable($dispatcher)) {
-            throw new \RuntimeException('Dispatcher must be a callable');
+            throw new RuntimeException('Dispatcher must be a callable');
         }
 
         return $dispatcher;

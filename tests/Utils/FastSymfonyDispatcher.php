@@ -23,10 +23,10 @@ class FastSymfonyDispatcher
             ->dispatch($request->getMethod(), $request->getPathInfo());
         switch ($fastRouteInfo[0]) {
             case \FastRoute\Dispatcher::NOT_FOUND:
-                throw new \Penny\Exception\RouteNotFound();
+                throw new \Penny\Exception\RouteNotFoundException();
                 break;
             case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-                throw new \Penny\Exception\MethodNotAllowed();
+                throw new \Penny\Exception\MethodNotAllowedException();
                 break;
             case \FastRoute\Dispatcher::FOUND:
                 $controller = $this->container->get($fastRouteInfo[1][0]);
