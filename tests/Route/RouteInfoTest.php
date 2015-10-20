@@ -1,4 +1,5 @@
 <?php
+
 namespace PennyTest\Route;
 
 use PHPUnit_Framework_TestCase;
@@ -19,9 +20,9 @@ class RouteInfoTest extends PHPUnit_Framework_TestCase
         $fastRouteInfo = [
             [],
             [new IndexController(), 'index'],
-            ["id" => 5]
+            ['id' => 5],
         ];
-        $routeInfo = FastPsr7RouteInfo::matched("index.try", $fastRouteInfo[1], $fastRouteInfo[2]);
-        $this->assertSame("index.try", $routeInfo->getName());
+        $routeInfo = FastPsr7RouteInfo::matched('index.try', $fastRouteInfo[1], $fastRouteInfo[2]);
+        $this->assertSame('index.try', $routeInfo->getName());
     }
 }

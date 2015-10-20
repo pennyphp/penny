@@ -1,4 +1,5 @@
 <?php
+
 namespace Penny\Route;
 
 interface RouteInfoInterface

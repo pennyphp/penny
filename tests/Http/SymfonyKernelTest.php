@@ -8,7 +8,6 @@ use Penny\Config\Loader;
 use FastRoute;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use TestApp\Controller\IndexController;
 
 class SymfonyKernelTest extends \PHPUnit_Framework_TestCase
 {

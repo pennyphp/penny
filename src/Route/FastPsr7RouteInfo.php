@@ -1,4 +1,5 @@
 <?php
+
 namespace Penny\Route;
 
 class FastPsr7RouteInfo implements RouteInfoInterface
@@ -13,6 +14,7 @@ class FastPsr7RouteInfo implements RouteInfoInterface
         $obj->name = $name;
         $obj->callable = $callable;
         $obj->params = $params;
+
         return $obj;
     }
 
