@@ -2,9 +2,9 @@
 
 namespace PennyTest\Utils;
 
-use Symfony\Component\HttpFoundation\Request;
-use Penny\Route\FastPsr7RouteInfo;
 use ReflectionClass;
+use Penny\Route\RouteInfo;
+use Symfony\Component\HttpFoundation\Request;
 
 class FastSymfonyDispatcher
 {
@@ -37,8 +37,7 @@ class FastSymfonyDispatcher
                 $callback = function ($controller, $fastRouteInfo) {
                     return call_user_func([$controller, $fastRouteInfo[1][1]]);
                 };
-                $routeInfo = FastPsr7RouteInfo::matched($eventName, $callback($controller, $fastRouteInfo[1][1]), $fastRouteInfo[2]);
-
+                $routeInfo = new RouteInfo($eventName, $callback($controller, $fastRouteInfo[1][1]), $fastRouteInfo[2]);
                 return $routeInfo;
                 break;
             default:

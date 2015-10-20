@@ -2,20 +2,17 @@
 
 namespace Penny\Route;
 
-class FastPsr7RouteInfo implements RouteInfoInterface
+class RouteInfo implements RouteInfoInterface
 {
     private $name;
     private $callable;
     private $params;
 
-    public static function matched($name, callable $callable, $params = [])
+    public function __construct($name, callable $callable, $params = [])
     {
-        $obj = new self();
-        $obj->name = $name;
-        $obj->callable = $callable;
-        $obj->params = $params;
-
-        return $obj;
+        $this->name = $name;
+        $this->callable = $callable;
+        $this->params = $params;
     }
 
     public function getName()
