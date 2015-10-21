@@ -4,7 +4,7 @@ namespace Penny\Exception;
 
 use Exception;
 
-final class MethodNotAllowed extends Exception
+final class MethodNotAllowedException extends Exception
 {
     /**
      * Exception code.

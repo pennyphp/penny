@@ -6,8 +6,8 @@ use Interop\Container\ContainerInterface;
 use Exception;
 use ReflectionClass;
 use FastRoute\Dispatcher as BaseDispatcher;
-use Penny\Exception\MethodNotAllowed;
-use Penny\Exception\RouteNotFound;
+use Penny\Exception\MethodNotAllowedException;
+use Penny\Exception\RouteNotFoundException;
 use Psr\Http\Message\RequestInterface;
 use Penny\Route\RouteInfo;
 
@@ -37,9 +37,9 @@ class Dispatcher
      * @param RequestInterface $request Representation of an outgoing,
      *                                  client-side request.
      *
-     * @throws RouteNotFound    If the route is not found.
-     * @throws MethodNotAllowed If the method is not allowed.
-     * @throws Exception        If no one case is matched.
+     * @throws RouteNotFoundException    If the route is not found.
+     * @throws MethodNotAllowedException If the method is not allowed.
+     * @throws Exception                 If no one case is matched.
      *
      * @return array
      */
@@ -55,9 +55,9 @@ class Dispatcher
 
         switch ($routeInfo[0]) {
             case BaseDispatcher::NOT_FOUND:
-                throw new RouteNotFound();
+                throw new RouteNotFoundException();
             case BaseDispatcher::METHOD_NOT_ALLOWED:
-                throw new MethodNotAllowed();
+                throw new MethodNotAllowedException();
             case BaseDispatcher::FOUND:
                 $controller = $this->container->get($routeInfo[1][0]);
                 $method = $routeInfo[1][1];
