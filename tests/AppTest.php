@@ -7,8 +7,8 @@ use Interop\Container\ContainerInterface;
 use Penny\App;
 use Penny\Container;
 use Penny\Event\HttpFlowEvent;
-use Penny\Exception\MethodNotAllowed;
-use Penny\Exception\RouteNotFound;
+use Penny\Exception\MethodNotAllowedException;
+use Penny\Exception\RouteNotFoundException;
 use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 use stdClass;
@@ -34,12 +34,12 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
 
         $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) {
-            if ($e->getException() instanceof RouteNotFound) {
+            if ($e->getException() instanceof RouteNotFoundException) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
             }
 
-            if (405 == $e->getException() instanceof MethodNotAllowed) {
+            if (405 == $e->getException() instanceof MethodNotAllowedException) {
                 $response = $e->getResponse()->withStatus(405);
                 $e->setResponse($response);
             }

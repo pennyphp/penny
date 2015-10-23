@@ -9,8 +9,8 @@ Dispatcher tries to match router and request, if this match exists it returns th
 
 There are two possible kind of problems:
 
-* Route doesn't exist, an `Penny\Exception\RouteNotFound` Exception is thrown;
-* Route exists but the HTTP Method hasn't been matched, an `Penny\Exception\MethodNotAllowed` Exception is thrown;
+* Route doesn't exist, an `Penny\Exception\RouteNotFoundException` Exception is thrown;
+* Route exists but the HTTP Method hasn't been matched, an `Penny\Exception\MethodNotAllowedException` Exception is thrown;
 
 If no exception are thrown, a response is returned back.
 
