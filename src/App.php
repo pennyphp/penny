@@ -110,7 +110,7 @@ class App
             $event->setRouteInfo($routeInfo);
             $event->setName($routeInfo->getName());
         } catch (Exception $exception) {
-            $event->setName('ERROR_DISPATCH');
+            $event->setName('dispatch_error');
             $event->setException($exception);
             $eventManager->trigger($event);
 
