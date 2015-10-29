@@ -5,7 +5,7 @@
 This is the Penny's flowchart.
 It is a event-based middleware. There is only one main event that turns into the application flow.  
 
-Dispatcher tries to match router and request, if this match exists it returns the result, if not, or in case of problems it triggers an `ERROR_DISPATCH` event.
+Dispatcher tries to match router and request, if this match exists it returns the result, if not, or in case of problems it triggers an `dispatch_error` event.
 
 There are two possible kind of problems:
 
