@@ -31,7 +31,7 @@ class SymfonyKernelTest extends \PHPUnit_Framework_TestCase
         $requestTest = null;
         $responseTest = null;
 
-        $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) use (&$requestTest, &$responseTest) {
+        $this->app->getContainer()->get('event_manager')->attach('dispatch_error', function ($e) use (&$requestTest, &$responseTest) {
             $requestTest = $e->getRequest();
             $responseTest = $e->getResponse();
         });

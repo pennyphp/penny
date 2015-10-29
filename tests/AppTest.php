@@ -33,7 +33,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
 
-        $this->app->getContainer()->get('event_manager')->attach('ERROR_DISPATCH', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach('dispatch_error', function ($e) {
             if ($e->getException() instanceof RouteNotFoundException) {
                 $response = $e->getResponse()->withStatus(404);
                 $e->setResponse($response);
