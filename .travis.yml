@@ -25,3 +25,4 @@ after_script:
 
 notifications:
   irc: "irc.freenode.org#pennyphp"
+  email: false
