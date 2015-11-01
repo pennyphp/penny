@@ -262,7 +262,7 @@ class IndexController
 
 ## Database integration with Doctrine 2
 
-We are using [Doctrine](https://github.com/dotrine/doctrine2) which is a popular Object Relational Mapper (ORM) library and the following  is it's basic configuration copied directly by
+We are using [Doctrine](https://github.com/doctrine/doctrine2) which is a popular Object Relational Mapper (ORM) library and the following  is it's basic configuration copied directly by
  official site.
 
 ```php
