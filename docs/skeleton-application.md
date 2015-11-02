@@ -31,7 +31,7 @@ PHP dependencies and autoloading are managed trough composer. [New to composer?]
 
 ## Get it
 
-The Penny skeleton application is [hosted on GitHub](https://github.com/gianarb/penny-classic-app)
+The Penny skeleton application is [hosted on GitHub](https://github.com/pennyphp/penny-skeleton-app)
 
 The most common ways to get it are:
 
@@ -44,15 +44,15 @@ $ composer create-project penny/classic-app -s dev
 ### Via git clone
 
 ```bash
-$ git clone https://github.com/gianarb/penny-classic-app.git
-$ cd penny-classic-app && composer install
+$ git clone https://github.com/pennyphp/penny-skeleton-app.git
+$ cd penny-skeleton-app && composer install
 ```
 
 ### Downloading the latest master archive
 
 ```bash
-$ wget -nv -O - https://github.com/gianarb/penny-classic-app/archive/master.zip | tar zx
-$ cd penny-classic-app-master && composer install
+$ wget -nv -O - https://github.com/pennyphp/penny-skeleton-app/archive/master.zip | tar zx
+$ cd penny-skeleton-app-master && composer install
 ```
 
 ## Build assets
@@ -102,7 +102,7 @@ $ php -S 0.0.0.0:80 -t public
 **Attention**: This is configured  as a *development* environment.
 If you want to use it in production you have to: disable error reporting, persist logs, disable Z-Ray, raise limits and fine tune your configurations.
 
-The `penny-classic-app` repository contains a `docker-compose.yml.dist` file which currently configures two containers, one
+The `penny-skeleton-app` repository contains a `docker-compose.yml.dist` file which currently configures two containers, one
 running the NGINX web server and one running php-fpm.
 This file should work as is but  *must be renamed* into `docker-compose.yml`. You can modify if you need something specific for your system like paths, ip addresses, ports, additional services (databases, queues, caching layers) and so on.
 Remember that the docker-compose.yml file is in `.gitignore` since this is very specific to the current installation.

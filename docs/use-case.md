@@ -5,8 +5,8 @@ Open a PR and change this list to add yours!
 
 # Skeletons
 
-* [penny-foldering](https://github.com/gianarb/penny-foldering) is a folder structure example. This is the simplest starting point.
-* [classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with an HTML Render.
+* [penny-foldering](https://github.com/pennyphp/penny-foldering) is a folder structure example. This is the simplest starting point.
+* [penny-skeleton-app](https://github.com/pennyphp/penny-skeleton-app) is a skeleton application to build classic web application with an HTML Render.
 It uses [thephpleague/plates](https://github.com/thephpleague/plates) as template engine.
 
 # Applications

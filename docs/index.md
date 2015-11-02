@@ -16,4 +16,4 @@ This freedom requires a strong knowledge of the Dependency Injection pattern and
 
 Here we put a list of implementation examples to help you with your development process:
 
-* [classic-app](https://github.com/gianarb/penny-classic-app) is a skeleton application to build classic web application with a HTML Render. It implements [thephpleague/plates](https://github.com/thephpleague/plates) how template engine.
+* [penny-skeleton-app](https://github.com/gianarb/penny-skeleton-app) is a skeleton application to build web application with a HTML Render. It implements [thephpleague/plates](https://github.com/thephpleague/plates) how template engine.
