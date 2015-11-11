@@ -3,10 +3,11 @@ namespace Penny\Event;
 
 use Exception;
 use Penny\Route\RouteInfoInterface;
-use Zend\EventManager\EventInterface;
 
-interface PennyEventInterface extends EventInterface
+interface PennyEventInterface
 {
+    public function getName();
+    public function setName($name);
     public function setResponse($response);
     public function getResponse();
     public function setRequest($request);
@@ -15,4 +16,5 @@ interface PennyEventInterface extends EventInterface
     public function setRouteInfo(RouteInfoInterface $routerInfo);
     public function setException(Exception $exception);
     public function getException();
+    public function stopPropagation($flag = true);
 }
