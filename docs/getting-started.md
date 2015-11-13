@@ -59,13 +59,22 @@ $emitter = new \Zend\Diactoros\Response\SapiEmitter();
 $emitter->emit($app->run());
 ```
 
-Create these directories or clone [penny-foldering](https://github.com/gianarb/penny-foldering).
+The `Penny\App` allow us to pass Container that instance of `Interop\Container\ContainerInterface`, if we don't supply any, it will load using PHP DI that will read `./config/{{*}}{{,*.local}}.php` as default. For custom path for config to be read with PHP DI, we can specify:
+
+```php
+$config = Loader::load("./config/{{*}}{{,*.local}}.php");
+$app    = new App(Container\PHPDiFactory::buildContainer($config));
+```
+
+To build penny app, we can create these directories or clone [penny-foldering](https://github.com/gianarb/penny-foldering).
 
 ```bash
 git clone git@github.com:gianarb/penny-foldering ./penny-app
 cd penny-app
 composer install
 ```
+
+There is easier way, use [penny-skeleton-app](/docs/skeleton-application.md).
 
 # WebServer
 

@@ -82,11 +82,10 @@ use YourApp\Dispatcher\FastSymfonyDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-$this->app = new App($router);
+$this->app = new App();
 $dispatcher = new FastSymfonyDispatcher($router);
 $this->app->getContainer()->set("dispatcher", $dispatcher);
 $this->app->run($request, $response);
 ```
 
 Now your application runs using the  `Symfony\HttpFoundation` instead of `Zend\Diactoros`.
-
