@@ -51,6 +51,12 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $this->app->getContainer());
     }
 
+    public function testCustomPathRole()
+    {
+        $app = new App(null, __DIR__ . '/CustomConfig/{{*}}{{,*.local}}.php');
+        $this->assertTrue($app->getContainer()->has('router'));
+    }
+
     public function testAppWithContainerThatDoesnotHasRouter()
     {
         $this->setExpectedException('Exception', 'Define router config');
