@@ -11,6 +11,9 @@ pages:
 - ['flow.md', 'Application flow']
 - ['the-dispatcher-concept.md', 'The dispatcher concept']
 - ['use-case.md', 'Use case']
+- ['event-manager-intro.md', 'Event Manager Introduction']
+- ['available-event-manager.md', 'Available Event Manager']
+- ['write-your-event-manager-proxy.md', 'Write Your Event Manager Proxy']
 - ['license.md', 'License']
 
 copyright: Copyright &copy; 2015, <a href="https://github.com/gianarb">Gianluca Arbezzano</a>.
