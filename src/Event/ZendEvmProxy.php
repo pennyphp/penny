@@ -21,7 +21,7 @@ class ZendEvmProxy implements PennyEvmInterface
     /**
      * {@inheritDoc}
      */
-    public function trigger(PennyEventInterface $event)
+    public function trigger($event)
     {
         $this->eventManager->trigger($event);
         return $this;
