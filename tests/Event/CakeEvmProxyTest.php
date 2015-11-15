@@ -2,9 +2,7 @@
 
 namespace PennyTest\Event;
 
-use Exception;
 use Penny\Event\CakeEvmProxy;
-use Cake\Event\EventManager;
 use PHPUnit_Framework_TestCase;
 
 class CakeEmvProxyTest extends PHPUnit_Framework_TestCase
