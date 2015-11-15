@@ -45,15 +45,14 @@ class YourAwesomeEventManagerProxy implements PennyEvmInterface
 After that, you can register it as service named 'event_manager' in your favourite container.
 
 ```php
-$container = YourAwesomeContainerImplementsPsrContainerInterface();
-$container->set('event_manager', new YourAwesomeEventManagerProxy());
-// other set 'request', 'response',
+use App\EventManager\Event\YourAwesomeEventManagerProxy;
+use DI;
 
 $builder = new DI\ContainerBuilder();
 $builder->useAnnotations(true);
 $builder->addDefinitions(
     [
-        'event_manager' =>  DI\object('App\EventManager\Event\YourAwesomeEventManagerProxy'),
+        'event_manager' =>  DI\object(YourAwesomeEventManagerProxy::class),
         // other services definition here
         // see https://github.com/pennyphp/penny/blob/master/src/Container/PHPDiFactory.php
     ]
