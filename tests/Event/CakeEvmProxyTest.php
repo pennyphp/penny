@@ -19,17 +19,22 @@ class CakeEmvProxyTest extends PHPUnit_Framework_TestCase
 
     public function testAttachTrigger()
     {
-        $listener = function() {
-            echo 'triggered';
+        $listener1 = function() {
+            echo 'triggered1';
         };
-        $eventName = 'foo';
+        $listener2 = function() {
+            echo 'triggered2';
+        };
 
-        $this->evmProxy->attach($eventName, $listener);
+        $eventKey = 'foo';
+
+        $this->evmProxy->attach($eventKey, $listener1, 102);
+        $this->evmProxy->attach($eventKey, $listener2, 101);
 
         ob_start();
-        $this->evmProxy->trigger($eventName);
+        $this->evmProxy->trigger($eventKey);
         $content = ob_get_clean();
 
-        $this->assertEquals('triggered', $content);
+        $this->assertEquals('triggered2triggered1', $content);
     }
 }
