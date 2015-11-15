@@ -14,7 +14,7 @@ At the moment Symfony, Zend Framework and Laravel are very big projects and this
 This project helps you to create applications with the best standalone components.  
 
 ## Getting Started
-[penny skeleton app](https://github.com/gianarb/penny-skeleton-app) is a first penny implementation.
+[penny skeleton app](https://github.com/pennyphp/penny-skeleton-app) is a first penny implementation.
 "Classic" because it integrates league/plates and helps you to build an HTML application.
 
 ### Installation
