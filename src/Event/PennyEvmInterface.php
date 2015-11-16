@@ -6,6 +6,13 @@ interface PennyEvmInterface
     /**
      * Triggerer event
      *
+     * @param string $event Trigger specific event
+     */
+    public function triggerByEventName($event);
+
+    /**
+     * Triggerer event
+     *
      * @param PennyEventInterface $event Trigger specific event
      */
     public function trigger(PennyEventInterface $event);

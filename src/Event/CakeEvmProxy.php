@@ -1,9 +1,9 @@
 <?php
 namespace Penny\Event;
 
-use Zend\EventManager\EventManager;
+use Cake\Event\EventManager;
 
-class ZendEvmProxy implements PennyEvmInterface
+class CakeEvmProxy implements PennyEvmInterface
 {
     /**
      * @var EventManager
@@ -11,7 +11,7 @@ class ZendEvmProxy implements PennyEvmInterface
     private $eventManager;
 
     /**
-     * Proxy Zend\EventManager\EventManager
+     * Proxy EventManager
      */
     public function __construct()
     {
@@ -23,7 +23,7 @@ class ZendEvmProxy implements PennyEvmInterface
      */
     public function triggerByEventName($event)
     {
-        $this->eventManager->trigger($event);
+        $this->eventManager->dispatch($event);
         return $this;
     }
 
@@ -32,16 +32,17 @@ class ZendEvmProxy implements PennyEvmInterface
      */
     public function trigger(PennyEventInterface $event)
     {
-        $this->eventManager->trigger($event);
+        $this->eventManager->dispatch($event);
         return $this;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function attach($eventName, callable $listener, $priority = 0)
+    public function attach($eventName, callable $listener, $priority = 1)
     {
-        $this->eventManager->attach($eventName, $listener, $priority);
+        $options['priority'] = $priority;
+        $this->eventManager->attach($listener, $eventName, $options);
         return $this;
     }
 }
