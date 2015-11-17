@@ -21,6 +21,13 @@ class Dispatcher
     private $router;
 
     /**
+     * Service Container
+     *
+     * @var ContainerInterface
+     */
+    private $container;
+
+    /**
      * Class constructor with required FastRoute dispatcher implementation.
      *
      * @param BaseDispatcher $router Inner router (based on Nikic FastRouter).
