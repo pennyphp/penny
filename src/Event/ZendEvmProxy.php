@@ -1,6 +1,7 @@
 <?php
 namespace Penny\Event;
 
+use Zend\EventManager\EventInterface as ZendEventInterface;
 use Zend\EventManager\EventManager;
 
 class ZendEvmProxy implements PennyEvmInterface
@@ -23,7 +24,10 @@ class ZendEvmProxy implements PennyEvmInterface
      */
     public function trigger(PennyEventInterface $event)
     {
-        $this->eventManager->trigger($event);
+        if ($event instanceof ZendEventInterface) {
+            $this->eventManager->trigger($event);
+        }
+
         return $this;
     }
 

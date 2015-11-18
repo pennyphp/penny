@@ -1,6 +1,7 @@
 <?php
 namespace Penny\Event;
 
+use Cake\Event\Event as BaseCakeEvent;
 use Cake\Event\EventManager;
 
 class CakeEvmProxy implements PennyEvmInterface
@@ -23,7 +24,9 @@ class CakeEvmProxy implements PennyEvmInterface
      */
     public function trigger(PennyEventInterface $event)
     {
-        $this->eventManager->dispatch($event);
+        if ($event instanceof BaseCakeEvent) {
+            $this->eventManager->dispatch($event);
+        }
         return $this;
     }
 
