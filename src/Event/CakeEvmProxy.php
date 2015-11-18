@@ -32,8 +32,9 @@ class CakeEvmProxy implements PennyEvmInterface
      */
     public function attach($eventName, callable $listener, $priority = 1)
     {
+        $options = [];
         $options['priority'] = $priority;
-        $this->eventManager->attach($listener, $eventName, $options);
+        $this->eventManager->on($eventName, $options, $listener);
         return $this;
     }
 }
