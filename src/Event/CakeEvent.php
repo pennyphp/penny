@@ -8,6 +8,34 @@ use Penny\Route\RouteInfoInterface;
 class CakeEvent extends BaseCakeEvent implements PennyEventInterface
 {
     /**
+     * Representation of an outgoing, client-side request.
+     *
+     * @var mixed
+     */
+    private $request;
+
+    /**
+     * Representation of an outgoing, server-side response.
+     *
+     * @var mixed
+     */
+    private $response;
+
+    /**
+     * Exception thrown during execution.
+     *
+     * @var Exception
+     */
+    private $exception;
+
+    /**
+     * Routing information.
+     *
+     * @var RouteInfoInterface
+     */
+    private $routeInfo;
+
+    /**
      * {@inheritDoc}
      */
     public function __construct($name, $subject = null, $data = null)
@@ -30,7 +58,7 @@ class CakeEvent extends BaseCakeEvent implements PennyEventInterface
      */
     public function getName()
     {
-        return $this->_name;
+        return $this->name();
     }
 
     /**
