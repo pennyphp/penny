@@ -13,7 +13,7 @@ pages:
 - ['use-case.md', 'Use case']
 - ['event-manager-intro.md', 'Event Manager Introduction']
 - ['available-event-manager.md', 'Available Event Manager']
-- ['write-your-event-manager-proxy.md', 'Write Your Event Manager Proxy']
+- ['write-our-event-manager-proxy.md', 'Write Our Event Manager Proxy']
 - ['license.md', 'License']
 
 copyright: Copyright &copy; 2015, <a href="https://github.com/gianarb">Gianluca Arbezzano</a>.

@@ -1,13 +1,13 @@
-# Write Your Event Manager Proxy
+# Write Our Event Manager Proxy
 
-You can write our event manager proxy with the following signature:
+We can write our event manager proxy with the following signature:
 
 ```php
 namespace App\EventManager\Event;
 
-use Your\Awesome\EventManager;
+use Our\Awesome\EventManager;
 
-class YourAwesomeEventManagerProxy implements PennyEvmInterface
+class OurAwesomeEventManagerProxy implements PennyEvmInterface
 {
     /**
      * @var EventManager
@@ -42,17 +42,17 @@ class YourAwesomeEventManagerProxy implements PennyEvmInterface
 }
 ```
 
-After that, you can register it as service named 'event_manager' in your favourite container.
+After that, we can register it as service named 'event_manager' in Our favorite container.
 
 ```php
-use App\EventManager\Event\YourAwesomeEventManagerProxy;
+use App\EventManager\Event\OurAwesomeEventManagerProxy;
 use DI;
 
 $builder = new DI\ContainerBuilder();
 $builder->useAnnotations(true);
 $builder->addDefinitions(
     [
-        'event_manager' =>  DI\object(YourAwesomeEventManagerProxy::class),
+        'event_manager' =>  DI\object(OurAwesomeEventManagerProxy::class),
         // other services definition here
         // see https://github.com/pennyphp/penny/blob/master/src/Container/PHPDiFactory.php
     ]
