@@ -1,6 +1,6 @@
 <?php
 
-namespace PennyTest;
+namespace PennyTest\Event;
 
 use Exception;
 use Penny\Event\HttpFlowEvent;
