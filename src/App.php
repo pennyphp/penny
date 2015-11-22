@@ -140,7 +140,7 @@ class App
      *
      * @return PennyEventInterface|\Zend\EventManager\EventInterface|\Cake\Event\Event
      */
-    private function triggerWithException($eventManager, $event, $name, $exception)
+    private function triggerWithException($eventManager, $event, $name, Exception $exception)
     {
         $event->setName($name);
         $event->setException($exception);
