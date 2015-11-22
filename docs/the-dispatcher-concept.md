@@ -2,7 +2,7 @@
 
 ## HTTP Libraries
 
-By "HTTP implementation" I mean: *a layer that helps you to work with Request and Response in terms of reading a request, create a response and send it back to the client.*
+By "HTTP implementation", it means: *a layer that helps us to work with Request and Response in terms of reading a request, create a response and send it back to the client.*
 
 In PHP there are a lot of libraries that do that:
 
@@ -16,13 +16,13 @@ In PHP there are a lot of libraries that do that:
 The [Dispatcher](https://github.com/gianarb/penny/blob/master/src/Dispatcher.php) (click link to show current implementation), in penny represents the link between: router,
 request and response.
 
-The default Penny Dispatcher implementation uses `Zend\Diactoros`. You can write your own dispatcher that makes use of your favorite HTTP library
+The default Penny Dispatcher implementation uses `Zend\Diactoros`. We can write our own dispatcher that makes use of our favorite HTTP library
 
 Main advantages gained by using `Zend\Diactoros` are:
 * It is supported by the Zend Framework community
 * It follows PSR-7 standard. [(what is PSR-7?)](http://www.php-fig.org/psr/psr-7/)
 
-If the dispatch process is good and exists a callable for your request it returns a RouteInfo implementations.
+If the dispatch process is good and exists a callable for our request it returns a RouteInfo implementations.
 
 ## Penny, FastRouter and Symfony\HttpFoundation
 Here we are going to see how to write a dispatcher to use with the `Symfony\HttpFoundation` component.
@@ -33,12 +33,12 @@ Here we are going to see how to write a dispatcher to use with the `Symfony\Http
 composer require symfony/http-foundation
 ```
 
-2. Write your dispatcher that uses the `HttpFoundation\Request`
+2. Write our dispatcher that uses the `HttpFoundation\Request`
 
 ```php
 <?php
 
-namespace YourApp\Dispatcher;
+namespace OurApp\Dispatcher;
 
 use Symfony\Component\HttpFoundation\Request;
 
@@ -78,7 +78,7 @@ class FastSymfonyDispatcher
 ```php
 <?php
 use Penny\App;
-use YourApp\Dispatcher\FastSymfonyDispatcher;
+use OurApp\Dispatcher\FastSymfonyDispatcher;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -88,4 +88,4 @@ $this->app->getContainer()->set("dispatcher", $dispatcher);
 $this->app->run($request, $response);
 ```
 
-Now your application runs using the  `Symfony\HttpFoundation` instead of `Zend\Diactoros`.
+Now our application runs using the  `Symfony\HttpFoundation` instead of `Zend\Diactoros`.

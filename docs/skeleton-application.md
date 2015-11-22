@@ -65,8 +65,8 @@ Grunt and other build tools are
 *Resolve node dependencies*
 **Note:**  
 bower and grunt require node.js this is only an example of method to manage static asset,
-if you don't have familiarity with this tools no problem, you can use [assetic](https://github.com/kriswallsmith/assetic),
-download all static deps into the public dir or other solutions.
+if we don't have familiarity with this tools, no problem, we can use [assetic](https://github.com/kriswallsmith/assetic),
+download all static dependencies into the public dir or other solutions.
 
 ```bash
 $ sudo npm install -G grunt-cli
@@ -89,7 +89,7 @@ $ grunt dev
 
 ## PHP built-in Web server
 
-**For testing purposes only** you can use the PHP built-in web server
+**For testing purposes only** we can use the PHP built-in web server
 
 In the skeleton application folder issue a:
 
@@ -100,11 +100,11 @@ $ php -S 0.0.0.0:80 -t public
 ## Docker
 
 **Attention**: This is configured  as a *development* environment.
-If you want to use it in production you have to: disable error reporting, persist logs, disable Z-Ray, raise limits and fine tune your configurations.
+If we want to use it in production, we have to: disable error reporting, persist logs, disable Z-Ray, raise limits and fine tune our configurations.
 
 The `penny-skeleton-app` repository contains a `docker-compose.yml.dist` file which currently configures two containers, one
 running the NGINX web server and one running php-fpm.
-This file should work as is but  *must be renamed* into `docker-compose.yml`. You can modify if you need something specific for your system like paths, ip addresses, ports, additional services (databases, queues, caching layers) and so on.
+This file should work as is but  *must be renamed* into `docker-compose.yml`. We can modify if we need something specific for our system like paths, ip addresses, ports, additional services (databases, queues, caching layers) and so on.
 Remember that the docker-compose.yml file is in `.gitignore` since this is very specific to the current installation.
 
 ### Requirements
@@ -112,15 +112,15 @@ Remember that the docker-compose.yml file is in `.gitignore` since this is very 
 - Docker >= 1.6.0
 - [docker-compose](https://docs.docker.com/compose/)
 
-### Create your docker-compose.yml
+### Create our docker-compose.yml
 
 ```bash
 $ cp docker-compose.yml.dist docker-compose.yml
-# edit it for your specific needs
+# edit it for our specific needs
 $ vi docker-compose.yml ```
 
 ### Build
-Before starting you have to build penny-classic specific images, to do it issue a:
+Before starting, we have to build penny-classic specific images, to do it issue a:
 
 ```bash
 $ docker-compose build
@@ -148,4 +148,4 @@ IP addresses can be configured in `docker-compose.yml`
 
 # Next Steps
 
-Add links about Doctrine integration, writing templates with Plates, creating forms, validating forms etc..
+Add links about Doctrine integration, writing templates with Plates, creating forms, validating forms, etc.

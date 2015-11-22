@@ -1,13 +1,13 @@
 # Getting Started
 
-Penny is a framework that helps you to build YOUR own application.
+Penny is a framework that helps us to build OUR own application.
 In this tutorial we will try to build our first skeleton application.
 
 This simple application needs some third-party php components:
 
-* [theleague/plates](https://github.com/theleague/plates) the template system used to render your page.
-* [doctrine/doctrine](https://github/doctrine/doctrine2) the ORM, used to persist and load your data from/to the MySQL database.
-* [zendframework/zend-form](https://github/zendframework/zend-form) to create forms used manipulate your data.
+* [theleague/plates](https://github.com/theleague/plates) the template system used to render our page.
+* [doctrine/doctrine](https://github/doctrine/doctrine2) the ORM, used to persist and load our data from/to the MySQL database.
+* [zendframework/zend-form](https://github/zendframework/zend-form) to create forms used manipulate our data.
 
 In this tutorial I also used [bower](https://bower.io) and [grunt](http://gruntjs.com/) to manage fronted assets.
 
@@ -78,10 +78,11 @@ There is easier way, use [penny-skeleton-app](/docs/skeleton-application.md).
 
 # WebServer
 
-Of courese you can use your favorite web server. Here are just a few examples
+Of course we can use our favorite web server. Here are just a few examples
 
 ## PHP
-In develop I use the PHP Internal Server. You go in the root of project and run it.
+
+We can use the PHP Internal Server. We can go to the root of project, and run the following command:
 
 ```bash
 php -S 127.0.0.0:8085 -t public
@@ -175,8 +176,8 @@ This is our first route :tada:, now we need the corresponding controller, let's 
 
 To manage autoloading we use [composer](https://getcomposer.org).
 
-You can add this configuration in your composer.json.
-This configuration tells your scripts that the `PennyApp` namespace resides under the `app` directory, that's where we are placing our controllers.
+We can add this configuration in our composer.json.
+This configuration tells our scripts that the `PennyApp` namespace resides under the `app` directory, that's where we are placing our controllers.
 
 ```json
 {
@@ -207,7 +208,7 @@ class IndexController
 }
 ```
 
-Pretty easy right? This is your controller and your action waiting $request and $response,
+Pretty easy right? This is our controller and our action waiting $request and $response,
 
 the above implementation uses [Zend\Diactoros](https://github.com/zendframework/zend-diactoros) and it is PSR-7 compatible.
 
@@ -228,11 +229,11 @@ return [
         });
     },
     "template" => \DI\object(\League\Plates\Engine::class)
-        ->constructor("./app/view/"), // ./app/view is the path of your templates
+        ->constructor("./app/view/"), // ./app/view is the path of our templates
 ];
 ```
 
-Now you can use it in your controller, update it and create your first template!
+Now, we can use it in our controller, update it and create our first template!
 
 ```php
 // /app/Controller/IndexController.php
@@ -320,7 +321,7 @@ return [
         });
     },
     "template" => \DI\object(\League\Plates\Engine::class)
-        ->constructor("./app/view/"), // ./app/view is the path of your templates
+        ->constructor("./app/view/"), // ./app/view is the path of our templates
 
     "doctrine.dbal" => \DI\factory(function (\DI\Container $c) {
         return Doctrine\DBAL\DriverManager::getConnection($c->get("parameters")["doctrine"]["conn"]);
@@ -341,7 +342,7 @@ return [
 
 Adding sensitive parameters (like database credentials) into the VCS is a very dangerous and bad practice, the `conn` configuration into the `parameters` array is the default,  VCS committed. not working one.
 
-You can ovveride it in the local environment, adding a `/config/*.local.php` file where keys override the default ones provided in the default configuration.
+We can override it in the local environment, adding a `/config/*.local.php` file where keys override the default ones provided in the default configuration.
 
 ```
 <?php
@@ -360,7 +361,7 @@ return [
 
 *Add it into the .gitignore*
 
-Doctrine has an awesome console that helps you to manage database, schema, cache an a lot of other stuff.
+Doctrine has an awesome console that helps us to manage database, schema, cache an a lot of other stuff.
 **TODO**: we should give an overview on how to do in Penny things contained in  [this chapter](http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html).
 
 ```php
@@ -372,7 +373,7 @@ $app = new \Penny\App();
 return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app->getContainer()->get("doctrine.em"));
 ```
 
-Now we are ready to use it in your app writing our first entity.
+Now we are ready to use it in our app writing our first entity.
 
 ```php
 // /app/Entity/Car.php
