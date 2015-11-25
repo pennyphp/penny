@@ -6,7 +6,7 @@ use FastRoute;
 use Interop\Container\ContainerInterface;
 use Penny\App;
 use Penny\Container;
-use Penny\Event\HttpFlowEvent;
+use Penny\Event\ZendHttpFlowEvent;
 use Penny\Exception\MethodNotAllowedException;
 use Penny\Exception\RouteNotFoundException;
 use Penny\Config\Loader;
@@ -229,7 +229,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $dispatcher = function () use ($request) {
             return 'callback';
         };
-        $httpFlowEvent = $this->prophesize(HttpFlowEvent::class);
+        $httpFlowEvent = $this->prophesize(ZendHttpFlowEvent::class);
         $eventManager = $this->prophesize(EventManager::class);
 
         $container->has('router')->willReturn(true);

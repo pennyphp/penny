@@ -3,43 +3,34 @@
 namespace PennyTest\Event;
 
 use Exception;
-use Penny\Event\CakeEvent;
+use Penny\Event\ZendHttpFlowEvent;
 use Penny\Route\RouteInfoInterface;
 use PHPUnit_Framework_TestCase;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
-class CakeEventTest extends PHPUnit_Framework_TestCase
+class ZendHttpFlowEventTest extends PHPUnit_Framework_TestCase
 {
-    /** @var CakeEvent */
-    protected $event;
+    private $event;
 
-    protected function setUp()
+    public function setUp()
     {
-        $this->event = new CakeEvent('foo');
-    }
+        $request = (new Request())
+        ->withUri(new Uri('/'))
+        ->withMethod('GET');
+        $response = new Response();
 
-    public function testGetName()
-    {
-        $this->assertEquals('foo', $this->event->getName());
+        $this->event = new ZendHttpFlowEvent('http_flow_event', $request, $response);
     }
 
     public function testGetResponse()
     {
-        $response = new Response();
-        $this->event->setResponse($response);
-
         $this->assertInstanceOf(Response::class, $this->event->getResponse());
     }
 
     public function testGetRequest()
     {
-        $request = (new Request())
-        ->withUri(new Uri('/'))
-        ->withMethod('GET');
-        $this->event->setRequest($request);
-
         $this->assertInstanceOf(Request::class, $this->event->getRequest());
     }
 
@@ -56,11 +47,5 @@ class CakeEventTest extends PHPUnit_Framework_TestCase
         $exception = new Exception();
         $this->event->setException($exception);
         $this->assertSame($exception, $this->event->getException());
-    }
-
-    public function testStopPropagation()
-    {
-        $this->event->stopPropagation(false);
-        $this->assertFalse($this->event->isStopped());
     }
 }

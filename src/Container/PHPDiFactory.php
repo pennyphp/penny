@@ -23,7 +23,7 @@ class PHPDiFactory
             [
                 'request' => \Zend\Diactoros\ServerRequestFactory::fromGlobals(),
                 'response' => DI\object('Zend\Diactoros\Response'),
-                'http_flow_event' => DI\object('Penny\Event\HttpFlowEvent')
+                'http_flow_event' => DI\object('Penny\Event\ZendHttpFlowEvent')
                     ->constructor(
                         'bootstrap',
                         DI\get('request'),
