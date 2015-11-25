@@ -8,7 +8,6 @@ use Penny\Config\Loader;
 use Penny\Event\PennyEventInterface;
 use Penny\Route\RouteInfoInterface;
 use Interop\Container\ContainerInterface;
-use Zend\EventManager\EventManager;
 
 class App
 {
@@ -67,7 +66,7 @@ class App
     /**
      * Penny HTTP flow event getter.
      *
-     * @return EventManager
+     * @return \Penny\Event\ZendEvmProxy|\Penny\Event\CakeEvmProxy
      */
     private function getEventManager()
     {
