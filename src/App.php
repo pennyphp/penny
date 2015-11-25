@@ -5,6 +5,7 @@ namespace Penny;
 use Exception;
 use RuntimeException;
 use Penny\Config\Loader;
+use Penny\Event\PennyEvmInterface;
 use Penny\Event\PennyEventInterface;
 use Penny\Route\RouteInfoInterface;
 use Interop\Container\ContainerInterface;
@@ -66,7 +67,7 @@ class App
     /**
      * Penny HTTP flow event getter.
      *
-     * @return \Penny\Event\ZendEvmProxy|\Penny\Event\CakeEvmProxy
+     * @return PennyEvmInterface
      */
     private function getEventManager()
     {
@@ -132,7 +133,7 @@ class App
     /**
      * Event Manager trigger with exception
      *
-     * @param \Penny\Event\ZendEvmProxy|\Penny\Event\CakeEvmProxy $eventManager
+     * @param PennyEvmInterface $eventManager
      * @param PennyEventInterface $event
      * @param string $name
      * @param Exception $exception
