@@ -133,12 +133,12 @@ class App
     /**
      * Event Manager trigger with exception
      *
-     * @param \Zend\EventManager\EventManager|\Cake\Event\EventManager $eventManager
-     * @param PennyEventInterface|\Zend\EventManager\EventInterface|\Cake\Event\Event $event
+     * @param \Penny\Event\ZendEvmProxy|\Penny\Event\CakeEvmProxy $eventManager
+     * @param PennyEventInterface $event
      * @param string $name
      * @param Exception $exception
      *
-     * @return PennyEventInterface|\Zend\EventManager\EventInterface|\Cake\Event\Event
+     * @return PennyEventInterface
      */
     private function triggerWithException($eventManager, $event, $name, Exception $exception)
     {
