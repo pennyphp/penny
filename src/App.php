@@ -110,11 +110,8 @@ class App
             $event->setRouteInfo($routeInfo);
             $event->setName($routeInfo->getName());
         } catch (Exception $exception) {
-            $event->setName('dispatch_error');
-            $event->setException($exception);
-            $eventManager->trigger($event);
-
-            return $event->getResponse();
+            return $this->triggerWithException($eventManager, $event, 'dispatch_error', $exception)
+                        ->getResponse();
         }
 
         $eventManager->attach($event->getName(), function ($event) use ($routeInfo) {
@@ -127,11 +124,28 @@ class App
         try {
             $eventManager->trigger($event);
         } catch (Exception $exception) {
-            $event->setName($routeInfo->getName().'_error');
-            $event->setException($exception);
-            $eventManager->trigger($event);
+            $this->triggerWithException($eventManager, $event, $routeInfo->getName().'_error', $exception);
         }
 
         return $event->getResponse();
+    }
+
+    /**
+     * Event Manager trigger with exception
+     *
+     * @param \Zend\EventManager\EventManager|\Cake\Event\EventManager $eventManager
+     * @param PennyEventInterface|\Zend\EventManager\EventInterface|\Cake\Event\Event $event
+     * @param string $name
+     * @param Exception $exception
+     *
+     * @return PennyEventInterface|\Zend\EventManager\EventInterface|\Cake\Event\Event
+     */
+    private function triggerWithException($eventManager, $event, $name, Exception $exception)
+    {
+        $event->setName($name);
+        $event->setException($exception);
+        $eventManager->trigger($event);
+
+        return $event;
     }
 }
