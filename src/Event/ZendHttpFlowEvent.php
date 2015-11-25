@@ -6,7 +6,7 @@ use Exception;
 use Penny\Route\RouteInfoInterface;
 use Zend\EventManager\Event;
 
-class HttpFlowEvent extends Event implements PennyEventInterface
+class ZendHttpFlowEvent extends Event implements PennyEventInterface
 {
     /**
      * Representation of an outgoing, client-side request.

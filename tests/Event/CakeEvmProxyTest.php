@@ -2,7 +2,7 @@
 
 namespace PennyTest\Event;
 
-use Penny\Event\CakeEvent;
+use Penny\Event\CakeHttpFlowEvent;
 use Penny\Event\CakeEvmProxy;
 use PHPUnit_Framework_TestCase;
 
@@ -30,7 +30,7 @@ class CakeEmvProxyTest extends PHPUnit_Framework_TestCase
         $this->evmProxy->attach($eventKey, $listener1, 102);
         $this->evmProxy->attach($eventKey, $listener2, 101);
 
-        $cakeEvent = new CakeEvent($eventKey);
+        $cakeEvent = new CakeHttpFlowEvent($eventKey);
 
         ob_start();
         $this->evmProxy->trigger($cakeEvent);
