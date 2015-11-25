@@ -31,6 +31,7 @@ class Dispatcher
      * Class constructor with required FastRoute dispatcher implementation.
      *
      * @param BaseDispatcher $router Inner router (based on Nikic FastRouter).
+     * @param ContainerInterface $container Dependency Injection container.
      */
     public function __construct(BaseDispatcher $router, ContainerInterface $container)
     {
