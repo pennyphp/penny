@@ -49,33 +49,45 @@ class Dispatcher
      * @throws MethodNotAllowedException If the method is not allowed.
      * @throws Exception                 If no one case is matched.
      *
-     * @return array
+     * @return RouteInfo
      */
     public function __invoke(RequestInterface $request)
     {
         $router = $this->router;
         $uri = $request->getUri();
 
-        $routeInfo = $router->dispatch(
+        $dispatch = $router->dispatch(
             $request->getMethod(),
             $uri->getPath()
         );
 
-        switch ($routeInfo[0]) {
+        switch ($dispatch[0]) {
             case BaseDispatcher::NOT_FOUND:
                 throw new RouteNotFoundException();
             case BaseDispatcher::METHOD_NOT_ALLOWED:
                 throw new MethodNotAllowedException();
             case BaseDispatcher::FOUND:
-                $controller = $this->container->get($routeInfo[1][0]);
-                $method = $routeInfo[1][1];
-                $function = strtolower((new ReflectionClass($controller))->getShortName());
-                $eventName = "{$function}.{$method}"; // this improve ~1us
-
-                $routeInfo = new RouteInfo($eventName, [$controller, $routeInfo[1][1]], $routeInfo[2]);
-                return $routeInfo;
+                return $this->processRouteInfo($dispatch);
             default:
                 throw new Exception(null, 500);
         }
+    }
+
+    /**
+     * Process RouteInfo instance
+     *
+     * @param array $dispatch
+     *
+     * @return RouteInfo
+     */
+    private function processRouteInfo(array $dispatch)
+    {
+        $controller = $this->container->get($dispatch[1][0]);
+        $method = $dispatch[1][1];
+        $params = $dispatch[2];
+        $function = strtolower((new ReflectionClass($controller))->getShortName());
+        $eventName = "{$function}.{$method}"; // this improve ~1us
+
+        return new RouteInfo($eventName, [$controller, $method], $params);
     }
 }
