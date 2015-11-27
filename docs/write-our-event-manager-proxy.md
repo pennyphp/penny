@@ -42,24 +42,23 @@ class OurAwesomeEventManagerProxy implements PennyEvmInterface
 }
 ```
 
-After that, we can register it as service named 'event_manager' in Our favorite container.
+After that, we can register it as service named 'event_manager' in Our favorite container. For example, we use PHP-DI that may be facilitated by `Penny\Container\PHPDiFactory` :
 
 ```php
 use App\EventManager\Event\OurAwesomeEventManagerProxy;
 use DI;
+use Penny\App;
+use Penny\Config\Loader;
+use Penny\Container\PHPDiFactory;
+use Zend\Stdlib\ArrayUtils;
 
-$builder = new DI\ContainerBuilder();
-$builder->useAnnotations(true);
-$builder->addDefinitions(
+$config = Loader::load("./config/{{*}}{{,*.local}}.php");
+$config = ArrayUtils::merge(
     [
         'event_manager' =>  DI\object(OurAwesomeEventManagerProxy::class),
-        // other services definition here
-        // see https://github.com/pennyphp/penny/blob/master/src/Container/PHPDiFactory.php
-    ]
+    ],
+    $config
 );
-$builder->addDefinitions($config);
-$container = $builder->build();
-$container->set('di', $container);
 
-$app = new App($container);
+$app = new App(PHPDiFactory::buildContainer($config));
 ```
