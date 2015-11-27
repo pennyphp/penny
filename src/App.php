@@ -119,8 +119,8 @@ class App
         $eventManager = $this->getEventManager();
 
         try {
-            $routeInfo = $dispatcher($event->getRequest());
-            $this->handleRoute($routeInfo, $dispatcher, $eventManager, $event);
+            $routeInfo = call_user_func($dispatcher, $event->getRequest());
+            $this->handleRoute($routeInfo, $event);
         } catch (Exception $exception) {
             return $this->triggerWithException($eventManager, $event, 'dispatch_error', $exception)
                         ->getResponse();
@@ -134,16 +134,12 @@ class App
      * Handle Route.
      *
      * @param RouteInfoInterface $routeInfo
-     * @param Dispatcher $dispatcher
-     * @param PennyEvmInterface $eventManager
      * @param PennyEventInterface $event
      *
      * @throws RuntimeException if dispatch does not return RouteInfo object.
      */
     private function handleRoute(
         RouteInfoInterface $routeInfo,
-        Dispatcher $dispatcher,
-        PennyEvmInterface $eventManager,
         PennyEventInterface $event
     ) {
         if (!$routeInfo instanceof RouteInfoInterface) {
