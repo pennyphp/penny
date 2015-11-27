@@ -51,10 +51,12 @@ Every application has an entry point, `public/index.php` is our.
 // /public/index.php
 
 <?php
+use Penny\App;
+
 chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
-$app = new \Penny\App();
+$app = new Penny\App();
 $emitter = new \Zend\Diactoros\Response\SapiEmitter();
 $emitter->emit($app->run());
 ```
@@ -62,6 +64,10 @@ $emitter->emit($app->run());
 The `Penny\App` allow us to pass Container that instance of `Interop\Container\ContainerInterface`, if we don't supply any, it will load using PHP DI that will read `./config/{{*}}{{,*.local}}.php` as default. For custom path for config to be read with PHP DI, we can specify:
 
 ```php
+use Penny\App;
+use Penny\Config\Loader;
+use Penny\Container;
+
 $config = Loader::load("./config/{{*}}{{,*.local}}.php");
 $app    = new App(Container\PHPDiFactory::buildContainer($config));
 ```
