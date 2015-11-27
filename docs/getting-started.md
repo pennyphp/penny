@@ -56,7 +56,7 @@ use Penny\App;
 chdir(dirname(__DIR__));
 require "vendor/autoload.php";
 
-$app = new Penny\App();
+$app = new App();
 $emitter = new \Zend\Diactoros\Response\SapiEmitter();
 $emitter->emit($app->run());
 ```
