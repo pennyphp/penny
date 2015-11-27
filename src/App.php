@@ -22,7 +22,7 @@ class App
     /**
      * Application initialization.
      *
-     * @param ContainerInterface|\DI\Container $container Dependency Injection container.
+     * @param ContainerInterface $container Dependency Injection container.
      *
      * @throws Exception If no router is defined.
      */

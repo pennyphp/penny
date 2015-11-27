@@ -19,7 +19,7 @@ class PHPDiFactory
      *
      * @link http://php-di.org/doc/php-definitions.html
      *
-     * @return ContainerInterface
+     * @return DI\Container
      */
     public static function buildContainer($config = [], $annotation = true)
     {
