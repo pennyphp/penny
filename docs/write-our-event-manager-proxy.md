@@ -42,7 +42,7 @@ class OurAwesomeEventManagerProxy implements PennyEvmInterface
 }
 ```
 
-After that, we can register it as service named 'event_manager' in Our favorite container. For example, we use PHP DI that may be facilitated by `Penny\Container\PHPDiFactory` :
+After that, we can register it as service named 'event_manager' in Our favorite container. For example, we use PHP-DI that may be facilitated by `Penny\Container\PHPDiFactory` :
 
 ```php
 use App\EventManager\Event\OurAwesomeEventManagerProxy;
