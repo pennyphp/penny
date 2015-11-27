@@ -87,7 +87,7 @@ class App
     private function setUpEventWithRequestResponse($request, $response)
     {
         $event = $this->getContainer()->get('http_flow_event');
-        if (!($event instanceof PennyEventInterface)) {
+        if (!$routeInfo instanceof RouteInfoInterface)
             throw new RuntimeException('This event did not supported');
         }
 
