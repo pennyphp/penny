@@ -5,9 +5,11 @@ We can write our event manager proxy with the following signature:
 ```php
 namespace App\EventManager\Event;
 
+use Penny\Event\EventInterface;
+use Penny\Event\EventManagerInterface;
 use Our\Awesome\EventManager;
 
-class OurAwesomeEventManagerProxy implements PennyEvmInterface
+class OurAwesomeEventManagerProxy implements EventManagerInterface
 {
     /**
      * @var EventManager
@@ -25,7 +27,7 @@ class OurAwesomeEventManagerProxy implements PennyEvmInterface
     /**
      * {@inheritDoc}
      */
-    public function trigger(PennyEventInterface $event)
+    public function trigger(EventInterface $event)
     {
         $this->eventManager->trigger($event);
         return $this;

@@ -5,7 +5,7 @@ use Exception;
 use Cake\Event\Event as BaseCakeEvent;
 use Penny\Route\RouteInfoInterface;
 
-class CakeHttpFlowEvent extends BaseCakeEvent implements PennyEventInterface
+class CakeHttpFlowEvent extends BaseCakeEvent implements EventInterface
 {
     /**
      * Representation of an outgoing, client-side request.
