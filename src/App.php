@@ -133,7 +133,7 @@ class App
     /**
      * Handle Route.
      *
-     * @param $routeInfo
+     * @param mixed $routeInfo
      * @param PennyEventInterface $event
      *
      * @throws RuntimeException if dispatch does not return RouteInfo object.
