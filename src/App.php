@@ -138,7 +138,8 @@ class App
      *
      * @throws RuntimeException if dispatch does not return RouteInfo object.
      */
-    private function handleRoute($routeInfo, EventInterface $event) {
+    private function handleRoute($routeInfo, EventInterface $event)
+    {
         if (!$routeInfo instanceof RouteInfoInterface) {
             throw new RuntimeException('Dispatch does not return RouteInfo object');
         }
