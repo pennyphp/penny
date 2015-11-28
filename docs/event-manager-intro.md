@@ -1,13 +1,13 @@
 # Event Manager Introduction
 
-Penny provides an [`PennyEvmInterface`](https://github.com/pennyphp/penny/blob/master/src/Event/PennyEvmInterface.php) that has 2 methods :
+Penny provides an [`EventManagerInterface`](https://github.com/pennyphp/penny/blob/master/src/Event/EventManagerInterface.php) that has 2 methods :
 
 ```php
-public function trigger(PennyEventInterface $event);
+public function trigger(EventInterface $event);
 public function attach($eventName, callable $listener);
 ```
 
-The trigger will execute an event based on registered listeners in our Event Manager, Our Event must implement [`PennyEventInterface`](https://github.com/pennyphp/penny/blob/master/src/Event/PennyEventInterface.php) that has following methods:
+The trigger will execute an event based on registered listeners in our Event Manager, Our Event must implement [`EventInterface`](https://github.com/pennyphp/penny/blob/master/src/Event/EventInterface.php) that has following methods:
 
 ```php
 public function getName();
