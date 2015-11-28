@@ -118,6 +118,8 @@ class App
         $dispatcher   = $this->getDispatcher();
         $eventManager = $this->getEventManager();
 
+        $eventManager->trigger($event);
+
         try {
             $routeInfo = call_user_func($dispatcher, $event->getRequest());
             $this->handleRoute($routeInfo, $event);
