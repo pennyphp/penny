@@ -5,6 +5,7 @@ We can write our event manager proxy with the following signature:
 ```php
 namespace App\EventManager\Event;
 
+use Penny\Event\EventInterface;
 use Penny\Event\EventManagerInterface;
 use Our\Awesome\EventManager;
 
