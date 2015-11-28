@@ -241,4 +241,24 @@ class AppTest extends PHPUnit_Framework_TestCase
         $app = new App($container->reveal());
         $response = $app->run($request, $response);
     }
+
+    public function testBootstrapEventTriggered()
+    {
+        $config = Loader::load();
+        $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
+        });
+        $this->app = new App(Container\PHPDiFactory::buildContainer($config));
+        $this->app->getContainer()
+                  ->get('event_manager')
+                  ->attach('bootstrap', function() {
+                       echo 'bootstrap triggered';
+                  });
+
+        ob_start();
+        $this->app->run();
+        $content = ob_get_clean();
+
+        $this->assertEquals('bootstrap triggered', $content);
+    }
 }
