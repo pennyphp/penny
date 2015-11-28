@@ -4,7 +4,7 @@ namespace Penny\Event;
 use Exception;
 use Penny\Route\RouteInfoInterface;
 
-interface PennyEventInterface
+interface EventInterface
 {
     public function getName();
     public function setName($name);

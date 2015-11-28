@@ -4,7 +4,7 @@ namespace Penny\Event;
 use Zend\EventManager\EventInterface as ZendEventInterface;
 use Zend\EventManager\EventManager;
 
-class ZendEvmProxy implements PennyEvmInterface
+class ZendEvmProxy implements EventManagerInterface
 {
     /**
      * @var EventManager
@@ -22,7 +22,7 @@ class ZendEvmProxy implements PennyEvmInterface
     /**
      * {@inheritDoc}
      */
-    public function trigger(PennyEventInterface $event)
+    public function trigger(EventInterface $event)
     {
         if ($event instanceof ZendEventInterface) {
             $this->eventManager->trigger($event);

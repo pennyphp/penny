@@ -1,14 +1,14 @@
 <?php
 namespace Penny\Event;
 
-interface PennyEvmInterface
+interface EventManagerInterface
 {
     /**
      * Triggerer event
      *
-     * @param PennyEventInterface $event Trigger specific event
+     * @param EventInterface $event Trigger specific event
      */
-    public function trigger(PennyEventInterface $event);
+    public function trigger(EventInterface $event);
 
     /**
      * Attach new listener at specific event
