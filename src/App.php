@@ -133,15 +133,13 @@ class App
     /**
      * Handle Route.
      *
-     * @param RouteInfoInterface $routeInfo
+     * @param $routeInfo
      * @param PennyEventInterface $event
      *
      * @throws RuntimeException if dispatch does not return RouteInfo object.
      */
-    private function handleRoute(
-        RouteInfoInterface $routeInfo,
-        PennyEventInterface $event
-    ) {
+    private function handleRoute($routeInfo, PennyEventInterface $event)
+    {
         if (!$routeInfo instanceof RouteInfoInterface) {
             throw new RuntimeException('Dispatch does not return RouteInfo object');
         }
