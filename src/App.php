@@ -5,8 +5,8 @@ namespace Penny;
 use Exception;
 use RuntimeException;
 use Penny\Config\Loader;
-use Penny\Event\PennyEvmInterface;
-use Penny\Event\PennyEventInterface;
+use Penny\Event\EventManagerInterface;
+use Penny\Event\EventInterface;
 use Penny\Route\RouteInfoInterface;
 use Interop\Container\ContainerInterface;
 
@@ -67,7 +67,7 @@ class App
     /**
      * Penny HTTP flow event getter.
      *
-     * @return PennyEvmInterface
+     * @return EventManagerInterface
      */
     private function getEventManager()
     {
@@ -87,7 +87,7 @@ class App
     private function setUpEventWithRequestResponse($request, $response)
     {
         $event = $this->getContainer()->get('http_flow_event');
-        if (!$event instanceof PennyEventInterface) {
+        if (!$event instanceof EventInterface) {
             throw new RuntimeException('This event did not supported');
         }
 
@@ -133,13 +133,15 @@ class App
     /**
      * Handle Route.
      *
-     * @param mixed $routeInfo
-     * @param PennyEventInterface $event
+     * @param RouteInfoInterface $routeInfo
+     * @param EventInterface $event
      *
      * @throws RuntimeException if dispatch does not return RouteInfo object.
      */
-    private function handleRoute($routeInfo, PennyEventInterface $event)
-    {
+    private function handleRoute(
+        RouteInfoInterface $routeInfo,
+        EventInterface $event
+    ) {
         if (!$routeInfo instanceof RouteInfoInterface) {
             throw new RuntimeException('Dispatch does not return RouteInfo object');
         }
@@ -151,13 +153,13 @@ class App
     /**
      * Handle Response.
      *
-     * @param PennyEvmInterface $eventManager
-     * @param PennyEventInterface $event
+     * @param EventManagerInterface $eventManager
+     * @param EventInterface $event
      * @param RouteInfoInterface $routeInfo
      */
     private function handleResponse(
-        PennyEvmInterface $eventManager,
-        PennyEventInterface $event,
+        EventManagerInterface $eventManager,
+        EventInterface $event,
         RouteInfoInterface $routeInfo
     ) {
         $eventManager->attach($event->getName(), function ($event) use ($routeInfo) {
@@ -177,16 +179,16 @@ class App
     /**
      * Event Manager trigger with exception
      *
-     * @param PennyEvmInterface $eventManager
-     * @param PennyEventInterface $event
+     * @param EventManagerInterface $eventManager
+     * @param EventInterface $event
      * @param string $name
      * @param Exception $exception
      *
-     * @return PennyEventInterface
+     * @return EventInterface
      */
     private function triggerWithException(
-        PennyEvmInterface $eventManager,
-        PennyEventInterface $event,
+        EventManagerInterface $eventManager,
+        EventInterface $event,
         $name,
         Exception $exception
     ) {

@@ -6,8 +6,8 @@ use FastRoute;
 use Interop\Container\ContainerInterface;
 use Penny\App;
 use Penny\Container;
-use Penny\Event\PennyEventInterface;
-use Penny\Event\PennyEvmInterface;
+use Penny\Event\EventInterface;
+use Penny\Event\EventManagerInterface;
 use Penny\Exception\MethodNotAllowedException;
 use Penny\Exception\RouteNotFoundException;
 use Penny\Config\Loader;
@@ -203,7 +203,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testHttpFlowEventNotInstanceOfPennyEventInterface()
+    public function testHttpFlowEventNotInstanceOfEventInterface()
     {
         $this->setExpectedException('RuntimeException');
 
@@ -230,8 +230,8 @@ class AppTest extends PHPUnit_Framework_TestCase
         $dispatcher = function () use ($request) {
             return 'callback';
         };
-        $httpFlowEvent = $this->prophesize(PennyEventInterface::class);
-        $eventManager = $this->prophesize(PennyEvmInterface::class);
+        $httpFlowEvent = $this->prophesize(EventInterface::class);
+        $eventManager = $this->prophesize(EventManagerInterface::class);
 
         $container->has('router')->willReturn(true);
         $container->get('http_flow_event')->willReturn($httpFlowEvent);
