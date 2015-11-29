@@ -20,10 +20,10 @@ If a route matches, the corresponding callback is invoked, in this case the call
 $r->addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
 ```
 
-At this point the system triggers an event called `indexcontroller.index` with zero priority and execute the route callback.
+At this point the system triggers an event called `PennyApp\Controller\IndexController.index` with zero priority and execute the route callback.
 
 All listeners attached after and before it will be called correctly until the framework returns response,
-if an exception is thrown it will trigger an event named `indexcontroller.index_error`.
+if an exception is thrown it will trigger an event named `PennyApp\Controller\IndexController.index_error`.
 
 The most common way to manage all exceptions is:
 
