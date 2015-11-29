@@ -219,7 +219,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $response = $app->run($request, $response);
     }
 
-    public function testRouteInfoNotInstanceOfRouteInfoInterface()
+    public function testDispatcherNotInstanceOfPennyDispatcher()
     {
         $this->setExpectedException('RuntimeException', 'Dispatcher must be an instance of Penny\Dispatcher class');
 
