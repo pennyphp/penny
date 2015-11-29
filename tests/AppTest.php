@@ -170,11 +170,10 @@ class AppTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(405, $response->getStatusCode());
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testDispatcherShouldBeCallable()
     {
+        $this->setExpectedException('RuntimeException', 'Dispatcher must be a callable');
+
         $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
@@ -206,7 +205,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testHttpFlowEventNotInstanceOfEventInterface()
     {
-        $this->setExpectedException('RuntimeException');
+        $this->setExpectedException('RuntimeException', 'This event did not supported');
 
         chdir(__DIR__.'/app');
         $app = new App();
@@ -222,6 +221,8 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testRouteInfoNotInstanceOfRouteInfoInterface()
     {
+        $this->setExpectedException('RuntimeException', 'Dispatcher must be an instance of Penny\Dispatcher class');
+
         $container = $this->prophesize(ContainerInterface::class);
         $request = (new ServerRequest())
         ->withUri(new Uri('/'))

@@ -58,7 +58,13 @@ class App
     {
         $dispatcher = $this->container->get('dispatcher');
         if (!is_callable($dispatcher)) {
-            throw new \RuntimeException('Dispatcher must be a callable');
+            throw new RuntimeException('Dispatcher must be a callable');
+        }
+        if (!$dispatcher instanceof Dispatcher) {
+            throw new RuntimeException(sprintf(
+                'Dispatcher must be an instance of %s\Dispatcher class',
+                __NAMESPACE__
+            ));
         }
 
         return $dispatcher;
@@ -122,7 +128,8 @@ class App
 
         try {
             $routeInfo = call_user_func($dispatcher, $event->getRequest());
-            $this->handleRoute($routeInfo, $event);
+            $event->setRouteInfo($routeInfo);
+            $event->setName($routeInfo->getName());
         } catch (Exception $exception) {
             return $this->triggerWithException($eventManager, $event, 'dispatch_error', $exception)
                         ->getResponse();
@@ -130,24 +137,6 @@ class App
         $this->handleResponse($eventManager, $event, $routeInfo);
 
         return $event->getResponse();
-    }
-
-    /**
-     * Handle Route.
-     *
-     * @param mixed $routeInfo
-     * @param EventInterface $event
-     *
-     * @throws RuntimeException if dispatch does not return RouteInfo object.
-     */
-    private function handleRoute($routeInfo, EventInterface $event)
-    {
-        if (!$routeInfo instanceof RouteInfoInterface) {
-            throw new RuntimeException('Dispatch does not return RouteInfo object');
-        }
-
-        $event->setRouteInfo($routeInfo);
-        $event->setName($routeInfo->getName());
     }
 
     /**

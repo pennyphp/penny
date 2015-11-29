@@ -3,21 +3,13 @@
 namespace PennyTest\Utils;
 
 use ReflectionClass;
+use Penny\Dispatcher;
 use Penny\Route\RouteInfo;
 use Symfony\Component\HttpFoundation\Request;
 
-class FastSymfonyDispatcher
+class FastSymfonyDispatcher extends Dispatcher
 {
-    private $router;
-    private $container;
-
-    public function __construct($router, $container)
-    {
-        $this->router = $router;
-        $this->container = $container;
-    }
-
-    public function __invoke(Request $request)
+    public function __invoke($request)
     {
         $fastRouteInfo = $this->router
             ->dispatch($request->getMethod(), $request->getPathInfo());
