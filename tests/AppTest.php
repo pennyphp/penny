@@ -12,6 +12,7 @@ use Penny\Exception\MethodNotAllowedException;
 use Penny\Exception\RouteNotFoundException;
 use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
+use TestApp\Controller\IndexController;
 use stdClass;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
@@ -26,10 +27,10 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
-            $r->addRoute('GET', '/{id:\d+}', ['TestApp\Controller\IndexController', 'getSingle']);
-            $r->addRoute('GET', '/fail', ['TestApp\Controller\IndexController', 'failed']);
-            $r->addRoute('GET', '/dummy', ['TestApp\Controller\IndexController', 'dummy']);
+            $r->addRoute('GET', '/', [IndexController::class, 'index']);
+            $r->addRoute('GET', '/{id:\d+}', [IndexController::class, 'getSingle']);
+            $r->addRoute('GET', '/fail', [IndexController::class, 'failed']);
+            $r->addRoute('GET', '/dummy', [IndexController::class, 'dummy']);
         });
 
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
@@ -101,7 +102,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get('event_manager')->attach('indexcontroller.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach(IndexController::class.'.index', function ($e) {
             $response = $e->getResponse();
             $response->getBody()->write("I'm very happy!");
             $e->setResponse($response);
@@ -119,7 +120,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get('event_manager')->attach('indexcontroller.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach(IndexController::class.'.index', function ($e) {
             $response = $e->getResponse();
             $response->getBody()->write('This is');
             $e->setResponse($response);
@@ -139,7 +140,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         $response = new Response();
         $count = 0;
 
-        $this->app->getContainer()->get('event_manager')->attach('indexcontroller.dummy_error', function ($e) use (&$count) {
+        $this->app->getContainer()->get('event_manager')->attach(IndexController::class.'.dummy_error', function ($e) use (&$count) {
             $count = &$count + 1;
             throw $e->getException();
         }, 10);
@@ -181,7 +182,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
+            $r->addRoute('GET', '/', [IndexController::class, 'index']);
         });
         $config['dispatcher'] = new \StdClass();
 
@@ -246,7 +247,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     {
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
+            $r->addRoute('GET', '/', [IndexController::class, 'index']);
         });
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
         $this->app->getContainer()
