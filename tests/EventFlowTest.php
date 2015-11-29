@@ -7,6 +7,7 @@ use Penny\Config\Loader;
 use Penny\App;
 use Penny\Container;
 use PHPUnit_Framework_TestCase;
+use TestApp\Controller\IndexController;
 use Zend\Diactoros\Request;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
@@ -19,7 +20,7 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
     {
         $config = Loader::load();
         $config['router'] = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-            $r->addRoute('GET', '/', ['TestApp\Controller\IndexController', 'index']);
+            $r->addRoute('GET', '/', [IndexController::class, 'index']);
         });
 
         $this->app = new App(Container\PHPDiFactory::buildContainer($config));
@@ -32,13 +33,13 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
         ->withMethod('GET');
         $response = new Response();
 
-        $this->app->getContainer()->get('event_manager')->attach('indexcontroller.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach(IndexController::class.'.index', function ($e) {
             $response = $e->getResponse();
             $response = $response->withStatus(201);
             $e->setResponse($response);
         }, 100);
 
-        $this->app->getContainer()->get('event_manager')->attach('indexcontroller.index', function ($e) {
+        $this->app->getContainer()->get('event_manager')->attach(IndexController::class.'.index', function ($e) {
             $response = $e->getResponse();
             $response = $response->withStatus(205);
             $e->setResponse($response);

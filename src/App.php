@@ -162,7 +162,8 @@ class App
         EventInterface $event,
         RouteInfoInterface $routeInfo
     ) {
-        $eventManager->attach($event->getName(), function ($event) use ($routeInfo) {
+        $eventName = $event->getName();
+        $eventManager->attach($eventName, function ($event) use ($routeInfo) {
             $event->setResponse(call_user_func_array(
                 $routeInfo->getCallable(),
                 [$event->getRequest(), $event->getResponse()] + $routeInfo->getParams()
@@ -172,7 +173,7 @@ class App
         try {
             $eventManager->trigger($event);
         } catch (Exception $exception) {
-            $this->triggerWithException($eventManager, $event, $routeInfo->getName().'_error', $exception);
+            $this->triggerWithException($eventManager, $event, $eventName.'_error', $exception);
         }
     }
 
