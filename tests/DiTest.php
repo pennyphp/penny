@@ -7,7 +7,7 @@ use FastRoute;
 use Penny\App;
 use Penny\Container;
 use PHPUnit_Framework_TestCase;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
@@ -30,7 +30,7 @@ class DiTest extends PHPUnit_Framework_TestCase
         $this->container->set('troyan', 'call me');
         $app = new App($this->container);
 
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();

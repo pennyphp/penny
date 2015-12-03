@@ -6,7 +6,7 @@ use Exception;
 use Penny\Event\ZendHttpFlowEvent;
 use Penny\Route\RouteInfoInterface;
 use PHPUnit_Framework_TestCase;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
@@ -16,7 +16,7 @@ class ZendHttpFlowEventTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -31,7 +31,7 @@ class ZendHttpFlowEventTest extends PHPUnit_Framework_TestCase
 
     public function testGetRequest()
     {
-        $this->assertInstanceOf(Request::class, $this->event->getRequest());
+        $this->assertInstanceOf(ServerRequest::class, $this->event->getRequest());
     }
 
     public function testSetGetRouteInfo()

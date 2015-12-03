@@ -8,7 +8,7 @@ use Penny\App;
 use Penny\Container;
 use PHPUnit_Framework_TestCase;
 use TestApp\Controller\IndexController;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
@@ -28,7 +28,7 @@ class EventFlowTest extends PHPUnit_Framework_TestCase
 
     public function testStopEventFlow()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();

@@ -14,7 +14,7 @@ use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
 use TestApp\Controller\IndexController;
 use stdClass;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 use Zend\EventManager\EventManager;
@@ -64,7 +64,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testChangeResponseStatusCode()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/fail'))
         ->withMethod('GET');
         $response = new Response();
@@ -75,7 +75,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testRouteFound()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -86,7 +86,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testRouteParamIntoTheSignatureofMethod()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/10'))
         ->withMethod('GET');
         $response = new Response();
@@ -97,7 +97,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testEventPostExecuted()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -115,7 +115,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testEventPreExecuted()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -134,7 +134,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     public function testEventPreThrowExceptionIsTrigger()
     {
         $this->setExpectedException('InvalidArgumentException');
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/dummy'))
         ->withMethod('GET');
         $response = new Response();
@@ -150,7 +150,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testRouteNotFound()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/doh'))
         ->withMethod('GET');
         $response = new Response();
@@ -161,7 +161,7 @@ class AppTest extends PHPUnit_Framework_TestCase
 
     public function testMethodNotAllowed()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
         $response = new Response();
@@ -175,7 +175,7 @@ class AppTest extends PHPUnit_Framework_TestCase
      */
     public function testDispatcherShouldBeCallable()
     {
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
         $response = new Response();
@@ -195,7 +195,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         chdir(__DIR__.'/app');
         $app = new App();
 
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -211,7 +211,7 @@ class AppTest extends PHPUnit_Framework_TestCase
         chdir(__DIR__.'/app');
         $app = new App();
 
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
@@ -223,7 +223,7 @@ class AppTest extends PHPUnit_Framework_TestCase
     public function testRouteInfoNotInstanceOfRouteInfoInterface()
     {
         $container = $this->prophesize(ContainerInterface::class);
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('GET');
         $response = new Response();
