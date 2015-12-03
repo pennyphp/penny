@@ -7,7 +7,7 @@ use Penny\App;
 use Penny\Container;
 use Penny\Config\Loader;
 use PHPUnit_Framework_TestCase;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\Uri;
 
@@ -31,7 +31,7 @@ class AppLoaderTest extends PHPUnit_Framework_TestCase
     {
         $app = new App($this->container);
 
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/load'))
         ->withMethod('GET');
         $response = new Response();

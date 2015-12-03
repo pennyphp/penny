@@ -5,7 +5,7 @@ namespace PennyTest;
 use FastRoute;
 use Penny\Dispatcher;
 use PHPUnit_Framework_TestCase;
-use Zend\Diactoros\Request;
+use Zend\Diactoros\ServerRequest;
 use Zend\Diactoros\Uri;
 use Penny\Container\PHPDiFactory;
 
@@ -37,7 +37,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     public function testDispatchRouteNotFoundRequest()
     {
         $this->setExpectedException('Penny\Exception\RouteNotFoundException');
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/doh'))
         ->withMethod('GET');
 
@@ -48,7 +48,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
     public function testDispatchMethodNotAllowedRequest()
     {
         $this->setExpectedException('Penny\Exception\MethodNotAllowedException');
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
 
@@ -62,7 +62,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
         $router = $this->prophesize('FastRoute\Dispatcher', PHPDiFactory::buildContainer());
         $container = $this->prophesize('Interop\Container\ContainerInterface', PHPDiFactory::buildContainer());
-        $request = (new Request())
+        $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
 
