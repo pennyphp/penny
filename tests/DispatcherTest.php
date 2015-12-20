@@ -36,7 +36,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testDispatchRouteNotFoundRequest()
     {
-        $this->setExpectedException('Penny\Exception\RouteNotFoundException');
+        $this->setExpectedException('Penny\Exception\RouteNotFoundException', 'Route with path /doh not found.');
         $request = (new ServerRequest())
         ->withUri(new Uri('/doh'))
         ->withMethod('GET');
@@ -47,7 +47,7 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
 
     public function testDispatchMethodNotAllowedRequest()
     {
-        $this->setExpectedException('Penny\Exception\MethodNotAllowedException');
+        $this->setExpectedException('Penny\Exception\MethodNotAllowedException', 'Method POST not allowed.');
         $request = (new ServerRequest())
         ->withUri(new Uri('/'))
         ->withMethod('POST');
