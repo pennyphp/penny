@@ -63,9 +63,9 @@ class Dispatcher
 
         switch ($dispatch[0]) {
             case BaseDispatcher::NOT_FOUND:
-                throw new RouteNotFoundException();
+                throw new RouteNotFoundException('Route with path '.$uri->getPath().' not found.');
             case BaseDispatcher::METHOD_NOT_ALLOWED:
-                throw new MethodNotAllowedException();
+                throw new MethodNotAllowedException('Method '.$request->getMethod().' not allowed.');
             case BaseDispatcher::FOUND:
                 return $this->processRouteInfo($dispatch);
             default:
