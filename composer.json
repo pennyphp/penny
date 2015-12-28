@@ -9,17 +9,18 @@
     ],
     "require": {
         "php": "^5.6|^7.0",
+        "doctrine/annotations": "^1.2",
+        "gianarb/fast-event-manager": "~0.1",
         "nikic/fast-route": "~0.6",
         "php-di/php-di": "~5.0",
         "zendframework/zend-diactoros": "~1.0",
-        "zendframework/zend-eventmanager": "~2.5.0",
-        "doctrine/annotations": "^1.2",
         "zendframework/zend-stdlib": "~2.5"
     },
     "require-dev": {
+        "cakephp/event": "~3.0",
         "phpunit/phpunit": "~5.0",
         "symfony/http-foundation": "~3.0",
-        "cakephp/event": "~3.0"
+        "zendframework/zend-eventmanager": "~2.5.0"
     },
     "license": "MIT",
     "authors": [
