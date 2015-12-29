@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.8.0
+Found 8 pull request(s) merged for pennyphp/penny between 0.7.0 and 0.8.0.
+
+* [[#145]](https://github.com/pennyphp/penny/pull/145) make bootstrap event triggered in App::run()
+* [[#147]](https://github.com/pennyphp/penny/pull/147) Fixes [[#96]](https://github.com/pennyphp/penny/pull/96) , implements ClassName::class prefix for event name
+* [[#150]](https://github.com/pennyphp/penny/pull/150) update symfony/http-foundation to ~3.0
+* [[#151]](https://github.com/pennyphp/penny/pull/151) remove php7 from allow_failures in travis config
+* [[#146]](https://github.com/pennyphp/penny/pull/146) remove ->getContainer() call inside internal App class inside setUpEventWithRequestResponse() method
+* [[#152]](https://github.com/pennyphp/penny/pull/152) add exception message to RouteNoutFoundException and MethodNotAllowedException
+* [[#154]](https://github.com/pennyphp/penny/pull/154) Add test dispatcher is a closure
+* [[#155]](https://github.com/pennyphp/penny/pull/155) Fixed Readme.md and add site
+
 ## 0.7.0
 
 Found 32 pull request(s) merged for pennyphp/penny between 0.6.0 and HEAD.
