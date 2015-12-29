@@ -9,7 +9,7 @@ One penny is valueless but a lot of pennies build an empire.
 ![Penny PHP logo](https://raw.githubusercontent.com/gianarb/penny/master/docs/assets/img/pennyphp.png)
 
 ## What is penny?
-Penny is a library that helps you to build PHP application. It is focused around the interoperability concept.  
+[Penny](http://pennyphp.org) is a library that helps you to build PHP application. It is focused around the interoperability concept.  
 At the moment Symfony, Zend Framework and Laravel are very big projects and this complexity often is not required.  
 This project helps you to create applications with the best standalone components.  
 
@@ -18,8 +18,9 @@ This project helps you to create applications with the best standalone component
 "Classic" because it integrates league/plates and helps you to build an HTML application.
 
 ### Installation
-
+```
 $ composer create-project penny/classic-app -s dev
+```
 
 ### Built-in webserver
 ```
