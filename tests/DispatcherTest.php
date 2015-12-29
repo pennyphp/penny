@@ -56,6 +56,23 @@ class DispatcherTest extends PHPUnit_Framework_TestCase
         $dispatcher($request);
     }
 
+    public function testDispatcherIsAClosure()
+    {
+        $router = $this->prophesize('FastRoute\Dispatcher', PHPDiFactory::buildContainer());
+        $container = $this->prophesize('Interop\Container\ContainerInterface', PHPDiFactory::buildContainer());
+        $request = (new ServerRequest())
+        ->withUri(new Uri('/'))
+        ->withMethod('POST');
+
+        $router->reveal();
+        $container->reveal();
+        $dispatcher = function () use ($router, $container) {
+            return 'nothing';
+        };
+
+        $this->assertSame('nothing', $dispatcher($request));
+    }
+
     public function testDispatchGot500Exception()
     {
         $this->setExpectedException('Exception');
