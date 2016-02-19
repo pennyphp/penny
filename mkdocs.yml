@@ -1,6 +1,6 @@
 site_name: Penny
 site_description: Php Framework made of other components
-
+theme: readthedocs
 repo_url: https://github.com/gianarb/penny
 
 pages:
