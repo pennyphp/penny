@@ -1,7 +1,6 @@
-sudo: required
 language: php
-services:
-  - docker
+dist: trusty
+services: [docker]
 
 php:
     - 5.6
