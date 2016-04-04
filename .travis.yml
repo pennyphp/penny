@@ -1,6 +1,4 @@
 language: php
-dist: trusty
-services: [docker]
 
 php:
     - 5.6
@@ -18,27 +16,11 @@ script:
 after_script:
     - wget https://scrutinizer-ci.com/ocular.phar
     - php ocular.phar code-coverage:upload --format=php-clover clover.xml
-    - if [[ $DEPLOY_DOCS == "true" ]]; then echo "Preparing to build and deploy documentation" ; make docs_build ; echo "Completed deploying documentation" ; fi
 
 notifications:
     irc: irc.freenode.org#pennyphp
     email: false
 
-matrix:
-    fast_finish: true
-    include:
-      - php: 5.6
-        env:
-            - DEPLOY_DOCS=true
-    exclude:
-      - php: 5.6
-        env:
-            - DEPLOY_DOCS=false
-
 cache:
     directories:
         - $HOME/.composer/cache
-
-env:
-  global:
-    secure: Riiy2L3iua0Olm3Z1qtzqAAyqRA9YshyTjBB+77tJLSiuPmXNgFCKQRVg4kxCC5UnvF9A+Rv/W0DzUYQ+5O/0XVAGCqpndUJUNCBpwYYjQfWZ7jJyHnGqaKWDwXg3DW6dKlOTJa2xk0M5+BpqE3aAZlwnVeljMbzHSEJ/s1inCg=
