@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width initial-scale=1">
+
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <title>The dispatcher concept - Penny</title>
+        <meta name="description" content="PennyPHP Framework documentation">
+
+        <meta property="og:title" content="The dispatcher concept - Penny" />
+        <meta property="og:site_name" content="penny php site framework middleware"/>
+        <meta property="og:type" content="article, documentation" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="../img/pennyphp.png" />
+        <link rel="stylesheet" href="../css/compiled.css">
+    </head>
+
+  <body>
+
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 subbody no-float">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="/"><img alt="Penny" src="../img/pennyphp.png" /></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                      <li><a href="http://pennyphp.org/blog/"><i class="fa fa-users"></i>  Blog</a></li>
+                      <li><a href="http://docs.pennyphp.org/"><i class="fa fa-file-text-o"></i> Documentation</a></li>
+                      <li><a href="https://github.com/gianarb/penny" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+
+            <div class="row text-left">
+                <div class="col-md-4">
+                    <ul>
+                      
+                          
+                              <li class="">
+                                  <a href="..">Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../getting-started/">Getting started</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../skeleton-application/">Skeleton Application</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../install/">Install</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../flow/">Application flow</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="current">
+                                  <a href="./">The dispatcher concept</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../use-case/">Use case</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../event-manager-intro/">Event Manager Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../available-event-manager/">Available Event Manager</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../write-our-event-manager-proxy/">Write Our Event Manager Proxy</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../license/">License</a>
+                              </li>
+                          
+
+                      
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h1 id="the-dispatcher-concept">The Dispatcher concept</h1>
+<h2 id="http-libraries">HTTP Libraries</h2>
+<p>By "HTTP implementation", it means: <em>a layer that helps us to work with Request and Response in terms of reading a request, create a response and send it back to the client.</em></p>
+<p>In PHP there are a lot of libraries that do that:</p>
+<ul>
+<li><a href="https://github.com/zendframework/zend-http">Zend\Http</a></li>
+<li><a href="https://github.com/zendframework/zend-diactoros">Zend\Diactoros</a></li>
+<li><a href="https://github.com/symfony/HttpFoundation">Symfony\HttpFoundation</a></li>
+<li><a href="https://github.com/guzzle/psr7">guzzle/psr7</a></li>
+</ul>
+<h2 id="dispatcher">Dispatcher</h2>
+<p>The <a href="https://github.com/gianarb/penny/blob/master/src/Dispatcher.php">Dispatcher</a> (click link to show current implementation), in penny represents the link between: router,
+request and response.</p>
+<p>The default Penny Dispatcher implementation uses <code>Zend\Diactoros</code>. We can write our own dispatcher that makes use of our favorite HTTP library</p>
+<p>Main advantages gained by using <code>Zend\Diactoros</code> are:
+<em> It is supported by the Zend Framework community
+</em> It follows PSR-7 standard. <a href="http://www.php-fig.org/psr/psr-7/">(what is PSR-7?)</a></p>
+<p>If the dispatch process is good and exists a callable for our request it returns a RouteInfo implementations.</p>
+<h2 id="penny-fastrouter-and-symfonyhttpfoundation">Penny, FastRouter and Symfony\HttpFoundation</h2>
+<p>Here we are going to see how to write a dispatcher to use with the <code>Symfony\HttpFoundation</code> component.</p>
+<ol>
+<li>Install it.</li>
+</ol>
+<pre><code>composer require symfony/http-foundation
+</code></pre>
+
+<ol>
+<li>Write our dispatcher that uses the <code>HttpFoundation\Request</code></li>
+</ol>
+<pre><code class="php">&lt;?php
+
+namespace OurApp\Dispatcher;
+
+use Symfony\Component\HttpFoundation\Request;
+
+class FastSymfonyDispatcher
+{
+    private $router;
+
+    public function __construct($router)
+    {
+        $this-&gt;router = $router;
+    }
+
+    public function dispatch(Request $request)
+    {
+        $routeInfo = $this-&gt;router-&gt;dispatch($request-&gt;getMethod(), $request-&gt;getPathInfo());
+        switch ($routeInfo[0]) {
+            case \FastRoute\Dispatcher::NOT_FOUND:
+                throw new \Penny\Exception\RouteNotFoundException();
+                break;
+            case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
+                throw new \Penny\Exception\MethodNotAllowedException();
+                break;
+            case \FastRoute\Dispatcher::FOUND:
+                return $routeInfo;
+                break;
+            default:
+                throw new \Exception(null, 500);
+                break;
+        }
+    }
+}
+
+</code></pre>
+
+<ol>
+<li>Create custom endpoint that consume <code>Symfony\Component\HttpFoundation\Request</code> and <code>Response</code></li>
+</ol>
+<pre><code class="php">&lt;?php
+use Penny\App;
+use OurApp\Dispatcher\FastSymfonyDispatcher;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+$this-&gt;app = new App();
+$dispatcher = new FastSymfonyDispatcher($router);
+$this-&gt;app-&gt;getContainer()-&gt;set(&quot;dispatcher&quot;, $dispatcher);
+$this-&gt;app-&gt;run($request, $response);
+</code></pre>
+
+<p>Now our application runs using the  <code>Symfony\HttpFoundation</code> instead of <code>Zend\Diactoros</code>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="68JUJMXHCBK8U">
+                    <button type="button" class="btn btn-info" name="submit" alt="PayPal – The safer, easier way to pay online."><i class="fa fa-paypal"></i> Donate with PayPal</button>
+                    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="/js/jquery/dist/jquery.js"></script>
+    <script src="/js/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-67036349-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            var imgs = $('img');
+            for (var ii = 0; ii<imgs.length;ii++) {
+                $(imgs[ii]).addClass('img-responsive');
+            }
+        });
+    </script>
+
+  </body>
+
+</html>

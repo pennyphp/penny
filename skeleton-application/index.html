@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width initial-scale=1">
+
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <title>Skeleton Application - Penny</title>
+        <meta name="description" content="PennyPHP Framework documentation">
+
+        <meta property="og:title" content="Skeleton Application - Penny" />
+        <meta property="og:site_name" content="penny php site framework middleware"/>
+        <meta property="og:type" content="article, documentation" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="../img/pennyphp.png" />
+        <link rel="stylesheet" href="../css/compiled.css">
+    </head>
+
+  <body>
+
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 subbody no-float">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="/"><img alt="Penny" src="../img/pennyphp.png" /></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                      <li><a href="http://pennyphp.org/blog/"><i class="fa fa-users"></i>  Blog</a></li>
+                      <li><a href="http://docs.pennyphp.org/"><i class="fa fa-file-text-o"></i> Documentation</a></li>
+                      <li><a href="https://github.com/gianarb/penny" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+
+            <div class="row text-left">
+                <div class="col-md-4">
+                    <ul>
+                      
+                          
+                              <li class="">
+                                  <a href="..">Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../getting-started/">Getting started</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="current">
+                                  <a href="./">Skeleton Application</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../install/">Install</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../flow/">Application flow</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../the-dispatcher-concept/">The dispatcher concept</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../use-case/">Use case</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../event-manager-intro/">Event Manager Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../available-event-manager/">Available Event Manager</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../write-our-event-manager-proxy/">Write Our Event Manager Proxy</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../license/">License</a>
+                              </li>
+                          
+
+                      
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h1 id="penny-skeleton-application">Penny Skeleton Application</h1>
+<h2 id="table-of-contents">Table of contents</h2>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#get-it">Get it</a></li>
+<li><a href="#requirements">Requirements</a></li>
+<li><a href="#php-dependencies">PHP Dependencies</a></li>
+<li><a href="#build-assets">Build assets</a></li>
+</ul>
+</li>
+<li><a href="#web-server-setup">Web server setup</a><ul>
+<li><a href="#php-built-in-web-server">PHP built-in Web server</a></li>
+<li><a href="#docker">Docker</a></li>
+</ul>
+</li>
+<li><a href="#next-steps">Next Steps</a></li>
+</ul>
+<h1 id="introduction">Introduction</h1>
+<p>The Penny Skeleton Application aims to be the starting point to bootstrap a typical web application made of controllers and views.</p>
+<h2 id="requirements">Requirements</h2>
+<ul>
+<li>PHP &gt;= 5.4 .</li>
+<li><a href="https://getcomposer.org/">Composer</a>  (Required to manage PHP dependencies).</li>
+<li>Node and npm  (Required to build frontend assets).</li>
+</ul>
+<h2 id="php-dependencies">PHP Dependencies</h2>
+<p>PHP dependencies and autoloading are managed trough composer. <a href="https://getcomposer.org/doc/00-intro.md">New to composer?</a>.</p>
+<h1 id="installation">Installation</h1>
+<h2 id="get-it">Get it</h2>
+<p>The Penny skeleton application is <a href="https://github.com/pennyphp/penny-skeleton-app">hosted on GitHub</a></p>
+<p>The most common ways to get it are:</p>
+<h3 id="via-composer">Via Composer</h3>
+<pre><code>$ composer create-project penny/classic-app -s dev
+</code></pre>
+
+<h3 id="via-git-clone">Via git clone</h3>
+<pre><code class="bash">$ git clone https://github.com/pennyphp/penny-skeleton-app.git
+$ cd penny-skeleton-app &amp;&amp; composer install
+</code></pre>
+
+<h3 id="downloading-the-latest-master-archive">Downloading the latest master archive</h3>
+<pre><code class="bash">$ wget -nv -O - https://github.com/pennyphp/penny-skeleton-app/archive/master.zip | tar zx
+$ cd penny-skeleton-app-master &amp;&amp; composer install
+</code></pre>
+
+<h2 id="build-assets">Build assets</h2>
+<p>Javascript front end dependencies are managed trough <a href="http://bower.io/">bower</a> and built using <a href="http://gruntjs.com">grunt</a>.
+Grunt and other build tools are</p>
+<p><strong>Note:</strong> <em>The following commands must be issued in the skeleton application folder</em>,</p>
+<p><em>Resolve node dependencies</em>
+<strong>Note:</strong><br />
+bower and grunt require node.js this is only an example of method to manage static asset,
+if we don't have familiarity with this tools, no problem, we can use <a href="https://github.com/kriswallsmith/assetic">assetic</a>,
+download all static dependencies into the public dir or other solutions.</p>
+<pre><code class="bash">$ sudo npm install -G grunt-cli
+$ npm install
+</code></pre>
+
+<p><em>Resolve frontend dependencies</em></p>
+<pre><code class="bash">$ ./node_modules/bower/bin/bower install
+</code></pre>
+
+<p><em>Build assets</em></p>
+<pre><code class="bash">$ grunt dev
+</code></pre>
+
+<h1 id="web-server-setup">Web server setup</h1>
+<h2 id="php-built-in-web-server">PHP built-in Web server</h2>
+<p><strong>For testing purposes only</strong> we can use the PHP built-in web server</p>
+<p>In the skeleton application folder issue a:</p>
+<pre><code class="bash">$ php -S 0.0.0.0:80 -t public
+</code></pre>
+
+<h2 id="docker">Docker</h2>
+<p><strong>Attention</strong>: This is configured  as a <em>development</em> environment.
+If we want to use it in production, we have to: disable error reporting, persist logs, disable Z-Ray, raise limits and fine tune our configurations.</p>
+<p>The <code>penny-skeleton-app</code> repository contains a <code>docker-compose.yml.dist</code> file which currently configures two containers, one
+running the NGINX web server and one running php-fpm.
+This file should work as is but  <em>must be renamed</em> into <code>docker-compose.yml</code>. We can modify if we need something specific for our system like paths, ip addresses, ports, additional services (databases, queues, caching layers) and so on.
+Remember that the docker-compose.yml file is in <code>.gitignore</code> since this is very specific to the current installation.</p>
+<h3 id="requirements_1">Requirements</h3>
+<ul>
+<li>Docker &gt;= 1.6.0</li>
+<li><a href="https://docs.docker.com/compose/">docker-compose</a></li>
+</ul>
+<h3 id="create-our-docker-composeyml">Create our docker-compose.yml</h3>
+<pre><code class="bash">$ cp docker-compose.yml.dist docker-compose.yml
+# edit it for our specific needs
+$ vi docker-compose.yml ```
+
+### Build
+Before starting, we have to build penny-classic specific images, to do it issue a:
+
+```bash
+$ docker-compose build
+</code></pre>
+
+<h3 id="up-and-running">Up and running</h3>
+<pre><code class="bash">$ docker-compose up -d
+</code></pre>
+
+<h3 id="z-ray">Z-Ray</h3>
+<p>Z-Ray is included in the Penny Docker development environment.</p>
+<p><img alt="Z-Ray" src="http://i.imgur.com/MfvkfY0.png" /></p>
+<h3 id="endpoints">Endpoints</h3>
+<p>IP addresses can be configured in <code>docker-compose.yml</code></p>
+<ul>
+<li>Application:  <code>http://127.0.0.10</code></li>
+<li>Z-Ray:  <code>http://127.0.0.10:10081/ZendServer</code></li>
+</ul>
+<h1 id="next-steps">Next Steps</h1>
+<p>Add links about Doctrine integration, writing templates with Plates, creating forms, validating forms, etc.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="68JUJMXHCBK8U">
+                    <button type="button" class="btn btn-info" name="submit" alt="PayPal – The safer, easier way to pay online."><i class="fa fa-paypal"></i> Donate with PayPal</button>
+                    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="/js/jquery/dist/jquery.js"></script>
+    <script src="/js/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-67036349-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            var imgs = $('img');
+            for (var ii = 0; ii<imgs.length;ii++) {
+                $(imgs[ii]).addClass('img-responsive');
+            }
+        });
+    </script>
+
+  </body>
+
+</html>

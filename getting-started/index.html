@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width initial-scale=1">
+
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+        <title>Getting started - Penny</title>
+        <meta name="description" content="PennyPHP Framework documentation">
+
+        <meta property="og:title" content="Getting started - Penny" />
+        <meta property="og:site_name" content="penny php site framework middleware"/>
+        <meta property="og:type" content="article, documentation" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:image" content="../img/pennyphp.png" />
+        <link rel="stylesheet" href="../css/compiled.css">
+    </head>
+
+  <body>
+
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8 subbody no-float">
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="/"><img alt="Penny" src="../img/pennyphp.png" /></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                      <li><a href="http://pennyphp.org/blog/"><i class="fa fa-users"></i>  Blog</a></li>
+                      <li><a href="http://docs.pennyphp.org/"><i class="fa fa-file-text-o"></i> Documentation</a></li>
+                      <li><a href="https://github.com/gianarb/penny" target="_blank"><i class="fa fa-github"></i> GitHub</a></li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+
+            <div class="row text-left">
+                <div class="col-md-4">
+                    <ul>
+                      
+                          
+                              <li class="">
+                                  <a href="..">Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="current">
+                                  <a href="./">Getting started</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../skeleton-application/">Skeleton Application</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../install/">Install</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../flow/">Application flow</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../the-dispatcher-concept/">The dispatcher concept</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../use-case/">Use case</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../event-manager-intro/">Event Manager Introduction</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../available-event-manager/">Available Event Manager</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../write-our-event-manager-proxy/">Write Our Event Manager Proxy</a>
+                              </li>
+                          
+
+                      
+                          
+                              <li class="">
+                                  <a href="../license/">License</a>
+                              </li>
+                          
+
+                      
+                    </ul>
+                </div>
+                <div class="col-md-8">
+                    <h1 id="getting-started">Getting Started</h1>
+<p>Penny is a framework that helps us to build OUR own application.
+In this tutorial we will try to build our first skeleton application.</p>
+<p>This simple application needs some third-party php components:</p>
+<ul>
+<li><a href="https://github.com/theleague/plates">theleague/plates</a> the template system used to render our page.</li>
+<li><a href="https://github/doctrine/doctrine2">doctrine/doctrine</a> the ORM, used to persist and load our data from/to the MySQL database.</li>
+<li><a href="https://github/zendframework/zend-form">zendframework/zend-form</a> to create forms used manipulate our data.</li>
+</ul>
+<p>In this tutorial I also used <a href="https://bower.io">bower</a> and <a href="http://gruntjs.com/">grunt</a> to manage fronted assets.</p>
+<h2 id="install">Install</h2>
+<pre><code class="bash">composer require gianarb/penny:dev-master
+</code></pre>
+
+<h2 id="foldering">Foldering</h2>
+<p>Penny is just the base framework, to build an application is also necessary a good folder structure.</p>
+<p>This tutorial proposal is:</p>
+<pre><code>.
+├── app
+│   ├── Controller
+│   ├── Form
+│   ├── Entity
+│   ├── ...
+│   └── view
+├── bower.json
+├── composer.json
+├── config
+│   └── di.php
+├── Gruntfile.js
+├── package.json
+├── vendor
+└── public
+    └── index.php
+</code></pre>
+
+<ul>
+<li><code>app</code> contains application files.</li>
+<li><code>config</code> is the folder from which penny loads dependency injection configurations by default.</li>
+</ul>
+<p>Every application has an entry point, <code>public/index.php</code> is our.</p>
+<pre><code class="php">// /public/index.php
+
+&lt;?php
+use Penny\App;
+
+chdir(dirname(__DIR__));
+require &quot;vendor/autoload.php&quot;;
+
+$app = new App();
+$emitter = new \Zend\Diactoros\Response\SapiEmitter();
+$emitter-&gt;emit($app-&gt;run());
+</code></pre>
+
+<p>The <code>Penny\App</code> allow us to pass Container that instance of <code>Interop\Container\ContainerInterface</code>, if we don't supply any, it will load using PHP DI that will read <code>./config/{{*}}{{,*.local}}.php</code> as default. For custom path for config to be read with PHP DI, we can specify:</p>
+<pre><code class="php">use Penny\App;
+use Penny\Config\Loader;
+use Penny\Container;
+
+$config = Loader::load(&quot;./config/{{*}}{{,*.local}}.php&quot;);
+$app    = new App(Container\PHPDiFactory::buildContainer($config));
+</code></pre>
+
+<p>To build penny app, we can create these directories or clone <a href="https://github.com/gianarb/penny-foldering">penny-foldering</a>.</p>
+<pre><code class="bash">git clone git@github.com:gianarb/penny-foldering ./penny-app
+cd penny-app
+composer install
+</code></pre>
+
+<p>There is easier way, use <a href="/docs/skeleton-application.md">penny-skeleton-app</a>.</p>
+<h1 id="webserver">WebServer</h1>
+<p>Of course we can use our favorite web server. Here are just a few examples</p>
+<h2 id="php">PHP</h2>
+<p>We can use the PHP Internal Server. We can go to the root of project, and run the following command:</p>
+<pre><code class="bash">php -S 127.0.0.0:8085 -t public
+</code></pre>
+
+<h2 id="nginxphp-fpm-configuration">NGINX/PHP-FPM configuration</h2>
+<p><code>nginx/server.d/example.conf</code></p>
+<pre><code>upstream fpm {
+    server unix:/var/run/fpm-example.sock;
+}
+
+server {
+    listen 80;
+    server_name example.com;
+    proxy_pass_header Server;
+    root /var/www/example/public;
+    index index.php;
+
+    location / {
+        try_files                       $uri $uri/ /index.php$is_args$args;
+    }
+
+    location ~* .php$ {
+        fastcgi_pass                    fpm;
+        fastcgi_param                   SCRIPT_FILENAME /opt/example/public/index.php;
+        include fastcgi_params
+    }
+}
+</code></pre>
+
+<p><code>php/etc/pool.d/example.conf</code></p>
+<pre><code>[example]
+
+
+user = fpm
+group = fpm
+
+listen = /var/run/fpm-example.sock
+
+pm = dynamic
+pm.max_children = 20
+pm.start_servers = 10
+pm.min_spare_servers = 10
+pm.max_spare_servers = 10
+pm.max_requests = 100
+
+chdir = /var/www/example/
+
+security.limit_extensions = .php .phtml
+
+request_terminate_timeout = 600
+</code></pre>
+
+<h1 id="dependency-injection-and-routing-configuration">Dependency Injection and routing configuration</h1>
+<p>At the moment the default DiC library is PHP-DI and in this tutorial I use it.</p>
+<p>The default path where penny look for configuration files is the <code>config</code> directory.
+Files whose name match the <code>*.php</code>  pattern are loaded first and then it loads files whose name match the <code>*.local.php</code> pattern.
+This strategy is  useful to do configuration overriding for things like database credentials or external services api keys.</p>
+<p>The first step is to define a routing strategy, at the moment I'm using <a href="https://github.com/nikic/FastRoute">nikic/FastRoute</a> and, as the name state, it is very fast and surprisingly easy to use.</p>
+<p>At this point we can use the DI to load the router decoupling the routing library by the framework.</p>
+<p>Create <code>/config/config.app.php</code></p>
+<pre><code class="php">&lt;?php
+return [
+    &quot;router&quot; =&gt; function () {
+        return \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r-&gt;addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
+            $r-&gt;addRoute('POST', '/', ['PennyApp\Controller\IndexController', 'index']);
+        });
+    },
+];
+</code></pre>
+
+<p>In this way GET / resolves to the <code>PennyApp\Controller\IndexController</code> controller and then it calls the <code>index</code> action.</p>
+<p>This is our first route :tada:, now we need the corresponding controller, let's see how to create one.</p>
+<h2 id="autoloading">Autoloading</h2>
+<p>To manage autoloading we use <a href="https://getcomposer.org">composer</a>.</p>
+<p>We can add this configuration in our composer.json.
+This configuration tells our scripts that the <code>PennyApp</code> namespace resides under the <code>app</code> directory, that's where we are placing our controllers.</p>
+<pre><code class="json">{
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+            &quot;PennyApp\\&quot;: &quot;./app&quot;
+        }
+    }
+}
+</code></pre>
+
+<p>see the <a href="https://github.com/gianarb/penny-foldering/blob/master/composer.json">penny-foldering composer.json</a> for reference</p>
+<p>Now we are ready to write the controller that resolve our route.</p>
+<pre><code class="php">// /app/Controller/IndexController.php
+
+&lt;?php
+namespace PennyApp\Controller;
+
+class IndexController
+{
+    public function index($request, $response)
+    {
+        return $response;
+    }
+}
+</code></pre>
+
+<p>Pretty easy right? This is our controller and our action waiting $request and $response,</p>
+<p>the above implementation uses <a href="https://github.com/zendframework/zend-diactoros">Zend\Diactoros</a> and it is PSR-7 compatible.</p>
+<h2 id="templating-with-plates">Templating with Plates</h2>
+<p><a href="https://github.com/thephpleague/plates">Plates</a> is a native PHP template system that’s fast, easy to use and easy to extend.</p>
+<p>Here's how to add it to our application:</p>
+<pre><code class="php">// /config/config.app.php
+&lt;?php
+return [
+    &quot;router&quot; =&gt; function () {
+        return \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r-&gt;addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
+            $r-&gt;addRoute('POST', '/', ['PennyApp\Controller\IndexController', 'index']);
+        });
+    },
+    &quot;template&quot; =&gt; \DI\object(\League\Plates\Engine::class)
+        -&gt;constructor(&quot;./app/view/&quot;), // ./app/view is the path of our templates
+];
+</code></pre>
+
+<p>Now, we can use it in our controller, update it and create our first template!</p>
+<pre><code class="php">// /app/Controller/IndexController.php
+
+&lt;?php
+namespace PennyApp\Controller;
+
+class IndexController
+{
+    /**
+     * @Inject(&quot;template&quot;)
+     */
+    private $template;
+
+    public function index($request, $response)
+    {
+        $response-&gt;getBody()-&gt;write($this-&gt;template-&gt;render(&quot;index&quot;, [
+            &quot;name&quot; =&gt; &quot;developer&quot;
+        ]));
+        return $response;
+    }
+}
+</code></pre>
+
+<pre><code class="html">&lt;!-- /app/view/index.php --&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Penny Application&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hi! I'm a &lt;?php echo $name; ?&gt;&lt;/h1&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="database-integration-with-doctrine-2">Database integration with Doctrine 2</h2>
+<p>We are using <a href="https://github.com/doctrine/doctrine2">Doctrine</a> which is a popular Object Relational Mapper (ORM) library and the following  is it's basic configuration copied directly by
+ official site.</p>
+<pre><code class="php">&lt;?php
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+
+require_once &quot;vendor/autoload.php&quot;;
+
+$isDevMode = true;
+$config = Setup::createAnnotationMetadataConfiguration(array(__DIR__.&quot;/src&quot;), $isDevMode);
+$conn = array(
+    'driver' =&gt; 'pdo_sqlite',
+    'path' =&gt; __DIR__ . '/db.sqlite',
+);
+$entityManager = EntityManager::create($conn, $config);
+</code></pre>
+
+<p>Let's see how to integrate it in Penny using the Dependency injection container.</p>
+<pre><code class="php">// /config/app.config.php
+&lt;?php
+return [
+    &quot;parameters&quot; =&gt; [
+        &quot;doctrine&quot; =&gt; [
+            &quot;orm&quot; =&gt; [
+                &quot;devMode&quot; =&gt; true,
+                &quot;entityPaths&quot; =&gt; [__DIR__.&quot;/../app/Entity&quot;],
+                &quot;proxiyDir&quot; =&gt; __DIR__.&quot;/cache&quot;,
+                &quot;cacheDir&quot; =&gt; __DIR__.&quot;/cache&quot;,
+            ],
+            &quot;conn&quot; =&gt; [
+                &quot;driver&quot; =&gt; &quot;pdo_mysql&quot;,
+                'dbname' =&gt; 'translate',
+                'user' =&gt; 'root',
+                'password' =&gt; 'root',
+                'host' =&gt; '127.0.0.1',
+            ]
+        ]
+    ],
+    &quot;router&quot; =&gt; function () {
+        return \FastRoute\simpleDispatcher(function (\FastRoute\RouteCollector $r) {
+            $r-&gt;addRoute('GET', '/', ['PennyApp\Controller\IndexController', 'index']);
+            $r-&gt;addRoute('POST', '/', ['PennyApp\Controller\IndexController', 'index']);
+        });
+    },
+    &quot;template&quot; =&gt; \DI\object(\League\Plates\Engine::class)
+        -&gt;constructor(&quot;./app/view/&quot;), // ./app/view is the path of our templates
+
+    &quot;doctrine.dbal&quot; =&gt; \DI\factory(function (\DI\Container $c) {
+        return Doctrine\DBAL\DriverManager::getConnection($c-&gt;get(&quot;parameters&quot;)[&quot;doctrine&quot;][&quot;conn&quot;]);
+    }),
+    &quot;doctrine.em&quot; =&gt; \DI\factory(function (\DI\Container $c) {
+        $config = Setup::createAnnotationMetadataConfiguration(
+            $c-&gt;get(&quot;parameters&quot;)['doctrine']['orm']['entityPaths'],
+            $c-&gt;get(&quot;parameters&quot;)[&quot;doctrine&quot;][&quot;orm&quot;][&quot;devMode&quot;],
+            null,
+            null,
+            false
+        );
+        $dbal = $c-&gt;get(&quot;doctrine.dbal&quot;);
+        return EntityManager::create($dbal, $config);
+    }),
+];
+</code></pre>
+
+<p>Adding sensitive parameters (like database credentials) into the VCS is a very dangerous and bad practice, the <code>conn</code> configuration into the <code>parameters</code> array is the default,  VCS committed. not working one.</p>
+<p>We can override it in the local environment, adding a <code>/config/*.local.php</code> file where keys override the default ones provided in the default configuration.</p>
+<pre><code>&lt;?php
+// /config/local.php
+return [
+    &quot;parameters&quot; =&gt; [
+        &quot;doctrine&quot; =&gt; [
+            &quot;conn&quot; =&gt; [
+                'user' =&gt; 'applicationdatabase',
+                'password' =&gt; '35hw4gesgve4b',
+            ]
+        ]
+    ],
+];
+</code></pre>
+
+<p><em>Add it into the .gitignore</em></p>
+<p>Doctrine has an awesome console that helps us to manage database, schema, cache an a lot of other stuff.
+<strong>TODO</strong>: we should give an overview on how to do in Penny things contained in  <a href="http://doctrine-orm.readthedocs.org/en/latest/tutorials/getting-started.html">this chapter</a>.</p>
+<pre><code class="php">&lt;?php
+// cli-config.php
+require &quot;vendor/autoload.php&quot;;
+
+$app = new \Penny\App();
+return \Doctrine\ORM\Tools\Console\ConsoleRunner::createHelperSet($app-&gt;getContainer()-&gt;get(&quot;doctrine.em&quot;));
+</code></pre>
+
+<p>Now we are ready to use it in our app writing our first entity.</p>
+<pre><code class="php">// /app/Entity/Car.php
+&lt;?php
+namespace PennyApp\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Table(name=&quot;beers&quot;)
+ * @ORM\Entity()
+ */
+class Beer
+{
+    /**
+     * @ORM\Column(type=&quot;integer&quot;)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy=&quot;AUTO&quot;)
+     */
+    private $id;
+
+    /**
+     * @ORM\Column(type=&quot;string&quot;, nullable=false)
+     */
+    private $name;
+
+    /**
+     * @ORM\Column(type=&quot;string&quot;, nullable=false)
+     */
+    private $nation;
+
+    public function getId()
+    {
+        return $this-&gt;id;
+    }
+
+    public function setName($name)
+    {
+        $this-&gt;name = $name;
+        return $this;
+    }
+
+    public function getName()
+    {
+        return $this-&gt;name;
+    }
+
+    public function setNation($nation)
+    {
+        $this-&gt;nation = $nation;
+        return $this;
+    }
+
+    public function getNation()
+    {
+        return $this-&gt;nation;
+    }
+}
+</code></pre>
+
+<h2 id="form-and-validation">Form and Validation</h2>
+<p>Before persisting new records into the database validate and filter them is necessary. <code>Zend\Validator</code> and <code>Zend\Form</code>
+are good components that helps to do that.</p>
+<p>Update composer.json configuration adding them as dependencies.</p>
+<pre><code class="json">{
+    &quot;require&quot;: {
+        &quot;doctrine/orm&quot;: &quot;2.5.*&quot;,
+        &quot;gianarb/penny&quot;: &quot;~0.1.0&quot;,
+        &quot;zendframework/zend-form&quot;: &quot;2.5.0&quot;,
+        &quot;zendframework/zend-view&quot;: &quot;2.5.0&quot;,
+        &quot;zendframework/zend-i18n&quot;: &quot;2.5.0&quot;,
+        &quot;zendframework/zend-escaper&quot;: &quot;2.5.0&quot;,
+        &quot;zendframework/zend-servicemanager&quot;: &quot;2.5.0&quot;,
+        &quot;symfony/console&quot;: &quot;2.7.*&quot;,
+        &quot;league/plates&quot;: &quot;3.1.*&quot;
+    },
+    &quot;require-dev&quot;: {
+        &quot;phpunit/phpunit&quot;: &quot;~4.0&quot;
+    },
+    &quot;autoload&quot;: {
+        &quot;psr-4&quot;: {
+          &quot;PennyApp\\&quot;: &quot;./app&quot;
+        }
+    }
+}
+</code></pre>
+
+<p>Write the first form:</p>
+<pre><code class="php">// /app/Form/BeerForm.php
+
+&lt;?php
+namespace PennyApp\Form;
+
+use Zend\Form\Form;
+use Zend\Form\Element\Hidden;
+use Zend\Form\Element\Text;
+use Zend\Form\Element\Submit;
+
+class BeerForm extends Form
+{
+    public function __construct()
+    {
+        parent::__construct();
+
+        $hidden = new Hidden('id');
+        $this-&gt;add($hidden);
+
+        $code = new Text('name');
+        $code-&gt;setLabel('Name');
+        $this-&gt;add($code);
+
+        $name = new Text('nation');
+        $name-&gt;setLabel('Nation');
+        $this-&gt;add($name);
+
+        $save = new Submit('save');
+        $save-&gt;setValue('Save');
+        $this-&gt;add($save);
+    }
+}
+</code></pre>
+
+<p>Plates is very extensible and now we have a problem, BeerForm require a render! Let's see how to create it:</p>
+<pre><code class="php">&lt;?php
+// /config/app.config.php
+
+use Doctrine\ORM\Tools\Setup;
+use Doctrine\ORM\EntityManager;
+use \Interop\Container\ContainerInterface;
+
+return [
+    &quot;template&quot; =&gt; \DI\object(\League\Plates\Engine::class)
+        -&gt;constructor(&quot;./app/view/&quot;)
+        -&gt;method(&quot;registerFunction&quot;, &quot;form&quot;, function () {
+            $zfView = new \Zend\View\Renderer\PhpRenderer();
+            $plugins = $zfView-&gt;getHelperPluginManager();
+            $config  = new \Zend\Form\View\HelperConfig;
+            $config-&gt;configureServiceManager($plugins);
+            return $zfView;
+    }),
+    &quot;form.beer&quot; =&gt; \DI\object(\PennyApp\Form\BeerForm::class)
+        -&gt;method(&quot;setHydrator&quot;, new \Zend\Stdlib\Hydrator\ClassMethods()),
+];
+</code></pre>
+
+<pre><code class="html">&lt;!-- /app/view/index.php --&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;title&gt;Penny Application&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;h1&gt;Hi! I'm a &lt;?php echo $name; ?&gt;&lt;/h1&gt;
+
+        &lt;p&gt;&lt;/p&gt;
+
+        &lt;form method=&quot;POST&quot; role=&quot;form&quot; action=&quot;/&quot;&gt;
+            &lt;div class=&quot;form-group&quot;&gt;
+                &lt;?= $this-&gt;form()-&gt;formHidden($form-&gt;get('id')) ?&gt;
+                &lt;?= $this-&gt;form()-&gt;formRow($form-&gt;get('name')) ?&gt;
+                &lt;?= $this-&gt;form()-&gt;formRow($form-&gt;get('nation')) ?&gt;
+                &lt;?= $this-&gt;form()-&gt;formRow($form-&gt;get('save')) ?&gt;
+            &lt;/div&gt;
+        &lt;/form&gt;
+
+        &lt;p&gt;&lt;/p&gt;
+
+        &lt;ul&gt;
+            &lt;?php foreach ($beers as $beer) { ?&gt;
+            &lt;li&gt;&lt;?php echo $beer-&gt;getName() ?&gt;&lt;/li&gt;
+            &lt;?php } ?&gt;
+        &lt;/ul&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>As we did previously with other things we now inject the form into our controller.</p>
+<pre><code class="php">// /app/Controller/IndexController.php
+
+&lt;?php
+namespace PennyApp\Controller;
+
+use PennyApp\Entity\Beer;
+use Zend\Diactoros\Response\RedirectResponse;
+
+class IndexController
+{
+    /**
+     * @Inject(&quot;template&quot;)
+     */
+    private $template;
+
+    /**
+     * @Inject(&quot;doctrine.em&quot;)
+     */
+    private $entityManager;
+
+    /**
+     * @Inject(&quot;PennyApp\Form\BeerForm&quot;)
+     */
+    private $beerForm;
+
+    public function index($request, $response)
+    {
+        $lang = new Beer();
+        $beers = $this-&gt;entityManager-&gt;getRepository(&quot;PennyApp\Entity\Beer&quot;)-&gt;findAll();
+
+        $form = $this-&gt;beerForm-&gt;bind($lang);
+
+        if ($request-&gt;getMethod() == &quot;POST&quot;) {
+            $form-&gt;setData($this-&gt;decodeQueryParams($request-&gt;getBody()-&gt;__toString()));
+            if ($form-&gt;isValid()) {
+                $obj = $form-&gt;getObject();
+                $this-&gt;entityManager-&gt;persist($obj);
+                $this-&gt;entityManager-&gt;flush();
+
+                return new RedirectResponse('/', 301);
+            }
+        }
+        $response-&gt;getBody()-&gt;write($this-&gt;template-&gt;render(&quot;index&quot;, [
+            &quot;name&quot; =&gt; &quot;developer&quot;,
+            &quot;form&quot; =&gt; $beerForm,
+            &quot;beers&quot; =&gt; $beers,
+        ]));
+        return $response;
+    }
+
+    private function decodeQueryParams($string)
+    {
+        $params = [];
+        foreach (explode('&amp;', $string) as $chunk) {
+            $param = explode(&quot;=&quot;, $chunk);
+            $params[urldecode($param[0])] = urldecode($param[1]);
+        }
+        return $params;
+    }
+}
+</code></pre>
+
+<p>That's all for now, we really need your feedback to improve Penny.</p>
+<p><strong>SOCIAL-ALERT:</strong> Feedback is important to us. If you want to share your feedback about this document or about Penny, please do it opening an issue or discussing with us on Twitter using the <a href="https://twitter.com/hashtag/pennyphp?src=hash">#pennyphp hashtag</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+      <div class="container">
+
+        <div class="row text-center">
+            <div class="col-md-12">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="68JUJMXHCBK8U">
+                    <button type="button" class="btn btn-info" name="submit" alt="PayPal – The safer, easier way to pay online."><i class="fa fa-paypal"></i> Donate with PayPal</button>
+                    <img alt="" border="0" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" height="1">
+                </form>
+            </div>
+        </div>
+
+      </div>
+    </footer>
+
+    <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script src="/js/jquery/dist/jquery.js"></script>
+    <script src="/js/bootstrap/dist/js/bootstrap.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-67036349-1', 'auto');
+      ga('send', 'pageview');
+
+    </script>
+
+    <script>
+        $(document).ready(function(){
+            var imgs = $('img');
+            for (var ii = 0; ii<imgs.length;ii++) {
+                $(imgs[ii]).addClass('img-responsive');
+            }
+        });
+    </script>
+
+  </body>
+
+</html>
