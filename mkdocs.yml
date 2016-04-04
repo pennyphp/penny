@@ -1,20 +1,20 @@
 site_name: Penny
 site_description: Php Framework made of other components
-theme: readthedocs
+theme_dir: "mkpenny"
 repo_url: https://github.com/gianarb/penny
 
 pages:
-- ['index.md', 'Introduction']
-- ['getting-started.md', 'Getting started']
-- ['skeleton-application.md', 'Skeleton Application']
-- ['install.md', 'Install']
-- ['flow.md', 'Application flow']
-- ['the-dispatcher-concept.md', 'The dispatcher concept']
-- ['use-case.md', 'Use case']
-- ['event-manager-intro.md', 'Event Manager Introduction']
-- ['available-event-manager.md', 'Available Event Manager']
-- ['write-our-event-manager-proxy.md', 'Write Our Event Manager Proxy']
-- ['license.md', 'License']
+    - Introduction: 'index.md'
+    - Getting Started: 'getting-started.md'
+    - Skeleton Applcation: 'skeleton-application.md'
+    - Install: 'install.md'
+    - Application flow: 'flow.md'
+    - The dispatcher concept: 'the-dispatcher-concept.md'
+    - Use case: 'use-case.md'
+    - Event Manager Introduction: 'event-manager-intro.md'
+    - Available Event Manager: 'available-event-manager.md'
+    - Write Our Event Manager Proxy: 'write-our-event-manager-proxy.md'
+    - License: 'license.md'
 
 copyright: Copyright &copy; 2015, <a href="https://github.com/gianarb">Gianluca Arbezzano</a>.
 google_analytics: ["UA-60029542-3", "http://penny.readthedocs.org"]
