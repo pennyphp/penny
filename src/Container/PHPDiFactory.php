@@ -4,8 +4,8 @@ namespace Penny\Container;
 
 use DI;
 use Penny\Dispatcher;
-use Penny\Event\ZendHttpFlowEvent;
-use Penny\Event\ZendEvmProxy;
+use Penny\Event\FastHttpFlowEvent;
+use Penny\Event\FastEvmProxy;
 use Zend\Diactoros\Response;
 use Zend\Diactoros\ServerRequestFactory;
 
@@ -46,9 +46,9 @@ class PHPDiFactory
         $builder->addDefinitions([
             'request' => ServerRequestFactory::fromGlobals(),
             'response' => DI\object(Response::class),
-            'http_flow_event' => DI\object(ZendHttpFlowEvent::class)
+            'http_flow_event' => DI\object(FastHttpFlowEvent::class)
                 ->constructor('bootstrap', DI\get('request'), DI\get('response')),
-            'event_manager' => DI\object(ZendEvmProxy::class),
+            'event_manager' => DI\object(FastEvmProxy::class),
             'dispatcher' => DI\factory(function ($container) {
                 return new Dispatcher($container->get('router'), $container);
             }),
