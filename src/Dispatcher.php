@@ -8,7 +8,6 @@ use ReflectionClass;
 use FastRoute\Dispatcher as BaseDispatcher;
 use Penny\Exception\MethodNotAllowedException;
 use Penny\Exception\RouteNotFoundException;
-use Psr\Http\Message\RequestInterface;
 use Penny\Route\RouteInfo;
 
 class Dispatcher
@@ -42,7 +41,7 @@ class Dispatcher
     /**
      * Dispatching.
      *
-     * @param RequestInterface $request Representation of an outgoing,
+     * @param mixed $request Representation of an outgoing,
      *                                  client-side request.
      *
      * @throws RouteNotFoundException    If the route is not found.
@@ -51,7 +50,7 @@ class Dispatcher
      *
      * @return RouteInfo
      */
-    public function __invoke(RequestInterface $request)
+    public function __invoke($request)
     {
         $router = $this->router;
         $uri = $request->getUri();
