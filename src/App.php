@@ -23,13 +23,14 @@ class App
      * Application initialization.
      *
      * @param ContainerInterface $container Dependency Injection container.
+     * @param string $pathRole Glob role.
      *
      * @throws Exception If no router is defined.
      */
-    public function __construct(ContainerInterface $container = null)
+    public function __construct(ContainerInterface $container = null, $pathRole = './config/{{*}}{{,*.local}}.php')
     {
         if ($container === null) {
-            $container = Container\PHPDiFactory::buildContainer(Loader::load());
+            $container = Container\PHPDiFactory::buildContainer(Loader::load($pathRole));
         }
 
         if ($container->has('router') === false) {
