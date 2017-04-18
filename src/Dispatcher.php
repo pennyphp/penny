@@ -85,7 +85,7 @@ class Dispatcher
         $controller = $this->container->get($dispatch[1][0]);
         $method = $dispatch[1][1];
         $params = $dispatch[2];
-        $function = (new ReflectionClass($controller))->name;
+        $function = get_class($controller);
         $eventName = "{$function}.{$method}"; // this improve ~1us
 
         return new RouteInfo($eventName, [$controller, $method], $params);
